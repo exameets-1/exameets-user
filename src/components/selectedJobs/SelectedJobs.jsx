@@ -18,7 +18,7 @@ export default function SelectedJobs() {
   const { itJobs, nonItJobs, loading: jobsLoading } = useSelector((state) => state.jobs);
 
   
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const router = useRouter();
 
   useEffect(() => {
