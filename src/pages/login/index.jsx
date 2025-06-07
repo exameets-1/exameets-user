@@ -47,7 +47,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (error && error !== "User not authenticated") {
+    if (error && error !== "User not authenticated" && error !== "Please login to access this resource") {
       toast.error(error);
       dispatch(clearAllUserErrors());
     }
