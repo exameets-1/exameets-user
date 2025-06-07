@@ -1,0 +1,636 @@
+.navbar {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+.header {
+    width: 100%;
+}
+
+.topLine {
+    background-color: #015990;
+    color: white;
+    padding: 10px;
+    overflow: hidden; 
+    text-align: center;
+    height:50px;
+    position: relative;
+}
+
+.topLine p {
+    margin: 0;
+    margin-top: 6px;
+    font-size: 20px;
+    display: inline-block;
+    white-space: nowrap; 
+    position: relative;
+}
+
+.logo img {
+    width:auto;
+    height:auto;
+    max-width: 350px; 
+    max-height: 250px; 
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    padding: 5px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.hamburger div {
+    display:none;
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+}
+.nav {
+    display: flex;
+    align-items: center;
+}
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.menuItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+}
+.menuItem a:hover {
+    color: #015990;
+    text-decoration: underline;
+}
+
+.loginBtn:hover, .registerBtn:hover {
+    background-color: #015990;
+    color: white;
+}
+
+.iconCircle {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DFF1FF;
+    border-radius: 50%;
+    border: 3.5px solid #283D50;
+    margin-bottom: 5px;
+}
+
+.iconCircle img {
+    width: 35px;
+    height: auto;
+}
+
+.menuItem a {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}
+
+.bottomLine {
+    background-color: #015990;
+    color: white;
+    padding: 20px 20px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottomLine p {
+    margin: 0;
+    font-size: 20px;
+}
+
+.authLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-right: 100px;
+}
+
+.authLinks span {  
+    margin-right:150px;
+    margin-left:50px;
+    color: white;
+}
+
+
+
+.modal1 {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal1Content {
+    background-color: #fff;
+    border: 2px solid #283D50; 
+    margin: 15% auto;
+    padding: 20px;
+    width: 500px;
+    height: 390px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+
+  .welcomeMessage {
+    color: #283D50; 
+    font-family: Arial, sans-serif;
+    margin-bottom: 15px;
+    margin-top: 25px;
+  }
+  
+
+  .inputField {
+    width: 370px; 
+    height: 50px; 
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: #DFF1FF; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+
+  .forgotPassword {
+    color: #283D50;
+    font-size: 14px;
+    margin-top: 30px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  
+  .forgotPassword:hover {
+    text-decoration: underline;
+  }
+  
+
+  .loginBtn {
+    background-color: #283D50; 
+    color: white; 
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 370px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .loginBtn:hover {
+    background-color: #1c2c3b; 
+  }
+  
+  .close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: red;
+  }
+  
+
+.menuItem {
+    position: relative; /* Enable positioning for dropdown */
+}
+
+.dropdown {
+    display: none; /* Initially hide the dropdown */
+    position: absolute; /* Position it below the menu item */
+    background-color: white; /* Background color */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Optional shadow for dropdown */
+    z-index: 1; /* Ensure dropdown is above other content */
+    padding: 10px; /* Padding for dropdown */
+}
+
+.menuItem:hover .dropdown {
+    display: block; /* Show dropdown on hover */
+}
+
+.dropdown a {
+    display: block; /* Make links stack vertically */
+    padding: 8px; /* Add padding to links */
+    text-decoration: none; /* Remove underline */
+    color: black; /* Link color */
+}
+
+.dropdown a:hover {
+    background-color: #f1f1f1; /* Change background on hover */
+}
+
+
+/* General styling for mobile menu close (X) icon */
+.closeMenu {
+    font-size: 25px;
+    z-index: 1000;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Dropdown for Govt Jobs styling */
+.govtJobContainer {
+    position: relative;
+}
+
+.govtJobContainer .dropdown {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: -150px; /* Adjust this value for exact placement */
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
+    min-width: 100px;
+    z-index: 100;
+    border: 1px solid #ddd;
+}
+
+/* Show dropdown on hover */
+.govtJobContainer:hover .dropdown {
+    display: block;
+}
+
+
+/* Logo and top line */
+.logoMenu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+/* Hamburger (hidden on desktop) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 4px 0;
+}
+
+/* Navigation styling */
+nav.menu {
+    display: flex;
+    gap: 4px;
+}
+
+/* Menu item styling */
+.menuItem a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.menuItem a:hover {
+    color: #4a90e2;
+}
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobile View */
+
+@media screen and (max-width: 768px) {
+    .top-line p {
+        
+        padding-top: -10px;
+        font-size: 11px; 
+    }
+    .top-line {
+        padding-top: -10px;
+        margin-top: -10px;
+        margin-bottom: -10px;
+    height:45px;
+    
+}
+
+    .menu {
+        display: none; 
+    }
+    .menu.show {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        z-index:10;
+    }
+    /* Menu item styling on mobile */
+    .menu-item {
+        padding: 10px 20px;
+        margin: 5px 0;
+        align-items: left;
+        z-index:10000;
+    }
+    .menu-item a {
+        font-size: 16px;
+    }
+
+    /* Hamburger icon visible only on mobile */
+    .hamburger {
+        display: flex;
+    }
+    .hamburger div {
+        display:flex;
+        width: 100%;
+        height: 3px;
+        background-color: #000;
+    }
+    .logo img {
+        width:250px;
+        height:auto;
+        max-width: 300px; 
+        max-height: 150px; 
+    }
+    .bottom-line {
+        flex-direction: column; 
+        text-align: center; 
+        height:100px;
+        margin-top: -10px;
+        padding-top: 10px;
+    background-color: #015990;
+    }
+    
+    .bottom-line p {
+        border-bottom: 1px solid white; 
+        padding-bottom: 10px; 
+        width: 100%;
+        font-size: 17px;
+    }
+    
+    .auth-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 25px;
+        margin-right: 0px;
+        transition: text-decoration 0.3s ease;
+    }
+
+    .auth-links span {
+        margin-right:50px;
+        margin-left:50px;
+        color: white;
+    }
+    .auth-links {
+        margin-top: 10px; 
+        padding-right: 0px;
+
+    }
+    
+    
+    .icon-circle{
+        display: none;
+    }
+    .icon-circle img{
+        display:none;
+    }
+
+    
+    .modal1-content {
+        width:350px;
+    }
+    .input-field {
+        width: 300px;
+    }
+
+    .login-btn {
+        width:300px;
+    }
+
+    .close-menu {
+        display: none; /* Initially hidden */
+        position: absolute;
+        right: 5px;
+        top: 55px;
+        cursor: pointer;
+    }
+ 
+
+    /* Dropdown for Govt Jobs styling */
+    .govt-job-container, .internship-container {
+        position: relative;
+    }
+
+    .govt-job-container .dropdown,.internship-container .dropdown {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: -150px; /* Adjust this value for exact placement */
+        background-color: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px 15px;
+        min-width: 150px;
+        z-index: 100;
+        border: 1px solid #ddd;
+    }
+
+    /* Show dropdown on hover */
+    .govt-job-container:hover .dropdown , .internship-container:hover .dropdown {
+        display: block;
+    }
+
+
+    .logo-menu {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /* Navigation hidden initially on mobile */
+    nav.menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #ffffff;
+        width: 40%;
+    }
+
+    /* Show navigation when 'show' class is added */
+    nav.menu.show {
+        display: flex;
+        width:40%;
+        flex-direction: column;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Desktop View */
+ 
+ @media (min-width: 769px) {
+    nav.menu {
+        display: flex;
+    }
+    /* Dropdown for Govt Jobs styling */
+    .govt-job-container, .internship-container {
+        position: relative;
+    }
+
+    .govt-job-container .dropdown,.internship-container .dropdown  {
+        display: none;
+        position: absolute;
+        top: 100px;
+        left: -35px; /* Adjust this value for exact placement */
+        background-color: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px 15px;
+        min-width: 130px;
+        z-index: 100;
+        border: 1px solid #ddd;
+    }
+
+    /* Show dropdown on hover */
+    .govt-job-container:hover .dropdown, .intern-container:hover .dropdown {
+        display: block;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Menu styles */
+.menu {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+}
+
+.menu-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+}
+
+.menu-item-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+
+
+.menu-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    border: none;
+    text-align: center;
+}

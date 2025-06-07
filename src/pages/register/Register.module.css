@@ -1,0 +1,183 @@
+.form {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.signUpSection {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+}
+
+.signUpSection h2 {
+    color: #005587;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section label {
+    display: block;
+    color: #005587;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.section input,
+.section select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.section input:focus,
+.section select:focus {
+    border-color: #005587;
+    outline: none;
+}
+
+.phoneSection {
+    display: flex;
+    gap: 10px;
+}
+
+.phoneSection select {
+    width: 80px;
+}
+
+.phoneSection input {
+    flex: 1;
+}
+
+.otpSection {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.otpSection label {
+    color: #005587;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.otpSection input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.otpSection button {
+    padding: 8px 15px;
+    background-color: #005587;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.otpSection button:hover {
+    background-color: #004470;
+}
+
+.otpSection button:disabled {
+    background-color: #ccc;
+}
+
+.passwordSection {
+    margin-bottom: 8px;
+    color: #005587;
+    font-weight: 500;
+}
+
+.passwordBox {
+    margin-bottom: 15px;
+}
+
+.passwordBox input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.captchaSection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.captchaSection input[type="checkbox"] {
+    width: auto;
+}
+
+.nextBtn {
+    width: 100%;
+    padding: 12px;
+    background-color: #005587;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.nextBtn:hover {
+    background-color: #004470;
+}
+
+.nextBtn:disabled {
+    background-color: #ccc;
+}
+
+/* Password validation styles */
+.passwordValidation {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+.passwordValidation p {
+    margin: 4px 0;
+}
+
+.passwordValidation p.valid {
+    color: #4CAF50;
+}
+
+/* Error message styles */
+.errorMessage {
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Verification success message */
+.verificationSuccess {
+    color: #4CAF50;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+@media screen and (max-width: 480px) {
+    .form {
+        padding: 10px;
+    }
+    
+    .signUpSection {
+        padding: 15px;
+    }
+}

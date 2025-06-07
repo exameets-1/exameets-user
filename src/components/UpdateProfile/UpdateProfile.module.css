@@ -1,0 +1,112 @@
+.updateProfileContainer {
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .updateProfileCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 2rem;
+  }
+  
+  .updateProfileTitle {
+    color: #1a365d;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .updateProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .formGroup {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .formGroup label {
+    color: #4a5568;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  
+  .formInput {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+  }
+  
+  .formInput:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+  }
+  
+  select.formInput {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234A5568'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+  
+  .updateButton {
+    background-color: #4299e1;
+    color: white;
+    padding: 0.875rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .updateButton:hover:not(:disabled) {
+    background-color: #3182ce;
+    transform: translateY(-1px);
+  }
+  
+  .updateButton:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+  }
+  
+  .updateButton.loading {
+    position: relative;
+    cursor: wait;
+  }
+  
+  @media (max-width: 640px) {
+    .updateProfileContainer {
+      padding: 1rem;
+    }
+  
+    .updateProfileCard {
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+  
+    .updateProfileTitle {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }

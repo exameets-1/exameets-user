@@ -1,0 +1,190 @@
+.cBody {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.followUs {
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.stayUpdated {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.joinUs {
+    font-size: 25px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.introText {
+    margin-bottom: 20px;
+}
+
+.highlightText {
+    font-size: 25px;
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+
+.descriptionText {
+    font-size: 20px;
+}
+
+.channelDescription {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.rightSideMedia {
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+}
+
+.rightSideMedia img {
+    width: 40px;
+    margin-right: 15px;
+    transition: transform 0.3s ease;
+}
+
+.rightSideMedia img:hover {
+    transform: scale(1.1);
+}
+
+.socialIcon {
+    width: 40px;
+    height: 40px;
+    color: #015990;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.socialIcon:hover {
+    transform: scale(1.1);
+    color: #014d7a;
+}
+
+.divider {
+    border-top: 2px solid #ddd;
+    margin: 20px 0;
+}
+
+.section {
+    margin: 30px 0;
+}
+
+.ctaButton {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #015990;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.ctaButton:hover {
+    background-color: #014d7a;
+}
+
+.instructionsList {
+    font-size: 20px;
+    padding-left: 30px;
+    line-height: 30px;
+}
+
+.instructionsList li {
+    margin-bottom: 10px;
+}
+
+.spreadWordText {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.motto {
+    margin-bottom: 30px;
+    font-size: 22px;
+    color: #015990;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .followUs {
+        font-size: 28px;
+    }
+
+    .stayUpdated {
+        font-size: 26px;
+    }
+
+    .joinUs {
+        font-size: 22px;
+    }
+
+    .descriptionText, .channelDescription, .ctaButton {
+        font-size: 16px;
+    }
+
+    .highlightText {
+        font-size: 20px;
+        line-height: 32px;
+    }
+
+    .instructionsList {        
+        font-size: 16px;
+        padding-left: 20px;
+    }
+
+    .rightSideMedia img {
+        width: 32px;
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .followUs {
+        font-size: 24px;
+    }
+
+    .stayUpdated {
+        font-size: 24px;
+    }
+
+    .joinUs {
+        font-size: 22px;
+    }
+
+    .rightSideMedia img {
+        width: 28px;
+        margin-right: 8px;
+    }
+}

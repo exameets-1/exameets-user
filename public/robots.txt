@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://exameets.com/sitemap.xml
+
+# Disallow pagination pages from indexing
+Disallow: /jobs?page=*

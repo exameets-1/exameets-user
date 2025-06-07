@@ -1,0 +1,56 @@
+.profileUserContainer {
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profileUserSection {
+    margin-bottom: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.profileUserField {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.profileUserField:last-child {
+    border-bottom: none;
+}
+
+.profileUserLabel {
+    font-weight: 600;
+    color: #333;
+    flex: 0 0 40%;
+}
+
+.profileUserValue {   
+    color: #666;
+    flex: 0 0 60%;
+    text-align: right;
+}
+
+.profileUserValueEmpty {
+    color: #999;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .profileUserField {
+        flex-direction: column;
+    }
+
+    .profileUserLabel,
+    .profileUserValue {
+        text-align: left;
+        flex: 1 1 100%;
+    }
+
+    .profileUserLabel {
+        margin-bottom: 0.5rem;
+    }
+}

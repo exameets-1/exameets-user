@@ -1,0 +1,151 @@
+.userDashboard {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 2rem;
+}
+.userDashboardContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.userDashboardHeader {
+    background: #fff;   
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.userDashboardHeader h1 {
+    color: #005587;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+.userDashboardHeader p {
+    color: #666;
+}
+.userDashboardHeader span {
+    color: #005587;
+    font-weight: 500;
+}
+.userDashboardContent {
+    display: flex;
+    gap: 2rem;
+}
+.userSidebar {
+    width: 280px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    height: fit-content;
+}
+.userSidebar h4 {
+    color: #005587;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+.userSidebarLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.userSidebarLink {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #666;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+.userSidebarLink:hover {
+    background-color: #f0f7ff;
+    color: #005587;
+}
+.userSidebarLink.link-active {
+    background-color: #005587;
+    color: white;
+}
+.userSidebarLink svg {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+.userContentArea {
+    flex: 1;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+.userContentHeader {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+.userContentHeader h2 {
+    color: #005587;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.userLogoutButton {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #dc3545;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.userLogoutButton:hover {
+    background-color: #fff1f1;
+}
+.userDeleteButton {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #dc3545;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.userDeleteButton:hover {
+    background-color: #fff1f1;
+}
+@media (max-width: 768px) {
+    .userDashboard {
+        padding: 1rem;
+    }
+    .userDashboardContent {
+        flex-direction: column;
+    }
+    .userSidebar {
+        width: 100%;
+    }
+    .userSidebarToggle {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem;
+        cursor: pointer;
+    }
+    .userSidebarToggle svg {
+        font-size: 1.5rem;
+        color: #005587;
+    }
+}
+
+.menuVisible {
+    display: block;
+}
+
+.menuRotated {
+    transform: rotate(180deg);
+}

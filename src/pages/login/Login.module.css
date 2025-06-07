@@ -1,0 +1,175 @@
+.loginForm {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    min-height: 100vh;
+    align-items: center;
+}
+
+.loginSection {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loginSection h2 {
+    color: #005587;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section label {
+    display: block;
+    color: #005587;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.section input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.section input:focus {
+    border-color: #005587;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 85, 135, 0.1);
+}
+
+.inputGroup {
+    position: relative;
+}
+
+.inputGroup .icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    margin: 0px -40px;
+    transform: translateY(-50%);
+    color: #005587;
+}
+
+.inputGroup input {
+    padding-left: 40px;
+}
+
+.passwordToggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #005587;
+}
+
+.forgotPassword {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.forgotPassword a {
+    color: #005587;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgotPassword a:hover {
+    text-decoration: underline;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #005587;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: #004670;
+}
+
+.submitButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.registerLink {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.registerLink a {
+    color: #005587;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.registerLink a:hover { 
+    text-decoration: underline;
+}
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: white;  
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.modalHeader {
+    color: #005587;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.closeButton {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.timer {
+    text-align: center;
+    color: #666;
+    margin-top: 10px;
+    font-size: 14px;
+}

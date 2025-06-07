@@ -1,0 +1,129 @@
+.deleteUserContainer {
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.deleteUserWarning {
+    background-color: #fff5f5;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.deleteUserWarning h3 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #dc3545;
+}
+
+.deleteUserWarning p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #721c24;
+}
+
+.deleteUserForm {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.deleteUserField {
+    margin-bottom: 1.5rem;
+}
+
+.deleteUserLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.deleteUserInput[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.deleteUserInput[type="password"]:focus {
+    border-color: #dc3545;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+}
+
+.deleteUserCheckbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.deleteUserCheckbox input[type="checkbox"] {
+    margin-top: 0.25rem;
+}
+
+.deleteUserCheckbox label {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.deleteUserActions {
+    display: flex;
+    gap: 1rem;
+}
+
+.deleteUserDangerBtn {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+}
+
+.deleteUserDangerBtn:hover {
+    background-color: #c82333;
+}
+
+.deleteUserDangerBtn:disabled {
+    background-color: #f8d7da;
+    cursor: not-allowed;
+}
+
+.deleteUserCancelBtn {
+    background-color: #f8f9fa;
+    color: #666;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.deleteUserCancelBtn:hover {
+    background-color: #e9ecef;
+}
+
+@media (max-width: 600px) {
+    .deleteUserActions {
+        flex-direction: column;
+    }
+
+    .deleteUserDangerBtn,
+    .deleteUserCancelBtn {
+        width: 100%;
+    }
+}

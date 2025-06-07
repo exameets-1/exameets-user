@@ -1,0 +1,89 @@
+.footerContainer {
+    background-color: #015990;
+    color: white;
+    width: 100%;
+  }
+  
+  .footerTitle {
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  .footerLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  .ceerasLink a:hover {
+    text-decoration: underline;
+  }
+  
+  .footerLinks a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .footerLinks a:hover {
+    text-decoration: underline;
+  }
+  
+  .footerBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .rightSide {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .rightSide a {
+    color: white;
+    transition: opacity 0.2s ease;
+  }
+  
+  .rightSide a:hover {
+    opacity: 0.8;
+  }
+  
+  /* Scrolling text animation */
+  .footerQuotes {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    overflow: hidden;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .footerBottom {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  
+    .footerLinks {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  
+  /* Quote animation styles */
+  .quoteText {
+    text-align: center;
+    transition: opacity 1s ease-in-out;
+    min-height: 2em; /* Prevent layout shift */
+  }
+  
+  .fade-in {
+    opacity: 1;
+  }
+  
+  .fade-out {
+    opacity: 0;
+  }
+  
+  
