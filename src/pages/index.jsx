@@ -2,7 +2,7 @@
 
 import Welcome from '@/components/Welcome/Welcome';
 import WhatsNew from '@/components/WhatsNew/WhatsNew';
-import SelectedJobs from '@/components/TempFolder/SelectedJobs';
+import SelectedJobs from '@/components/SelectedJobs/SelectedJobs';
 import SocialModal from '@/components/SocialModal';
 import { useSelector } from 'react-redux';
 import scrollToTop from '@/hooks/useScrollToTop';
