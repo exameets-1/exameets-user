@@ -79,6 +79,8 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
             <div className="flex-1">
               <div className="relative">
                 <input
+                  id="govtjobs-search"
+                  name="govtjobs-search"
                   type="text"
                   placeholder="Search jobs..."
                   value={searchKeyword}
@@ -91,6 +93,8 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
             </div>
             <div className="flex gap-2">
               <select
+                id="govtjobs-location"
+                name="govtjobs-location"
                 value={router.query.location || 'All'}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -106,6 +110,8 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
                 <option value="Kolkata">Kolkata</option>
               </select>
               <select
+                id="govtjobs-sort"
+                name="govtjobs-sort"
                 value={router.query.sort || 'All'}
                 onChange={(e) => handleFilterChange('sort', e.target.value)}
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"

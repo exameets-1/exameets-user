@@ -261,6 +261,7 @@ const Register = () => {
             <input
               type="text"
               id="name"
+              autoComplete="name"
               placeholder="Enter Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -308,6 +309,7 @@ const Register = () => {
               </select>
               <input
                 type="tel"
+                autoComplete="tel"
                 id="phone"
                 placeholder="Enter 10-digit Mobile Number"
                 value={phone}
@@ -330,6 +332,7 @@ const Register = () => {
             <input
               type="email"
               id="email"
+              autoComplete="email"
               placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -383,9 +386,12 @@ const Register = () => {
             )}
           </div>*/}
 
+            <label htmlFor="email-otp" className="block text-[#015990] font-medium mb-2 dark:text-gray-100">Email OTP</label>
           <div className="flex items-center gap-2 mb-5">
             <input
               type="text"
+              id="email-otp"
+              
               placeholder="Enter Email OTP"
               value={emailOtp}
               onChange={(e) => handleOtpChange(e, setEmailOtp)}
@@ -428,11 +434,14 @@ const Register = () => {
           </div>
 
           <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
-            <label>Create Password</label>
+            <label htmlFor="password">Create Password</label>
           </div>
           <div className="mb-4">
             <input
               type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              autoComplete="new-password"
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -440,10 +449,14 @@ const Register = () => {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
             />
           </div>
-
+          <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
+            <label htmlFor="confirm-password">Confirm Password</label>
+          </div>
           <div className="mb-4">
             <input
               type={showConfirmPassword ? "text" : "password"}
+              id="confirm-password"
+              name="confirm-password"
               placeholder="Re-enter Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

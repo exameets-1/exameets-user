@@ -204,7 +204,7 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
         <div className="text-center mt-8">
           <button
             onClick={handleVisitResult}
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 mx-auto"
+            className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 mx-auto"
             disabled={!result?.importantLinks?.resultLink}
           >
             <FaExternalLinkAlt /> View Official Result

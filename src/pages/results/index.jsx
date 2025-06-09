@@ -124,6 +124,8 @@ const Results = ({ initialData, initialSearch, baseUrl }) => {
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1">
               <input
+                id="results-search"
+                name="results-search"
                 type="text"
                 placeholder="Search results by title, organization or post..."
                 value={searchKeyword}

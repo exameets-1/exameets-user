@@ -197,6 +197,8 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
+                  id="scholarships-search"
+                  name="scholarships-search"
                   type="text"
                   placeholder="Search scholarships..."
                   value={searchKeyword}
@@ -207,7 +209,8 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
               </div>
               <div className="flex gap-2">
                 <select
-                  name="category"
+                  id="scholarships-category"
+                  name="scholarships-category"
                   value={filters.category}
                   onChange={handleFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -224,7 +227,8 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                   <option value="Other">Other</option>
                 </select>
                 <select
-                  name="qualification"
+                  id="scholarships-qualification"
+                  name="scholarships-qualification"
                   value={filters.qualification}
                   onChange={handleFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"

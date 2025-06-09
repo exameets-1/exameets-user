@@ -35,6 +35,8 @@ const PreviousYearPage = ({ subjects, error }) => {
                     </div>
                     <div className="flex items-center relative">
                         <input
+                            id="paper-search"
+                            name="paper-search"
                             type="text"
                             placeholder="Search subjects..."
                             value={searchKeyword}

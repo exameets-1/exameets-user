@@ -142,6 +142,8 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
+                  id="job-search"
+                  name="job-search"
                   type="search"
                   placeholder="Search Jobs..."
                   value={searchKeyword}
@@ -151,6 +153,8 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
               </div>
               <div className="flex gap-2">
                 <select
+                  id="city-filter"
+                  name="city-filter"
                   value={filters.city}
                   onChange={(e) => handleFilterChange("city", e.target.value)}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -164,6 +168,8 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                 </select>
   
                 <select
+                  id="position-type-filter"
+                  name="position-type-filter"
                   value={filters.positionType}
                   onChange={(e) => handleFilterChange("positionType", e.target.value)}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"

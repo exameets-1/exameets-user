@@ -236,6 +236,8 @@ const handleResetPassword = async (e) => {
               <input
                 type="email"
                 id="email"
+                name="email"
+                autoComplete="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -254,6 +256,8 @@ const handleResetPassword = async (e) => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
+                name="password"
+                autoComplete="current-password"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

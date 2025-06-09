@@ -166,6 +166,8 @@ const WhatsNew = () => {
                 <div className="relative mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                     <input
+                        id="whatsnew-search"
+                        name="whatsnew-search"
                         type="text"
                         placeholder="         Search across all sections..."
                         value={searchTerm}

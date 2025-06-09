@@ -87,6 +87,8 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
             <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
+                  id="admitcards-search"
+                  name="admitcards-search"
                   type="text"
                   placeholder="Search admit cards..."
                   value={searchKeyword}

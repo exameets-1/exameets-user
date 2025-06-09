@@ -121,6 +121,8 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1">
               <input
+                id="internship-search"
+                name="internship-search"
                 type="text"
                 placeholder="Search internships..."
                 value={searchKeyword}
@@ -130,7 +132,8 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
             </div>
             <div className="flex gap-2">
               <select
-                name="city"
+                id="internship-location"
+                name="internship_location"
                 value={filters.city}
                 onChange={handleFilterChange}
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -147,6 +150,7 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                 <option value="Remote">Remote</option>
               </select>
               <select
+                id="internship-type"
                 name="internship_type"
                 value={filters.internship_type}
                 onChange={handleFilterChange}
