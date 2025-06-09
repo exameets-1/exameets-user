@@ -1,6 +1,25 @@
 User-agent: *
 Allow: /
-Sitemap: https://exameets.com/sitemap.xml
 
-# Disallow pagination pages from indexing
-Disallow: /jobs?page=*
+# Important pages - encourage crawling
+Allow: /govtjobs
+Allow: /jobs
+Allow: /results
+Allow: /internships
+Allow: /scholarships
+Allow: /admitcards
+Allow: /admissions
+Allow: /papers
+
+# Block admin or private areas (if any)
+Disallow: /admin
+Disallow: /api
+Disallow: /_next
+Disallow: /404
+Disallow: /500
+
+# Sitemap location
+Sitemap: https://exameets-user.vercel.app/sitemap.xml
+
+# Crawl delay (optional - remove if you want faster crawling)
+Crawl-delay: 1
