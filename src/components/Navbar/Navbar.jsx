@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { UserCog, X, Menu, ChevronDown } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
+import Image from 'next/image';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,9 +55,12 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-5 py-4 relative dark:bg-gray-800">
         {/* Logo */}
         <Link href="/" className="max-w-[350px] mx-auto">
-          <img 
-            src={darkMode ? "/images/logo-final-dark.png" : "/images/logo-final.png"} 
+          <Image 
+            src={darkMode ? "/images/logo-final-dark.webp" : "/images/logo-final.webp"} 
             alt="Exameets Logo" 
+            width={200} // Set an appropriate width
+            height={100} // Set an appropriate height
+            priority
             className="w-auto h-auto max-h-[250px]" 
           />
         </Link>
@@ -118,7 +122,7 @@ const Navbar = () => {
           <div className="flex flex-col items-center m-4 group">
             <Link href="/" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
-                <img src="/Home_Icon.svg" alt="Home" />
+                <Image src="/Home_Icon.svg" alt="Home" width={36} height={36} />
               </div>
               <span className="text-xl dark:text-gray-100">Home</span>
             </Link>
@@ -128,7 +132,7 @@ const Navbar = () => {
           <div className="relative flex flex-col items-center m-4 group">
             <Link href="/govtjobs" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50] transition-all duration-300 group-hover:bg-[#B3E0FF] group-hover:shadow-md">
-                <img src="/Govt_Icon.svg" alt="Govt Jobs" className="w-9 h-auto dark-image transition-transform duration-300 group-hover:scale-110" />
+                <Image src="/Govt_Icon.svg" alt="Govt Jobs" width={36} height={36} className="w-9 h-auto dark-image transition-transform duration-300 group-hover:scale-110" />
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-xl dark:text-gray-100">Govt Jobs</span>
@@ -148,7 +152,7 @@ const Navbar = () => {
           <div className="flex flex-col items-center m-4">
             <Link href="/jobs" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
-                <img src="/Tech_Icon.svg" alt="Tech Jobs" className="w-9 h-auto dark-image" />
+                <Image src="/Tech_Icon.svg" alt="Tech Jobs" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">Tech Jobs</span>
             </Link>
@@ -157,7 +161,7 @@ const Navbar = () => {
           <div className="flex flex-col items-center m-4">
             <Link href="/internships" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
-                <img src="/Courses_Icon.svg" alt="Courses" className="w-9 h-auto dark-image" />
+                <Image src="/Courses_Icon.svg" alt="Courses" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">Internships</span>
             </Link>
@@ -166,7 +170,7 @@ const Navbar = () => {
           <div className="flex flex-col items-center m-4">
             <Link href="/admissions" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
-                <img src="/Admission_Icon.svg" alt="Admissions" className="w-9 h-auto dark-image" />
+                <Image src="/Admission_Icon.svg" alt="Admissions" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">Admissions</span>
             </Link>
@@ -175,7 +179,7 @@ const Navbar = () => {
           <div className="flex flex-col items-center m-4">
             <Link href="/papers" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
-                <img src="/PYQ_Icon.svg" alt="PYQ" className="w-9 h-auto dark-image" />
+                <Image src="/PYQ_Icon.svg" alt="PYQ" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">PYQ</span>
             </Link>
@@ -184,7 +188,7 @@ const Navbar = () => {
           <div className="flex flex-col items-center m-4">
             <Link href="/scholarships" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
-                <img src="/Intern_Icon.svg" alt="Internships" className="w-9 h-auto dark-image" />
+                <Image src="/Intern_Icon.svg" alt="Internships" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">Scholarships</span>
             </Link>

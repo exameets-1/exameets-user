@@ -161,19 +161,19 @@ const Footer = () => {
           </div>
           
           <div className="flex gap-4">
-            <a href="https://whatsapp.com/channel/0029VaksJ72Lo4hmldL0yl41" target="_blank" rel="noopener noreferrer">
+            <a name="whatsapp-link" href="https://whatsapp.com/channel/0029VaksJ72Lo4hmldL0yl41" target="_blank" rel="noopener noreferrer">
               <FaWhatsapp size={24} />
             </a>
-            <a href="https://www.instagram.com/exameets/" target="_blank" rel="noopener noreferrer">
+            <a name="instagram-link" href="https://www.instagram.com/exameets/" target="_blank" rel="noopener noreferrer">  
               <FaInstagram size={24} />
             </a>
-            <a href="https://x.com/exameets" target="_blank" rel="noopener noreferrer">
+            <a name="twitter-link" href="https://x.com/exameets" target="_blank" rel="noopener noreferrer">
               <FaTwitter size={24} />
             </a>
-            <a href="https://www.linkedin.com/company/exameets/" target="_blank" rel="noopener noreferrer">
+            <a name="linkedin-link" href="https://www.linkedin.com/company/exameets/" target="_blank" rel="noopener noreferrer">
               <FaLinkedin size={24} />
             </a>
-            <a href="https://t.me/exameetschannel" target="_blank" rel="noopener noreferrer">
+            <a name="telegram-link" href="https://t.me/exameetschannel" target="_blank" rel="noopener noreferrer">
               <FaTelegram size={24} />
             </a>
           </div>
