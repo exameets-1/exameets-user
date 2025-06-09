@@ -190,6 +190,7 @@ try {
                 <input
                   type="text"
                   id="name"
+                  autoComplete="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
@@ -205,6 +206,7 @@ try {
                 <input
                   type="email"
                   id="email"
+                  autoComplete='email'
                   name="email"
                   placeholder="(Optional)"
                   value={formData.email}
