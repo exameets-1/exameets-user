@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import dbConnect from '@/lib/dbConnect';
 import { GovtJob } from '@/lib/models/GovtJob';
 import useDebounce from '@/hooks/useDebounce'; // Create this hook or use a utility
 import Link from 'next/link';
@@ -281,6 +282,7 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
 // }
 
 export async function getServerSideProps(context) {
+  await dbConnect();
   try {
     const { query } = context;
     const { location, sort, searchKeyword, page = 1, limit = 8 } = query;
