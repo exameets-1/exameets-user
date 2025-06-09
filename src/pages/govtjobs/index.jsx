@@ -209,6 +209,77 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
   );
 };
 
+// export async function getServerSideProps(context) {
+//   try {
+//     const { query } = context;
+//     const { location, sort, searchKeyword, page = 1, limit = 8 } = query;
+
+//     // Build query
+//     const dbQuery = {};
+//     if (location && location !== 'All') {
+//       dbQuery.jobLocation = { $regex: location, $options: 'i' };
+//     }
+
+//     if (searchKeyword) {
+//       dbQuery.$or = [
+//         { jobTitle: { $regex: searchKeyword, $options: 'i' } },
+//         { organization: { $regex: searchKeyword, $options: 'i' } },
+//         { jobLocation: { $regex: searchKeyword, $options: 'i' } },
+//         { postNames: { $regex: searchKeyword, $options: 'i' } },
+//         { notification_about: { $regex: searchKeyword, $options: 'i' } },
+//         { jobOverview: { $regex: searchKeyword, $options: 'i' } }
+//       ];
+//     }
+
+//     // Sort options
+//     let sortOptions = {};
+//     if (sort === 'recent') {
+//       sortOptions.notificationReleaseDate = -1;
+//     } else if (sort === 'deadline') {
+//       sortOptions.applicationEndDate = 1;
+//     }
+
+//     // Pagination
+//     const skip = (parseInt(page) - 1) * parseInt(limit);
+//     const totalJobs = await GovtJob.countDocuments(dbQuery);
+//     const govtJobs = await GovtJob.find(dbQuery)
+//       .sort(sortOptions)
+//       .skip(skip)
+//       .limit(parseInt(limit))
+//       .lean();
+
+//     // Format dates consistently
+//     const formattedJobs = govtJobs.map(job => ({
+//       ...job,
+//       applicationStartDate: formatDate(job.applicationStartDate),
+//       applicationEndDate: formatDate(job.applicationEndDate),
+//       notificationReleaseDate: formatDate(job.notificationReleaseDate),
+//       createdAt: formatDate(job.createdAt),
+//       updatedAt: formatDate(job.updatedAt)
+//     }));
+
+//     return {
+//       props: {
+//         govtJobs: JSON.parse(JSON.stringify(formattedJobs)),
+//         currentPage: parseInt(page),
+//         totalPages: Math.ceil(totalJobs / parseInt(limit)),
+//         totalJobs,
+//       },
+//     };
+//   } catch (error) {
+//     console.error('Error fetching government jobs:', error);
+//     return {
+//       props: {
+//         error: error.message || 'Failed to load government jobs',
+//         govtJobs: [],
+//         currentPage: 1,
+//         totalPages: 0,
+//         totalJobs: 0,
+//       },
+//     };
+//   }
+// }
+
 export async function getServerSideProps(context) {
   try {
     const { query } = context;
@@ -221,19 +292,14 @@ export async function getServerSideProps(context) {
     }
 
     if (searchKeyword) {
-      dbQuery.$or = [
-        { jobTitle: { $regex: searchKeyword, $options: 'i' } },
-        { organization: { $regex: searchKeyword, $options: 'i' } },
-        { jobLocation: { $regex: searchKeyword, $options: 'i' } },
-        { postNames: { $regex: searchKeyword, $options: 'i' } },
-        { notification_about: { $regex: searchKeyword, $options: 'i' } },
-        { jobOverview: { $regex: searchKeyword, $options: 'i' } }
-      ];
+      dbQuery.$text = { $search: searchKeyword }; // Use text index instead of regex
     }
 
     // Sort options
     let sortOptions = {};
-    if (sort === 'recent') {
+    if (searchKeyword) {
+      sortOptions = { score: { $meta: "textScore" } }; // Relevance if searching
+    } else if (sort === 'recent') {
       sortOptions.notificationReleaseDate = -1;
     } else if (sort === 'deadline') {
       sortOptions.applicationEndDate = 1;
@@ -246,9 +312,10 @@ export async function getServerSideProps(context) {
       .sort(sortOptions)
       .skip(skip)
       .limit(parseInt(limit))
+      .select(searchKeyword ? { score: { $meta: "textScore" } } : {}) // Only project score if searching
       .lean();
 
-    // Format dates consistently
+    // Format dates simply (to string)
     const formattedJobs = govtJobs.map(job => ({
       ...job,
       applicationStartDate: formatDate(job.applicationStartDate),
