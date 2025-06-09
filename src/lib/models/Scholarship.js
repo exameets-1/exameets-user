@@ -61,7 +61,13 @@ const scholarshipSchema = new mongoose.Schema({
     post_date: {
         type: Date,
         default: Date.now
-    }
+    },
+    slug: {
+        type: String,
+        required: [true, "Please enter scholarship slug"],
+        unique: true,
+        trim: true
+    },
 }, {
     timestamps: true
 });
