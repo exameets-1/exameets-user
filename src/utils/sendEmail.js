@@ -35,13 +35,6 @@ export const sendEmail = async({email, subject, message, type = 'signin'}) => {
             throw new Error('Missing required SMTP configuration');
         }
 
-        console.log('Configuring email transporter with:', {
-            host: smtpHost,
-            service: smtpService,
-            port: smtpPort,
-            user: smtpUser?.replace(/(.{3}).*(@.*)/, '$1***$2'), // Mask email for security
-        });
-
         const transporter = nodeMailer.createTransport({
             host: smtpHost,
             service: smtpService,
@@ -53,14 +46,11 @@ export const sendEmail = async({email, subject, message, type = 'signin'}) => {
             },
             tls: {
                 rejectUnauthorized: false
-            },
-            debug: true, // Enable debug for more detailed logs
-            logger: true
+            }
         });
 
         // Verify transporter configuration
         await transporter.verify();
-        console.log('SMTP transporter verified successfully');
 
         const options = {
             from: `"Exameets" <${smtpUser}>`,
@@ -80,18 +70,10 @@ export const sendEmail = async({email, subject, message, type = 'signin'}) => {
             `
         };
 
-        console.log('Sending email to:', email);
         const info = await transporter.sendMail(options);
-        console.log('Email sent successfully:', info.messageId);
         return info;
     } catch (error) {
-        console.error('Detailed email error:', {
-            message: error.message,
-            code: error.code,
-            command: error.command,
-            response: error.response,
-            responseCode: error.responseCode
-        });
+        console.error('Email sending error:', error.message);
         throw error;
     }
 };

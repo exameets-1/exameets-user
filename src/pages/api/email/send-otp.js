@@ -1,15 +1,13 @@
-import { sendEmail } from "@/utils/sendEmail";
-import { storeOTP } from "@/lib/otpStore";
-import { storeOTPInMemory } from "@/lib/otpMemoryStore";
+import { sendOTPService } from "@/lib/services/otpService";
 import { catchAsync } from "@/lib/middlewares/catchAsync";
-
-const generateOTP = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-};
+import dbConnect from "@/lib/dbConnect";
 
 export default catchAsync(async (req, res) => {
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
+        return res.status(405).json({ 
+            success: false,
+            message: 'Method not allowed' 
+        });
     }
 
     const { email } = req.body;
@@ -18,6 +16,15 @@ export default catchAsync(async (req, res) => {
         return res.status(400).json({
             success: false,
             message: 'Email is required'
+        });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({
+            success: false,
+            message: 'Please provide a valid email address'
         });
     }
 
@@ -33,7 +40,6 @@ export default catchAsync(async (req, res) => {
     const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
     
     if (missingEnvVars.length > 0) {
-        console.error('Missing environment variables:', missingEnvVars);
         return res.status(500).json({
             success: false,
             message: 'Email service is not properly configured'
@@ -41,38 +47,19 @@ export default catchAsync(async (req, res) => {
     }
 
     try {
-        // Generate OTP
-        const otp = generateOTP();
-        
-        // Try to store OTP in file system, fallback to memory
-        try {
-            await storeOTP(email, otp);
-        } catch (fileError) {
-            console.warn('File storage failed, using memory storage:', fileError.message);
-            storeOTPInMemory(email, otp);
+        // Connect to database
+        await dbConnect();
+
+        // Send OTP using service
+        const result = await sendOTPService(email, 'email_verification');
+
+        if (!result.success) {
+            return res.status(429).json(result); // 429 Too Many Requests
         }
 
-        // Send email
-        await sendEmail({
-            email: email,
-            subject: 'Email Verification OTP',
-            message: `Your OTP for email verification is: ${otp}. This OTP will expire in 5 minutes.`,
-            type: 'signin'
-        });
-
-        res.status(200).json({
-            success: true,
-            message: 'OTP sent successfully'
-        });
+        res.status(200).json(result);
 
     } catch (error) {
-        console.error('Send OTP Error:', error);
-        console.error('Error details:', {
-            message: error.message,
-            stack: error.stack,
-            code: error.code
-        });
-        
         // More specific error messages
         let errorMessage = 'Failed to send OTP. Please try again.';
         
@@ -82,6 +69,8 @@ export default catchAsync(async (req, res) => {
             errorMessage = 'Failed to connect to email service.';
         } else if (error.message?.includes('Invalid login')) {
             errorMessage = 'Email service authentication failed.';
+        } else if (error.message?.includes('E11000')) {
+            errorMessage = 'OTP request in progress. Please wait.';
         }
 
         res.status(500).json({

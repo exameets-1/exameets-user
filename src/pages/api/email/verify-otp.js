@@ -1,10 +1,13 @@
-import { verifyOTP } from '@/lib/otpStore';
-import { verifyOTPFromMemory } from '@/lib/otpMemoryStore';
+import { verifyOTPService } from '@/lib/services/otpService';
 import { catchAsync } from '@/lib/middlewares/catchAsync';
+import dbConnect from '@/lib/dbConnect';
 
 export default catchAsync(async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
+        return res.status(405).json({ 
+            success: false,
+            message: 'Method not allowed' 
+        });
     }
 
     const { email, otp } = req.body;
@@ -16,33 +19,41 @@ export default catchAsync(async function handler(req, res) {
         });
     }
 
-    try {
-        // Try file storage first, then memory storage
-        let result;
-        try {
-            result = verifyOTP(email, otp);
-        } catch (fileError) {
-            console.warn('File verification failed, trying memory storage:', fileError.message);
-            result = verifyOTPFromMemory(email, otp);
-        }
-
-        if (!result.valid) {
-            return res.status(400).json({
-                success: false,
-                message: result.message
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            message: result.message
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({
+            success: false,
+            message: 'Please provide a valid email address'
         });
+    }
+
+    // Validate OTP format
+    if (!/^\d{6}$/.test(otp.toString())) {
+        return res.status(400).json({
+            success: false,
+            message: 'OTP must be a 6-digit number'
+        });
+    }
+
+    try {
+        // Connect to database
+        await dbConnect();
+
+        // Verify OTP using service
+        const result = await verifyOTPService(email, otp.toString(), 'email_verification');
+
+        if (!result.success) {
+            return res.status(400).json(result);
+        }
+
+        res.status(200).json(result);
 
     } catch (error) {
         console.error("Email Verification Error:", error);
         res.status(500).json({
             success: false,
-            message: "Internal server error"
+            message: "Internal server error. Please try again."
         });
     }
 })
