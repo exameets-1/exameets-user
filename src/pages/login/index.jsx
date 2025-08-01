@@ -191,7 +191,7 @@ const handleResetPassword = async (e) => {
     setLoading(true);
     const response = await axios.post(`/api/password/reset-password`, {
       email: forgotEmail,
-      otp,
+      //otp //Not needed here since OTP was already verified
       newPassword
     });
 

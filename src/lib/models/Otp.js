@@ -4,7 +4,7 @@ const otpSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true, // Ensures only one OTP per email at a time
+        unique: true, // This automatically creates an index
         lowercase: true,
         trim: true
     },
@@ -27,13 +27,13 @@ const otpSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 300 // TTL: 5 minutes (300 seconds)
+        expires: 300 // This automatically creates a TTL index
     }
 });
 
-// Index for better performance
-otpSchema.index({ email: 1 });
-otpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });
+// Remove duplicate index definitions - they're already created by unique and expires above
+// otpSchema.index({ email: 1 }); // Removed - already indexed by unique: true
+// otpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 }); // Removed - already indexed by expires: 300
 
 const Otp = mongoose.models.Otp || mongoose.model("Otp", otpSchema);
 

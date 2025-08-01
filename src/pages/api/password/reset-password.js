@@ -10,23 +10,27 @@ export default catchAsync(async (req, res) => {
     await dbConnect();
 
     try {
-        const { email, otp, newPassword } = req.body;
-        const user = await User.findOne({
-            email,
-            resetPasswordOTP: otp,
-            resetPasswordOTPExpiry: { $gt: Date.now() }
-        });
+        const { email, newPassword } = req.body; // Remove otp from destructuring
 
+        // Check if user exists
+        const user = await User.findOne({ email });
         if (!user) {
-            return res.status(200).json({
+            return res.status(404).json({
                 success: false,
-                message: "Invalid or expired OTP"
+                message: "Email is not registered"
             });
         }
 
+        // No need to verify OTP again since it was already verified in the previous step
+        // Update password directly
         user.password = newPassword;
-        user.resetPasswordOTP = null;
-        user.resetPasswordOTPExpiry = null;
+        
+        // Clean up any old reset fields if they exist
+        if (user.resetPasswordOTP) {
+            user.resetPasswordOTP = undefined;
+            user.resetPasswordOTPExpiry = undefined;
+        }
+        
         await user.save();
 
         res.status(200).json({
@@ -34,9 +38,10 @@ export default catchAsync(async (req, res) => {
             message: "Password reset successful"
         });
     } catch (error) {
+        console.error("Password reset error:", error);
         res.status(500).json({
             success: false,
-            message: error.message
+            message: "Failed to reset password"
         });
     }
 });

@@ -63,8 +63,16 @@ export const sendOTPService = async (email, type = 'email_verification') => {
     }
 };
 
-export const verifyOTPService = async (email, providedOtp, type = 'email_verification') => {
+export const verifyOTPService = async (email, providedOtp, type = 'email_verification', deleteAfterVerify = true) => {
     try {
+        // Validate input parameters
+        if (!email || !providedOtp) {
+            return {
+                success: false,
+                message: "Email and OTP are required."
+            };
+        }
+
         // Find OTP document
         const otpDoc = await Otp.findOne({ 
             email: email.toLowerCase(),
@@ -101,8 +109,10 @@ export const verifyOTPService = async (email, providedOtp, type = 'email_verific
             };
         }
 
-        // OTP is correct - delete the document
-        await Otp.deleteOne({ _id: otpDoc._id });
+        // OTP is correct - delete the document only if specified
+        if (deleteAfterVerify) {
+            await Otp.deleteOne({ _id: otpDoc._id });
+        }
         
         return {
             success: true,
