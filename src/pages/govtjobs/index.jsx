@@ -8,12 +8,31 @@ import Link from 'next/link';
 
 const formatDate = (dateString) => {
   if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-IN', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
+  try {
+    // Handle DD-MM-YYYY format from MongoDB
+    if (typeof dateString === 'string' && dateString.includes('-')) {
+      const parts = dateString.split('-');
+      if (parts.length === 3) {
+        // Input is already in DD-MM-YYYY format, just return it
+        const day = parts[0].padStart(2, '0');
+        const month = parts[1].padStart(2, '0');
+        const year = parts[2];
+        return `${day}-${month}-${year}`;
+      }
+    }
+    
+    // Fallback for other date formats (convert to DD-MM-YYYY)
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  } catch (error) {
+    console.error('Date formatting error:', error);
+    return '';
+  }
 };
 
 const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) => {
@@ -100,14 +119,14 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               >
                 <option value="All">All Cities</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Pune">Pune</option>
                 <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Hyderabad">Hyderabad</option>
                 <option value="Kolkata">Kolkata</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Pune">Pune</option>
               </select>
               <select
                 id="govtjobs-sort"
@@ -133,48 +152,48 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
             govtJobs.map((job) => (
               <div 
                 key={job._id} 
-                className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:scale-105 transition-transform relative h-full"
+                className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:shadow-md hover:shadow-blue-250 dark:hover:shadow-blue-900/30 hover:scale-105 transition-all duration-300 ease-in-out relative h-full"
               >
-                <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem]">
+                <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem] overflow-hidden">
                   {job.jobTitle}
                 </h3>
-                <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
+                <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-2 overflow-hidden break-words">
                   {job.organization}
                 </div>
-                <div className="grid gap-2 mb-4">
+                <div className="grid gap-2 mb-4 overflow-hidden">
                   {job.jobLocation && (
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Location: {job.jobLocation}
+                    <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
+                      <span className="font-medium">Location:</span> {job.jobLocation}
                     </div>
                   )}
                   {job.postNames && (
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Post: {job.postNames}
+                    <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
+                      <span className="font-medium">Post:</span> {Array.isArray(job.postNames) ? job.postNames.join(', ') : job.postNames}
                     </div>
                   )}
                   {job.educationalQualifications && (
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Qualification: {job.educationalQualifications}
+                    <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
+                      <span className="font-medium">Qualification:</span> {Array.isArray(job.educationalQualifications) ? job.educationalQualifications[0] : job.educationalQualifications}
                     </div>
                   )}
                   {job.applicationStartDate && (
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Start: {job.applicationStartDate}
+                    <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
+                      <span className="font-medium">Start:</span> {job.applicationStartDate}
                     </div>
                   )}
                   {job.applicationEndDate && (
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Close: {job.applicationEndDate}
+                    <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
+                      <span className="font-medium">Close:</span> {job.applicationEndDate}
                     </div>
                   )}
                 </div>
                 <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
-                  <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+                  <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">
                     {job.totalVacancies ? `${job.totalVacancies} posts` : 'General'}
                   </span>
                   <Link 
                     href={`/govtjobs/${job.slug}`}
-                    className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
+                    className="text-[#015990] dark:text-blue-400 font-medium hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                   >
                     View Details →
                   </Link>
@@ -216,77 +235,6 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
   );
 };
 
-// export async function getServerSideProps(context) {
-//   try {
-//     const { query } = context;
-//     const { location, sort, searchKeyword, page = 1, limit = 8 } = query;
-
-//     // Build query
-//     const dbQuery = {};
-//     if (location && location !== 'All') {
-//       dbQuery.jobLocation = { $regex: location, $options: 'i' };
-//     }
-
-//     if (searchKeyword) {
-//       dbQuery.$or = [
-//         { jobTitle: { $regex: searchKeyword, $options: 'i' } },
-//         { organization: { $regex: searchKeyword, $options: 'i' } },
-//         { jobLocation: { $regex: searchKeyword, $options: 'i' } },
-//         { postNames: { $regex: searchKeyword, $options: 'i' } },
-//         { notification_about: { $regex: searchKeyword, $options: 'i' } },
-//         { jobOverview: { $regex: searchKeyword, $options: 'i' } }
-//       ];
-//     }
-
-//     // Sort options
-//     let sortOptions = {};
-//     if (sort === 'recent') {
-//       sortOptions.notificationReleaseDate = -1;
-//     } else if (sort === 'deadline') {
-//       sortOptions.applicationEndDate = 1;
-//     }
-
-//     // Pagination
-//     const skip = (parseInt(page) - 1) * parseInt(limit);
-//     const totalJobs = await GovtJob.countDocuments(dbQuery);
-//     const govtJobs = await GovtJob.find(dbQuery)
-//       .sort(sortOptions)
-//       .skip(skip)
-//       .limit(parseInt(limit))
-//       .lean();
-
-//     // Format dates consistently
-//     const formattedJobs = govtJobs.map(job => ({
-//       ...job,
-//       applicationStartDate: formatDate(job.applicationStartDate),
-//       applicationEndDate: formatDate(job.applicationEndDate),
-//       notificationReleaseDate: formatDate(job.notificationReleaseDate),
-//       createdAt: formatDate(job.createdAt),
-//       updatedAt: formatDate(job.updatedAt)
-//     }));
-
-//     return {
-//       props: {
-//         govtJobs: JSON.parse(JSON.stringify(formattedJobs)),
-//         currentPage: parseInt(page),
-//         totalPages: Math.ceil(totalJobs / parseInt(limit)),
-//         totalJobs,
-//       },
-//     };
-//   } catch (error) {
-//     console.error('Error fetching government jobs:', error);
-//     return {
-//       props: {
-//         error: error.message || 'Failed to load government jobs',
-//         govtJobs: [],
-//         currentPage: 1,
-//         totalPages: 0,
-//         totalJobs: 0,
-//       },
-//     };
-//   }
-// }
-
 export async function getServerSideProps(context) {
   await dbConnect();
   try {
@@ -299,43 +247,61 @@ export async function getServerSideProps(context) {
       dbQuery.jobLocation = { $regex: location, $options: 'i' };
     }
 
-    if (searchKeyword) {
-      dbQuery.$text = { $search: searchKeyword }; // Use text index instead of regex
+    if (searchKeyword && searchKeyword.trim()) {
+      const searchTerm = searchKeyword.trim();
+      
+      // Use regex search for partial matches (better for user experience)
+      dbQuery.$or = [
+        { jobTitle: { $regex: searchTerm, $options: 'i' } },
+        { organization: { $regex: searchTerm, $options: 'i' } },
+        { jobOverview: { $regex: searchTerm, $options: 'i' } },
+        { 'postNames': { $regex: searchTerm, $options: 'i' } },
+        { 'keywords': { $regex: searchTerm, $options: 'i' } },
+        { 'educationalQualifications': { $regex: searchTerm, $options: 'i' } },
+        { 'additionalRequirements': { $regex: searchTerm, $options: 'i' } },
+        { 'selectionProcess': { $regex: searchTerm, $options: 'i' } },
+        { 'examSubjects': { $regex: searchTerm, $options: 'i' } }
+      ];
     }
 
-    // Sort options
-    let sortOptions = {};
-    if (searchKeyword) {
-      sortOptions = { score: { $meta: "textScore" } }; // Relevance if searching
-    } else if (sort === 'recent') {
-      sortOptions.notificationReleaseDate = -1;
+    // Sort options - default to createdAt descending
+    let sortOptions = { createdAt: -1 }; // Default sort by newest first
+    if (sort === 'recent') {
+      sortOptions = { createdAt: -1 };
     } else if (sort === 'deadline') {
-      sortOptions.applicationEndDate = 1;
+      sortOptions = { applicationEndDate: 1 };
     }
 
     // Pagination
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    const totalJobs = await GovtJob.countDocuments(dbQuery);
+    
+    // Execute queries
+    const totalJobs = await GovtJob.countDocuments(dbQuery);    
     const govtJobs = await GovtJob.find(dbQuery)
       .sort(sortOptions)
       .skip(skip)
       .limit(parseInt(limit))
-      .select(searchKeyword ? { score: { $meta: "textScore" } } : {}) // Only project score if searching
       .lean();
-
-    // Format dates simply (to string)
+    // Format dates and convert all ObjectIds to strings
     const formattedJobs = govtJobs.map(job => ({
       ...job,
+      _id: job._id.toString(),
       applicationStartDate: formatDate(job.applicationStartDate),
       applicationEndDate: formatDate(job.applicationEndDate),
       notificationReleaseDate: formatDate(job.notificationReleaseDate),
-      createdAt: formatDate(job.createdAt),
-      updatedAt: formatDate(job.updatedAt)
+      examInterviewDate: formatDate(job.examInterviewDate),
+      createdAt: job.createdAt ? job.createdAt.toString() : null,
+      updatedAt: job.updatedAt ? job.updatedAt.toString() : null,
+      postedBy: job.postedBy ? job.postedBy.toString() : null,
+      faq: job.faq?.map(faqItem => ({
+        ...faqItem,
+        _id: faqItem._id ? faqItem._id.toString() : null
+      })) || []
     }));
 
     return {
       props: {
-        govtJobs: JSON.parse(JSON.stringify(formattedJobs)),
+        govtJobs: formattedJobs,
         currentPage: parseInt(page),
         totalPages: Math.ceil(totalJobs / parseInt(limit)),
         totalJobs,

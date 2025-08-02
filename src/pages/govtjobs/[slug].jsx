@@ -8,13 +8,33 @@ import { GovtJob } from "@/lib/models/GovtJob";
 const formatDate = (dateString) => {
   if (!dateString) return 'Not specified';
   try {
+    // Handle DD-MM-YYYY format from MongoDB
+    if (typeof dateString === 'string' && dateString.includes('-')) {
+      const parts = dateString.split('-');
+      if (parts.length === 3) {
+        // Convert DD-MM-YYYY to MM/DD/YYYY for JavaScript Date constructor
+        const day = parts[0];
+        const month = parts[1];
+        const year = parts[2];
+        const date = new Date(`${month}/${day}/${year}`);
+        
+        if (!isNaN(date.getTime())) {
+          // Return in DD/MM/YYYY format
+          return `${day}/${month}/${year}`;
+        }
+      }
+    }
+    
+    // Fallback for other date formats
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return 'Not specified';
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    
     const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   } catch (error) {
+    console.error('Date formatting error:', error);
     return 'Not specified';
   }
 };
@@ -126,17 +146,17 @@ const GovtJobDetails = ({ job, error }) => {
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
           <ul className="space-y-3">
             {[
-              ['Notification Release Date', job.notificationReleaseDate],
-              ['Application Start Date', job.applicationStartDate],
-              ['Application End Date', job.applicationEndDate],
-              ['Exam/Interview Date', job.examInterviewDate],
+              ['Notification Release Date', formatDate(job.notificationReleaseDate)],
+              ['Application Start Date', formatDate(job.applicationStartDate)],
+              ['Application End Date', formatDate(job.applicationEndDate)],
+              ['Exam/Interview Date', formatDate(job.examInterviewDate)],
             ].map(([label, date], index) => (
               <li
                 key={index}
                 className={`flex justify-between items-center ${index < 3 ? 'border-b pb-2 border-gray-200 dark:border-gray-700' : ''}`}
               >
                 <span className="font-medium">{label}:</span>
-                <span>{date || "Not specified"}</span>
+                <span>{date}</span>
               </li>
             ))}
           </ul>
@@ -348,6 +368,56 @@ const GovtJobDetails = ({ job, error }) => {
   );
 };
 
+// export async function getServerSideProps(context) {
+//   await dbConnect();
+//   const { slug } = context.params;
+
+//   try {
+//     const job = await GovtJob.findOne({ slug }).lean();
+    
+//     if (!job) {
+//       return { notFound: true };
+//     }
+
+//     // Convert ObjectId and other non-serializable fields
+//     const formattedJob = {
+//       ...job,
+//       _id: job._id ? job._id.toString() : null,
+//       faq: job.faq?.map(faqItem => ({
+//         ...faqItem,
+//         _id: faqItem._id ? faqItem._id.toString() : null
+//       })) || [],
+//       createdAt: job.createdAt ? job.createdAt.toString() : null,
+//       postedBy: job.postedBy ? job.postedBy.toString() : null
+//     };
+
+//     // Format date fields
+//     const dateFields = [
+//       'notificationReleaseDate',
+//       'applicationStartDate',
+//       'applicationEndDate',
+//       'examInterviewDate'
+//     ];
+    
+//     dateFields.forEach(field => {
+//       formattedJob[field] = job[field] ? formatDate(job[field]) : null;
+//     });
+
+//     return {
+//       props: {
+//         job: formattedJob,
+//       },
+//     };
+//   } catch (error) {
+//     console.error('Error fetching job details:', error);
+//     return {
+//       props: {
+//         error: error.message || "Failed to load job details",
+//       },
+//     };
+//   }
+// }
+
 export async function getServerSideProps(context) {
   await dbConnect();
   const { slug } = context.params;
@@ -371,16 +441,17 @@ export async function getServerSideProps(context) {
       postedBy: job.postedBy ? job.postedBy.toString() : null
     };
 
-    // Format date fields
+    // Format date fields - keep original values, let formatDate handle conversion
     const dateFields = [
       'notificationReleaseDate',
-      'applicationStartDate',
+      'applicationStartDate', 
       'applicationEndDate',
       'examInterviewDate'
     ];
     
     dateFields.forEach(field => {
-      formattedJob[field] = job[field] ? formatDate(job[field]) : null;
+      // Don't format here, pass the original value to the component
+      formattedJob[field] = job[field] || null;
     });
 
     return {

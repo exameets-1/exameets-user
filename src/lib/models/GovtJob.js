@@ -151,6 +151,8 @@ const govtJobSchema = new mongoose.Schema({
     slug: {
         //title and date at the end
         type: String,
+        unique: true,
+        index: true
     },
     isFeatured: {
         type: Boolean,
@@ -160,6 +162,23 @@ const govtJobSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
+
+// Add text index for search functionality
+govtJobSchema.index({ 
+    jobTitle: 'text', 
+    organization: 'text', 
+    jobOverview: 'text',
+    keywords: 'text'
+});
+
+// Add compound index for better query performance
+govtJobSchema.index({ createdAt: -1 });
+govtJobSchema.index({ applicationEndDate: 1 });
+govtJobSchema.index({ jobLocation: 1 });
 
 export const GovtJob = mongoose.models.GovtJob || mongoose.model('GovtJob', govtJobSchema);
