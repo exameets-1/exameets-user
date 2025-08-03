@@ -192,10 +192,10 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                     Duration: {internship.duration}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Start Date: {formatDate(internship.start_date)}
+                    Start Date: {(internship.start_date) === "" ? "Not specified" : (internship.start_date)}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Last Date to Apply: {formatDate(internship.last_date)}
+                    Last Date to Apply: {(internship.last_date) === "" ? "Not specified" : (internship.last_date)}
                   </div>
                 </div>
                 {/* Footer Section */}
@@ -293,11 +293,12 @@ export async function getServerSideProps(context) {
       .limit(limit)
       .lean();
 
-// In your getServerSideProps function
+// In your getServerSideProps function, update the serializedInternships mapping:
 const serializedInternships = internships.map(internship => ({
   ...internship,
   _id: internship._id.toString(),
-  createdAt: internship.createdAt.toISOString(), // Add this line
+  createdAt: internship.createdAt.toISOString(),
+  postedBy: internship.postedBy ? internship.postedBy.toString() : null, // Add this line
   start_date: internship.start_date,
   last_date: internship.last_date,
   skills_required: internship.skills_required || [] 

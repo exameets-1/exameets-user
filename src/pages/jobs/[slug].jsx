@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
+import { useRouter } from 'next/router';
 import dbConnect from "@/lib/dbConnect";
 import { Job } from "@/lib/models/Job";
 
@@ -16,6 +17,13 @@ const formatDate = (dateString) => {
 };
 
 const JobDetails = ({ job, error }) => {
+  const router = useRouter();
+
+  // Function to handle keyword clicks
+  const handleKeywordClick = (keyword) => {
+    router.push(`/jobs?q=${encodeURIComponent(keyword)}&page=1`);
+  };
+
   if (error) {
     return (
       <div className="max-w-6xl mx-auto p-6">
@@ -201,12 +209,12 @@ const JobDetails = ({ job, error }) => {
             {job.startDate && (
               <li className="flex justify-between items-center border-b pb-2 border-gray-200 dark:border-gray-700">
                 <span className="font-medium">Start Date:</span>
-                <span>{formatDate(job.startDate)}</span>
+                <span>{job.startDate}</span>
               </li>
             )}
             <li className="flex justify-between items-center">
               <span className="font-medium">Application Deadline:</span>
-              <span>{formatDate(job.applicationDeadline)}</span>
+              <span>{job.applicationDeadline}</span>
             </li>
           </ul>
         </section>
@@ -226,6 +234,39 @@ const JobDetails = ({ job, error }) => {
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Equal Opportunity</h2>
           <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.equalOpportunityStatement}</p>
         </section>
+
+        {/* FAQ */}
+        {job.faq?.length > 0 && (
+          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Frequently Asked Questions</h2>
+            <ul className="space-y-4">
+              {job.faq.map((item) => (
+                <li key={item._id} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                  <strong className="text-gray-800 dark:text-gray-200">Q:</strong> {item.question}<br />
+                  <strong className="text-gray-800 dark:text-gray-200 mt-2 block">A:</strong> {item.answer}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Keywords */}
+        {Array.isArray(job.keywords) && job.keywords.length > 0 && (
+          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Keywords</h2>
+            <div className="flex flex-wrap gap-2">
+              {job.keywords.map((keyword, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleKeywordClick(keyword)}
+                  className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors cursor-pointer"
+                >
+                  {keyword}
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Application Section */}
         <section className="mb-8">

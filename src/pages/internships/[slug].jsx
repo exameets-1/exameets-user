@@ -146,13 +146,13 @@ const InternshipDetails = ({ internship, error }) => {
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
         <div className="space-y-3">
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex justify-between items-center">
             <p className="font-medium text-gray-800 dark:text-gray-200">Start Date</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.start_date ? formatDate(internship.start_date) : 'Not specified'}
             </p>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex justify-between items-center">
             <p className="font-medium text-gray-800 dark:text-gray-200">Last Date to Apply</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.last_date ? formatDate(internship.last_date) : 'Not specified'}

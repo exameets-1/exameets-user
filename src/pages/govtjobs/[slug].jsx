@@ -3,6 +3,7 @@ import Head from "next/head";
 import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
 import { GovtJob } from "@/lib/models/GovtJob";
+import { useRouter } from 'next/router';
 
 // Helper function for consistent date formatting
 const formatDate = (dateString) => {
@@ -53,6 +54,12 @@ const renderArrayAsList = (array, emptyMessage = "None specified") => {
 };
 
 const GovtJobDetails = ({ job, error }) => {
+  const router = useRouter();
+
+  const handleKeywordClick = (keyword) => {
+    router.push(`/govtjobs?page=1&searchKeyword=${encodeURIComponent(keyword)}`);
+  };
+
   if (error) {
     return (
       <div className="max-w-6xl mx-auto p-6">
@@ -335,9 +342,13 @@ const GovtJobDetails = ({ job, error }) => {
             <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Keywords</h2>
             <div className="flex flex-wrap gap-2">
               {job.keywords.map((keyword, index) => (
-                <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">
+                <button
+                  key={index}
+                  onClick={() => handleKeywordClick(keyword)}
+                  className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors cursor-pointer"
+                >
                   {keyword}
-                </span>
+                </button>
               ))}
             </div>
           </section>

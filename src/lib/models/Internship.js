@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-const intershShipSchema = new mongoose.Schema({
 
+const intershShipSchema = new mongoose.Schema({
     internship_type: {
         type: String,
     },
@@ -62,6 +62,10 @@ const intershShipSchema = new mongoose.Schema({
     searchDescription: {
         type: String,
     },
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User' // or whatever model this references
+    }
 })
 
 export const Internship = mongoose.models.Internship || mongoose.model('Internship', intershShipSchema);

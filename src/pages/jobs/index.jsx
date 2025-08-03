@@ -223,7 +223,7 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                   {/* Footer Section */}
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
                     <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
-                      {formatDate(job.applicationDeadline || job.createdAt)}
+                      {job.applicationDeadline || job.createdAt}
                     </span>
                     <a 
                       href={`/jobs/${job.slug}`}
@@ -291,7 +291,10 @@ export async function getServerSideProps(context) {
       { companyName: { $regex: query.q, $options: 'i' } },
       { positionSummary: { $regex: query.q, $options: 'i' } },
       { 'languages': { $regex: query.q, $options: 'i' } },
-      { 'frameworks': { $regex: query.q, $options: 'i' } }
+      { 'frameworks': { $regex: query.q, $options: 'i' } },
+      //also search in keywords
+      { keywords: { $regex: query.q, $options: 'i' } }
+
     ];
   }
 

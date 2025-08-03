@@ -3,54 +3,42 @@ import mongoose from "mongoose";
 const jobPostingSchema = new mongoose.Schema({
     jobTitle: {
         type: String,
-        required: true,
     },
     category: {
         type: String,
         enum: ['IT', 'NON-IT'],
-        required: true,
     },
     city: {
         type: String,
-        required: true,
     },
     state: {
         type: String,
-        required: true,
     },
     country: {
         type: String,
-        required: true,
     },
     positionType: {
         type: String,
         enum: ['Full-Time', 'Part-Time', 'Contract'],
-        required: true,
     },
     companyName: {
         type: String,
-        required: true,
     },
     companyOverview: {
         type: String,
-        required: true,
     },
     positionSummary: {
         type: String,
-        required: true,
     },
     keyResponsibilities: {
         type: [String],
-        required: true,
         validate: [(arr) => arr.length >= 1, '{PATH} must have at least 1 item'],
     },
     education: {
         type: [String],
-        required: true,
     },
     experience: {
         type: String,
-        required: true,
     },
     languages: {
         type: [String],
@@ -70,7 +58,6 @@ const jobPostingSchema = new mongoose.Schema({
     },
     softSkills: {
         type: [String],
-        required: true,
     },
     preferredQualifications: {
         type: [String],
@@ -86,12 +73,10 @@ const jobPostingSchema = new mongoose.Schema({
     },
     benefits: {
         type: [String],
-        required: true,
     },
     submissionMethod: {
         type: String,
         enum: ['email', 'portal'],
-        required: true,
     },
     contactEmail: {
         type: String,
@@ -107,24 +92,43 @@ const jobPostingSchema = new mongoose.Schema({
     },
     jobReferenceNumber: {
         type: String,
-        required: false,
     },
     equalOpportunityStatement: {
         type: String,
-        required: true,
     },
     slug: {
         type: String,
-        required: true,
     },
     isFeatured: {
         type: Boolean,
         default: false,
     },
+    keywords: {
+        type: [String],
+    },
+    searchDescription: {
+        type: String,
+    },
+    faq: {
+        type: [{
+            question: String,
+            answer: String,
+            _id: {
+                type: mongoose.Schema.Types.ObjectId,
+                default: () => new mongoose.Types.ObjectId(),
+                auto: true
+            }
+        }],
+        default: []
+    },
     createdAt: {
         type: Date,
         default: Date.now,
     },
+    postedBy : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 });
 
 const JobModel = mongoose.models.Job || mongoose.model('Job', jobPostingSchema);
