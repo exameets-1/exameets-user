@@ -322,7 +322,7 @@ const GovtJobDetails = ({ job, error }) => {
               {job.faq.map((item, index) => (
                 <li key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                   <strong className="text-gray-800 dark:text-gray-200">Q:</strong> {item.question}<br />
-                  <strong className="text-gray-800 dark:text-gray-200 mt-2 block">A:</strong> {item.answer}
+                  <strong className="text-gray-800 dark:text-gray-200 mt-2">A:</strong> {item.answer}
                 </li>
               ))}
             </ul>
