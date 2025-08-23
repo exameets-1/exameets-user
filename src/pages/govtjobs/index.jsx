@@ -5,6 +5,7 @@ import dbConnect from '@/lib/dbConnect';
 import { GovtJob } from '@/lib/models/GovtJob';
 import useDebounce from '@/hooks/useDebounce'; // Create this hook or use a utility
 import Link from 'next/link';
+import Head from 'next/head';
 
 const formatDate = (dateString) => {
   if (!dateString) return '';
@@ -87,6 +88,12 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
   }
 
   return (
+    <>
+      <Head>
+        <title>Government Jobs | Exameets</title>
+        <meta name="description" content="Find the latest government job listings in India on Exameets. Stay updated with job alerts and resources to help you succeed." />
+        <link rel="canonical" href={`https://exameets.in/govtjobs`} />
+      </Head>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <div className="max-w-7xl mx-auto">
         <div className="bg-[#e6f4ff] dark:bg-gray-800 p-6 rounded-lg mb-8">
@@ -232,6 +239,7 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
         )}
       </div>
     </div>
+    </>
   );
 };
 
@@ -286,10 +294,10 @@ export async function getServerSideProps(context) {
     const formattedJobs = govtJobs.map(job => ({
       ...job,
       _id: job._id.toString(),
-      applicationStartDate: formatDate(job.applicationStartDate),
-      applicationEndDate: formatDate(job.applicationEndDate),
-      notificationReleaseDate: formatDate(job.notificationReleaseDate),
-      examInterviewDate: formatDate(job.examInterviewDate),
+      applicationStartDate: job.applicationStartDate ,
+      applicationEndDate: job.applicationEndDate ,
+      notificationReleaseDate: job.notificationReleaseDate ,
+      examInterviewDate: job.examInterviewDate ,
       createdAt: job.createdAt ? job.createdAt.toString() : null,
       updatedAt: job.updatedAt ? job.updatedAt.toString() : null,
       postedBy: job.postedBy ? job.postedBy.toString() : null,

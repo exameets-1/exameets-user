@@ -85,19 +85,19 @@ const GovtJobDetails = ({ job, error }) => {
   return (
     <>
       <Head>
-        <link rel="canonical" href={`https://exameets.com/govtjobs/${job.slug}`} />
+        <link rel="canonical" href={`https://exameets.in/govtjobs/${job.slug}`} />
       </Head>
       <NextSeo
         title={`${job.jobTitle || "Job Details"} | Exameets`}
         description={job.jobOverview?.substring(0, 150) || "Government job details"}
-        canonical={`https://exameets.com/govtjobs/${job.slug}`}
+        canonical={`https://exameets.in/govtjobs/${job.slug}`}
         openGraph={{
-          url: `https://exameets.com/govtjobs/${job.slug}`,
+          url: `https://exameets.in/govtjobs/${job.slug}`,
           title: `${job.jobTitle || "Job Details"} | Exameets`,
           description: job.jobOverview?.substring(0, 150) || "Government job details",
           images: [
             {
-              url: job.image_url || "https://exameets.com/images/logo.jpg",
+              url: job.image_url || "https://exameets.in  /images/logo.jpg",
               width: 1200,
               height: 630,
               alt: "Job Banner",
@@ -153,10 +153,10 @@ const GovtJobDetails = ({ job, error }) => {
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
           <ul className="space-y-3">
             {[
-              ['Notification Release Date', formatDate(job.notificationReleaseDate)],
-              ['Application Start Date', formatDate(job.applicationStartDate)],
-              ['Application End Date', formatDate(job.applicationEndDate)],
-              ['Exam/Interview Date', formatDate(job.examInterviewDate)],
+              ['Notification Release Date',job.notificationReleaseDate],
+              ['Application Start Date',job.applicationStartDate],
+              ['Application End Date',job.applicationEndDate],
+              ['Exam/Interview Date',job.examInterviewDate],
             ].map(([label, date], index) => (
               <li
                 key={index}

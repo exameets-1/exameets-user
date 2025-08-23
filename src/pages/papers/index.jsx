@@ -1,6 +1,7 @@
 import { useState, useRef} from "react";
 import { useRouter } from "next/router";
 import { PreviousYear } from "@/lib/models/PreviousYear";
+import { toast } from "react-toastify";
 import dbConnect from "@/lib/dbConnect";
 
 const PreviousYearPage = ({ subjects, error }) => {
@@ -20,7 +21,7 @@ const PreviousYearPage = ({ subjects, error }) => {
 
     if (error) {
         toast.error(error);
-        return <div className="text-center text-red-500 p-10">Error loading subjects: {error}</div>;
+        return <div className="text-center text-red-500 p-10">Error loading papers: {error}</div>;
     }
 
     return (
@@ -38,7 +39,7 @@ const PreviousYearPage = ({ subjects, error }) => {
                             id="paper-search"
                             name="paper-search"
                             type="text"
-                            placeholder="Search subjects..."
+                            placeholder="Search exam papers..."
                             value={searchKeyword}
                             onChange={(e) => setSearchKeyword(e.target.value)}
                             ref={searchInputRef}
@@ -89,7 +90,7 @@ export async function getServerSideProps() {
             return {
                 props: {
                     subjects: [],
-                    error: "No subjects found"
+                    error: "No papers found"
                 }
             };
         }
@@ -101,11 +102,11 @@ export async function getServerSideProps() {
             }
         };
     } catch (error) {
-        console.error("Failed to fetch subjects:", error);
+        console.error("Failed to fetch papers:", error);
         return {
             props: {
                 subjects: [],
-                error: error.message || "Error fetching subjects"
+                error: error.message || "Error fetching papers"
             }
         };
     }

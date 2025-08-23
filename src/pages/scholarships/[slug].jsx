@@ -190,6 +190,7 @@ export const getServerSideProps = async (context) => {
         const processedScholarship = {
             ...scholarshipDoc,
             _id: scholarshipDoc._id.toString(),
+            postedBy: scholarshipDoc.postedBy ? scholarshipDoc.postedBy.toString() : null,
             createdAt: scholarshipDoc.createdAt.toISOString(),
             // Handle date fields that might be strings or Date objects
             post_date: scholarshipDoc.post_date ? 

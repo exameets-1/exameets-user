@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 import dbConnect from "@/lib/dbConnect";
 import { Admission } from "@/lib/models/Admission";
 
@@ -124,7 +125,6 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-
   const sanitizeJSON = (data) => {
     return JSON.stringify(data)
       .replace(/</g, '\\u003c')
@@ -162,10 +162,9 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
   return (
     <>
       <Head>
-        <meta name="robots" content={currentPage === 1 ? "index, follow" : "noindex, follow"} />
-        <meta name="google" content="nositelinkssearchbox" />
-        <link rel="canonical" href={canonicalUrl} />
-        <link rel="alternate" hrefLang="en-in" href={canonicalUrl} />
+        <title>Admissions | Exameets</title>
+        <link rel="canonical" href={`https://exameets.in/admissions`} />
+        < meta name="description" content="Explore the latest admission opportunities across various fields and locations. Find your next educational opportunity with Exameets." />
       </Head>
 
       <NextSeo
@@ -224,7 +223,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
               <div className="flex gap-2">
                 <select
                   id="admissions-category"
-                  name="admissions-category"
+                  name="category"
                   value={filters.category}
                   onChange={handleFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -280,50 +279,47 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
               admissions.map((admission) => (
                 <div 
                   key={admission._id} 
-                  className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:scale-105 transition-transform relative h-full"
+                  className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:shadow-md hover:shadow-blue-250 dark:hover:shadow-blue-900/30 hover:scale-105 transition-all duration-300 ease-in-out relative h-full"
                 >
-
-                  {/* Title Section */}
-                  <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem] overflow-hidden">
                     {admission.title}
                   </h3>
-                  
-                  {/* Institute with Border */}
-                  <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
-                    {admission.institute}
-                  </div>
-                  
-                  {/* Content Section */}
-                  <div className="grid gap-2 mb-4">
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Location: {admission.location}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Last Date: {formatDate(admission.last_date)}
-                    </div>
+<div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 truncate whitespace-nowrap overflow-hidden">
+  {admission.institute}
+</div>
+
+                  <div className="grid gap-2 mb-4 overflow-hidden">
+                    {admission.location && (
+                      <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
+                        <span className="font-medium">Location:</span> {admission.location}
+                      </div>
+                    )}
+                    {admission.last_date && (
+                      <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
+                        <span className="font-medium">Last Date:</span> {formatDate(admission.last_date)}
+                      </div>
+                    )}
                     {admission.eligibility_criteria && (
-                      <div className="text-sm text-gray-600 dark:text-gray-300">
-                        Eligibility: {admission.eligibility_criteria}
+                      <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
+                        <span className="font-medium">Eligibility:</span> {admission.eligibility_criteria}
                       </div>
                     )}
                     {admission.fees && (
-                      <div className="text-sm text-gray-600 dark:text-gray-300">
-                        Fees: {admission.fees}
+                      <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
+                        <span className="font-medium">Fees:</span> {admission.fees}
                       </div>
                     )}
                   </div>
-                  
-                  {/* Footer Section */}
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
-                    <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
-                      {admission.category}
+                    <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">
+                      {admission.category || 'General'}
                     </span>
-                    <button
-                      className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
-                      onClick={() => handleViewDetails(admission.slug)}
+                    <Link 
+                      href={`/admissions/${admission.slug}`}
+                      className="text-[#015990] dark:text-blue-400 font-medium hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                     >
                       View Details →
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))
@@ -334,7 +330,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
             <div className="flex justify-center items-center gap-4 my-8">
               <button
                 className={`px-4 py-2 bg-[#015990] dark:bg-blue-600 text-white rounded ${
-                  !pagination.hasPrevPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
+                  !pagination.hasPrevPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700'
                 }`}
                 onClick={() => handlePageChange(pagination.prevPage)}
                 disabled={!pagination.hasPrevPage}
@@ -348,7 +344,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
 
               <button
                 className={`px-4 py-2 bg-[#015990] dark:bg-blue-600 text-white rounded ${
-                  !pagination.hasNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
+                  !pagination.hasNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700'
                 }`}
                 onClick={() => handlePageChange(pagination.nextPage)}
                 disabled={!pagination.hasNextPage}

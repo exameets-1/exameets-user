@@ -295,12 +295,9 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       Amount: {scholarship.amount}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Eligibility: {scholarship.eligibility_criteria}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                    {/* <div className="text-sm text-gray-600 dark:text-gray-300">
                       Last Date: {formatDate(scholarship.last_date)}
-                    </div>
+                    </div> */}
                   </div>
                   
                   {/* Footer Section */}

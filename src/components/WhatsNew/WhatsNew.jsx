@@ -13,6 +13,7 @@ import { fetchLatestYears } from '@/store/slices/previousSlice';
 import { performGlobalSearch, clearSearchResults } from '@/store/slices/globalSearchSlice';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
+import Loader from '@/components/Loader';
 
 //Fix-me : API CALLS
 
@@ -179,8 +180,8 @@ const WhatsNew = () => {
                 <div className="flex-1">
                     <div className="h-96 overflow-y-auto rounded-lg">
                         {isLoading ? (
-                            <div className="flex justify-center items-center h-40">
-                                <div className="w-10 h-10 border-4 border-[#015990] border-t-transparent rounded-full animate-spin"></div>
+                             <div className="flex items-center justify-center h-96">
+                                <Loader />
                             </div>
                         ) : searchError ? (
                             <div className="text-center py-6 text-red-500 dark:text-red-400">

@@ -10,7 +10,7 @@ const previousYearSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    subject: {
+    subject: { // This field is used to store the paper's name
         type: String,
     },
     year: {

@@ -1,9 +1,18 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import useScrollToTop from '../../hooks/useScrollToTop';
 
 const AboutUs = () => {
     useScrollToTop();
+
     return (
+      <>
+        <Head>
+          <title>About Us | Exameets</title>
+          <meta name="description" content="Learn more about Exameets, our mission, vision, and the services we offer to students and job seekers." />
+          <link rel="canonical" href="https://exameets.in/about-us" />
+        </Head>
+
         <div className="w-11/12 max-w-[1600px] mx-auto my-2 p-5 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
           <div className="text-[#015990] dark:text-blue-300 text-3xl md:text-4xl font-bold text-center mb-8">
             Welcome to Exameets
@@ -90,6 +99,7 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
+        </>
       );      
 };
 

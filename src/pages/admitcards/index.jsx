@@ -67,12 +67,12 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
   return (
     <>
       <Head>
-        <title>Admit Cards - Latest Recruitment Hall Tickets</title>
+        <title>Admit Cards | Exameets</title>
         <meta
           name="description"
           content="Find latest admit cards and recruitment hall tickets for government jobs and competitive exams. Get direct download links and important exam dates."
         />
-        <link rel="canonical" href={`${baseUrl}/admitcards`} />
+        <link rel="canonical" href={`https://exameets.in/admitcards`} />
       </Head>
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
@@ -118,6 +118,12 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
                   <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
                     {admitCard.organization}
                   </div>
+
+                  {/* Vacancies */}
+                  <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                    <span className="font-semibold">Vacancies:</span> {admitCard.vacancies || 'Not specified'}
+                  </div>
+
                   {/* Content Section */}
                   <div className="grid gap-2 mb-4">
                     <div className="text-sm text-gray-600 dark:text-gray-300">
@@ -127,7 +133,7 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
                   {/* Footer Section */}
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
                     <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
-                      Admit Card
+                      
                     </span>
                     <button
                       className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
@@ -202,6 +208,7 @@ export async function getServerSideProps(context) {
     const serializedAdmitCards = admitCards.map(card => ({
       ...card,
       _id: card._id.toString(),
+      postedBy: card.postedBy?._id ? card.postedBy._id.toString() : null,
       createdAt: card.createdAt instanceof Date 
         ? card.createdAt.toISOString() 
         : card.createdAt,

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import Head from 'next/head';
 
 // In Next.js, we use hooks differently
 const useScrollToTop = () => {
@@ -124,6 +125,12 @@ try {
     };
 
     return (
+      <>
+      <Head>
+        <title>Contact Us | Exameets</title>
+        <meta name="description" content="Get in touch with Exameets for any inquiries, feedback, or support. We're here to help you succeed." />
+        <link rel="canonical" href={`https://exameets.in/contact-us`} />
+      </Head>
         <div className="p-5 max-w-[1200px] mx-auto">
           {/* Introduction Section */}
           <section className="bg-white dark:bg-gray-800 p-5 md:p-8 rounded-lg shadow-md mb-10">
@@ -255,6 +262,7 @@ try {
             </form>
           </section>
         </div>
+      </>
     );
 };
 

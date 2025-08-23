@@ -237,7 +237,7 @@ export async function getServerSideProps(context) {
         await dbConnect();
         
         // Add console logs for debugging
-        console.log(`Searching for papers with subject: ${decodedSubject}`);
+        console.log(`Searching for papers with exam: ${decodedSubject}`);
         
         const papers = await PreviousYear.find({
             subject: { $regex: new RegExp(`^${decodedSubject}$`, 'i') } // Case-insensitive match
@@ -250,7 +250,7 @@ export async function getServerSideProps(context) {
                 props: {
                     subject: decodedSubject,
                     papersByYear: {},
-                    error: `No papers found for this subject: ${decodedSubject}`
+                    error: `No papers found for this exam: ${decodedSubject}`
                 }
             };
         }
@@ -279,7 +279,7 @@ export async function getServerSideProps(context) {
             }
         };
     } catch (error) {
-        console.error("Failed to fetch papers by subject:", error);
+        console.error("Failed to fetch papers by exam:", error);
         return {
             props: {
                 subject: decodedSubject,
