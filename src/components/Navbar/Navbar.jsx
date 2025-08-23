@@ -54,14 +54,16 @@ const Navbar = () => {
       {/* Logo and Menu */}
       <div className="flex items-center justify-between px-5 py-4 relative dark:bg-gray-800">
         {/* Logo */}
-        <Link href="/" className="max-w-[350px] mx-auto">
-          <Image 
-            src={darkMode ? "/images/logo-final-dark.webp" : "/images/logo-final.webp"} 
-            alt="Exameets Logo" 
-            width={200} // Set an appropriate width
-            height={100} // Set an appropriate height
+        <Link href="/" className="max-w-[320px] mx-auto">
+          <Image
+            src={darkMode ? "/images/logo-final-dark.webp" : "/images/logo-final.webp"}
+            alt="Exameets Logo"
+            width={320}
+            height={114}
             priority
-            className="w-auto h-auto max-h-[250px]" 
+            fetchPriority="high"
+            sizes="(max-width: 640px) 80vw, 320px"
+            className="w-auto h-auto max-h-[114px]"
           />
         </Link>
 
