@@ -17,13 +17,11 @@ const Layout = ({ children }) => {
   }, [darkMode]);
 
   return (
-    <html lang="en">
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-      </div>
-    </html>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+      <Navbar />
+      <main>{children}</main>
+      <Footer />
+    </div>
   );
 };
 

@@ -97,7 +97,7 @@ const GovtJobDetails = ({ job, error }) => {
           description: job.jobOverview?.substring(0, 150) || "Government job details",
           images: [
             {
-              url: job.image_url || "https://exameets.in  /images/logo.jpg",
+              url: job.image_url || "https://exameets.in/images/logo-final.png",
               width: 1200,
               height: 630,
               alt: "Job Banner",
