@@ -161,20 +161,50 @@ const Footer = () => {
           </div>
           
           <div className="flex gap-4">
-            <a name="whatsapp-link" href="https://whatsapp.com/channel/0029VaksJ72Lo4hmldL0yl41" target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp size={24} />
+            <a
+              name="whatsapp-link"
+              href="https://whatsapp.com/channel/0029VaksJ72Lo4hmldL0yl41"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp Channel"
+            >
+              <FaWhatsapp size={24} aria-hidden="true" />
             </a>
-            <a name="instagram-link" href="https://www.instagram.com/exameets/" target="_blank" rel="noopener noreferrer">  
-              <FaInstagram size={24} />
+            <a
+              name="instagram-link"
+              href="https://www.instagram.com/exameets/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <FaInstagram size={24} aria-hidden="true" />
             </a>
-            <a name="twitter-link" href="https://x.com/exameets" target="_blank" rel="noopener noreferrer">
-              <FaTwitter size={24} />
+            <a
+              name="twitter-link"
+              href="https://x.com/exameets"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter (X)"
+            >
+              <FaTwitter size={24} aria-hidden="true" />
             </a>
-            <a name="linkedin-link" href="https://www.linkedin.com/company/exameets/" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin size={24} />
+            <a
+              name="linkedin-link"
+              href="https://www.linkedin.com/company/exameets/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin size={24} aria-hidden="true" />
             </a>
-            <a name="telegram-link" href="https://t.me/exameetschannel" target="_blank" rel="noopener noreferrer">
-              <FaTelegram size={24} />
+            <a
+              name="telegram-link"
+              href="https://t.me/exameetschannel"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Telegram Channel"
+            >
+              <FaTelegram size={24} aria-hidden="true" />
             </a>
           </div>
         </div>
