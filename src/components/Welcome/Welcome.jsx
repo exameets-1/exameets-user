@@ -61,7 +61,11 @@ const Welcome = () => {
 
       {/* Call to action with scale animation */}
       <p className="mt-8 text-lg sm:text-xl md:text-2xl font-bold text-[#002e5b] dark:text-white leading-snug max-w-[90%] transform transition-all duration-700 translate-y-0 opacity-100 animate-[slideInUp_1s_ease-out_0.6s_both] hover:scale-105 cursor-default">
-        Join Exameets today and let us help you achieve your dreams – because here at Exameets, we "Meet All Your Needs."
+        Join Exameets today and let us help you achieve your dreams – because here at Exameets, we
+        <br />
+        <span className="text-3xl text-[#002e5b] dark:text-white font-extrabold">
+          "Meet All Your Needs."
+        </span>
       </p>
 
       {/* Animated underline for the tagline */}
