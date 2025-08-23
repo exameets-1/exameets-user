@@ -117,18 +117,32 @@ const GovtJobDetails = ({ job, error }) => {
         </div>
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-white text-center">{job.jobTitle || "Government Job"}</h1>
-          <p className="mt-2 text-white text-center">{job.organization || "Not specified"}</p>
-          {job.year && <p className="text-white text-center">Year: {job.year}</p>}
+          <h1 className="text-4xl font-bold text-white text-center">{job.jobTitle || "Government Job"}</h1>
+          <p className="mt-2 text-2xl text-white font-mono text-center">{job.organization || "Not specified"}</p>
+          {/* {job.year && <p className="text-white text-center">Year: {job.year}</p>} */}
         </div>
 
         {/* Job Overview */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Job Overview</h2>
           <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.jobOverview || "No overview available"}</p>
+          <div className="flex">
           {job.notification_about && (
-            <p className="text-gray-700 dark:text-gray-300 mt-2">Notification About: {job.notification_about}</p>
+            <p className="text-gray-700 dark:text-gray-300 font-bold mt-2">Notification Aboutㅤ:ㅤ </p>
           )}
+          {job.notification_about && (
+            <p className="text-gray-700 dark:text-gray-300 mt-2">{job.notification_about}</p>
+          )}
+          </div>
+                    <div className="flex">
+          {job.year && (
+            <p className="text-gray-700 dark:text-gray-300 font-bold mt-2">Yearㅤ:ㅤ </p>
+          )}
+          {job.year && (
+            <p className="text-gray-700 dark:text-gray-300 mt-2">{job.year}</p>
+          )}
+          </div>
+          
         </section>
 
         {/* Job Location & Vacancies */}

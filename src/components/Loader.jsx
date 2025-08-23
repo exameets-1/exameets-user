@@ -1,82 +1,3 @@
-// export default function Loader() {
-//   return (
-//     <>
-//       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white dark:bg-gray-800">
-//         {/* Inline SVG Logo */}
-//         <div className="animate-pulse-gentle">
-
-//         </div>
-
-//         {/* Loading Line */}
-//         <div className="w-48 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden relative mt-2">
-//           {/* Left to right: #053654 */}
-//           <div className="absolute left-0 top-0 h-full rounded-full animate-bar-ltr" style={{ background: "#053654" }} />
-//           {/* Right to left: #E06D0B */}
-//           <div className="absolute right-0 top-0 h-full rounded-full animate-bar-rtl" style={{ background: "#E06D0B" }} />
-//         </div>
-
-//         <style jsx>{`
-//           .animate-bar-ltr {
-//             width: 0%;
-//             opacity: 0;
-//             animation: bar-ltr 1s cubic-bezier(0.4,0,0.2,1) infinite;
-//             z-index: 1;
-//           }
-//           .animate-bar-rtl {
-//             width: 0%;
-//             opacity: 0;
-//             animation: bar-rtl 1s cubic-bezier(0.4,0,0.2,1) infinite;
-//             animation-delay: 1s;
-//             z-index: 2;
-//           }
-//           @keyframes bar-ltr {
-//             0%   { width: 0%; left: 0; opacity: 1; }
-//             10%  { opacity: 1; }
-//             90%  { width: 100%; left: 0; opacity: 1; }
-//             100% { width: 100%; left: 0; opacity: 0; }
-//           }
-//           @keyframes bar-rtl {
-//             0%   { width: 0%; right: 0; opacity: 0; }
-//             10%  { opacity: 1; }
-//             90%  { width: 100%; right: 0; opacity: 1; }
-//             100% { width: 100%; right: 0; opacity: 0; }
-//           }
-
-//           .animate-pulse-gentle {
-//             animation: pulseGentle 2s ease-in-out infinite;
-//           }
-
-//           @keyframes loading {
-//             0% {
-//               width: 0%;
-//               margin-left: 0%;
-//             }
-//             50% {
-//               width: 75%;
-//               margin-left: 0%;
-//             }
-//             100% {
-//               width: 0%;
-//               margin-left: 100%;
-//             }
-//           }
-
-//           @keyframes pulseGentle {
-//             0%, 100% {
-//               transform: scale(1);
-//               opacity: 1;
-//             }
-//             50% {
-//               transform: scale(1.05);
-//               opacity: 0.9;
-//             }
-//           }
-//         `}</style>
-//       </div>
-//     </>
-//   );
-// }
-
 export default function Loader() {
   return (
     <>
@@ -84,8 +5,8 @@ export default function Loader() {
         {/* Inline SVG Logo */}
         <div className="animate-pulse-gentle">
                     <svg
-            width="280"
-            height="130"
+            width="320"
+            height="120"
             viewBox="0 0 9577 3409"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMidYMid meet"
