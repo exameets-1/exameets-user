@@ -195,10 +195,10 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                   className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:scale-105 transition-transform relative h-full"
                 >
                   {/* Title Section */}
-                  <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-1 min-h-[1.75rem]">
                     {job.jobTitle}
                   </h3>
-                  
+
                   {/* Company with Border */}
                   <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
                     {job.companyName}
@@ -222,9 +222,9 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                   
                   {/* Footer Section */}
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
-                    <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
-                      {job.applicationDeadline || job.createdAt}
-                    </span>
+                    {/* <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+                      {formatDate(job.applicationDeadline) || formatDate(job.createdAt)}
+                    </span> */}
                     <a 
                       href={`/jobs/${job.slug}`}
                       className="text-[#015990] dark:text-blue-400 font-medium hover:underline"

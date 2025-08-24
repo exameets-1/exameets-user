@@ -176,7 +176,7 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                 className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:scale-105 transition-transform relative h-full"
               >
                 {/* Title Section */}
-                <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem]">
+                <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-1 min-h-[1.75rem]">
                   {internship.title}
                 </h3>
                 {/* Organization with Border */}
@@ -200,9 +200,9 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                 </div>
                 {/* Footer Section */}
                 <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
-                  <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+                  {/* <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
                     Stipend: {internship.stipend}
-                  </span>
+                  </span> */}
                   <button
                     className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
                     onClick={(e) => {
