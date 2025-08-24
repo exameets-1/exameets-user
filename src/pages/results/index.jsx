@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import dbConnect from '@/lib/dbConnect';
 import { Result } from '@/lib/models/Result';
-import Spinner from '@/components/Spinner';
+import Loader from '@/components/Loader';
 import useDebounce from '@/hooks/useDebounce';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -69,7 +69,7 @@ const Results = ({ initialData, initialSearch, baseUrl }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (router.isFallback) return <Spinner />;
+  if (router.isFallback) return <Loader />;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">

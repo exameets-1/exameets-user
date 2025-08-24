@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import Spinner from "@/components/Spinner";
+import Loader from "@/components/Loader";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dbConnect from "@/lib/dbConnect";
 import { Team } from "@/lib/models/Team";
@@ -32,7 +32,7 @@ const Teams = ({ teams: initialTeams, error: initialError }) => {
         router.push(`/teams/${name}`);
     };
 
-    if (loading) return <Spinner />;
+    if (loading) return <Loader />;
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-5">

@@ -1,7 +1,7 @@
 import React , { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
-import Spinner from "@/components/Spinner";
+import Loader from "@/components/Loader";
 import Image from "next/image";
 import dbConnect from "@/lib/dbConnect";
 import { Team } from "@/lib/models/Team";
@@ -35,7 +35,7 @@ const TeamDetails = ({ teamData, error: serverError }) => {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <Loader />;
   }
 
   if (error) {

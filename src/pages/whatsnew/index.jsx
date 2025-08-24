@@ -10,7 +10,7 @@ import { fetchLatestAdmitCards } from '@/store/slices/admitCardSlice';
 import { fetchLatestAdmissions } from '@/store/slices/admissionSlice';
 import { fetchLatestYears } from '@/store/slices/previousSlice';
 import Link from 'next/link';
-import Spinner from '@/components/Spinner';
+import Loader from '@/components/Loader';
 import useScrollToTop from '@/hooks/useScrollToTop';
 
 const WhatsNew = () => {
@@ -99,7 +99,7 @@ const WhatsNew = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center min-h-[80vh]">
-                <Spinner />
+                <Loader />
             </div>
         );
     }
