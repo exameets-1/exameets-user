@@ -60,8 +60,8 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
         </div>
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-white text-center">{admitCard.title}</h1>
-          <p className="mt-2 text-white text-center">{admitCard.organization}</p>
+          <h1 className="text-4xl font-bold text-white text-center">{admitCard.title}</h1>
+          <p className="mt-2 text-2xl font-mono text-white text-center">{admitCard.organization}</p>
         </div>
 
         {/* Basic Info Grid */}
@@ -169,7 +169,7 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
         <div className="text-center mt-8">
           <button
             onClick={handleVisitAdmitCard}
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 mx-auto"
+            className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 mx-auto"
             disabled={!admitCard.importantLinks?.some(link => link.linkType === 'downloadLink')}
           >
             <FaExternalLinkAlt /> Download Admit Card
