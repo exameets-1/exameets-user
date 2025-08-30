@@ -47,7 +47,7 @@ const Navbar = () => {
       {/* Top Line */}
       <div className="bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 text-center py-2 flex items-center justify-center px-4">
         <p className="text-base md:text-xl">
-          ...Exameets is a one-step platform for students, where all the needs are met...
+          Exameets is a one-step platform for students, where all the needs are met !
         </p>
       </div>
 
@@ -93,7 +93,7 @@ const Navbar = () => {
             <Link href="/jobs" onClick={closeMobileMenu} className={getNavItemStyle('/jobs')}>Tech Jobs</Link>
             <Link href="/internships" onClick={closeMobileMenu} className={getNavItemStyle('/internships')}>Internships</Link>
             <Link href="/admissions" onClick={closeMobileMenu} className={getNavItemStyle('/admissions')}>Admissions</Link>
-            <Link href="/previousyears" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link>
+            <Link href="/papers" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link>
             <Link href="/scholarships" onClick={closeMobileMenu} className={getNavItemStyle('/scholarships')}>Scholarships</Link>
           </div>
           
@@ -203,7 +203,7 @@ const Navbar = () => {
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleDarkMode}
-          className="absolute right-4 rounded-full backdrop-blur-sm"
+          className="absolute right-4 rounded-full backdrop-blur-sm hidden md:block"
           style={{
             cursor: 'pointer'
           }}
@@ -224,7 +224,7 @@ const Navbar = () => {
         ) : (
           <>
             <p className="text-xl mb-2 md:mb-0">Register to get the notifications you need</p>
-            <div className="flex items-center gap-4 pr-12">
+            <div className="flex items-center gap-4 pr-0 md:pr-12 justify-center w-full md:w-auto">
               <Link href="/login" className="text-xl text-white dark:text-gray-100 no-underline">Login</Link>
               <span className="text-xl">|</span>
               <Link href="/register" className="text-xl text-white dark:text-gray-100 no-underline">Register</Link>
