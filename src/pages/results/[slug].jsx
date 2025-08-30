@@ -4,6 +4,7 @@ import { useState } from 'react';
 import dbConnect from '@/lib/dbConnect';
 import { Result } from '@/lib/models/Result';
 import { FaExternalLinkAlt, FaLink, FaEdit } from 'react-icons/fa';
+import { NextSeo } from 'next-seo';
 
 const ResultDetailsPage = ({ result, baseUrl }) => {
   const router = useRouter();
@@ -32,6 +33,26 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href={`${baseUrl}${router.asPath}`} />
       </Head>
+
+      <NextSeo
+              title={`${result.title || "Results Details"} | Exameets`}
+              description={result.description || "Results details"}
+              canonical={`https://exameets.in/results/${result.slug}`}
+              openGraph={{
+                url: `https://exameets.in/results/${result.slug}`,
+                title: `${result.title || "Results Details"} | Exameets`,
+                description: result.description || "Results details",
+                images: [
+                  {
+                    url: "https://exameets.in/images/logo-final.webp",
+                    width: 800,
+                    height: 600,
+                    alt: "Exameets Logo",
+                  },
+                ],
+              }}
+      />
+
 
       <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
         <div className="flex justify-between items-start mb-6">

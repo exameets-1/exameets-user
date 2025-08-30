@@ -59,6 +59,14 @@ const InternshipDetails = ({ internship, error }) => {
           url: `https://exameets.in/internships/${internship.slug}`,
           title: `${internship.title} | Exameets`,
           description: internship.description || "Internship details",
+          images: [
+            {
+              url: internship.image_url || "https://exameets.in/images/logo-final.webp",
+              width: 1200,
+              height: 630,
+              alt: "Internship Banner",
+            },
+          ],
         }}
       />
 

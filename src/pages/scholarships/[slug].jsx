@@ -62,7 +62,7 @@ const ScholarshipDetails = ({ scholarship, error }) => {
                     description: scholarship.description || "",
                     images: [
                         {
-                            url: "https://exameets.in/images/logo.png",
+                            url: "https://exameets.in/images/logo-final.webp",
                             width: 800,
                             height: 600,
                             alt: "Exameets Scholarship",

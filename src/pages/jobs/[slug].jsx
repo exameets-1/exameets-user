@@ -79,6 +79,14 @@ const JobDetails = ({ job, error }) => {
           url: `https://exameets.in/jobs/${job.slug}`,
           title: `${job.jobTitle} | ${job.companyName} | Job Details`,
           description: job.positionSummary,
+          images: [
+            {
+              url: job.image_url || "https://exameets.in/images/logo-final.webp",
+              width: 1200,
+              height: 630,
+              alt: "Job Banner",
+            },
+          ],
         }}
       />
 

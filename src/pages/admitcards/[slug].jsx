@@ -3,6 +3,7 @@ import dbConnect from '@/lib/dbConnect';
 import { AdmitCard } from '@/lib/models/AdmitCard';
 import { useRouter } from 'next/router';
 import { FaExternalLinkAlt, FaLink } from 'react-icons/fa';
+import { NextSeo } from 'next-seo';
 
 const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
   const router = useRouter();
@@ -48,6 +49,24 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
           {JSON.stringify(structuredData)}
         </script>
       </Head>
+            <NextSeo
+              title={`${admitCard.title || "AdmitCard Details"} | Exameets`}
+              description={admitCard.description || "Admission details"}
+              canonical={`https://exameets.in/admitcards/${admitCard.slug}`}
+              openGraph={{
+                url: `https://exameets.in/admitcards/${admitCard.slug}`,
+                title: `${admitCard.title || "AdmitCard Details"} | Exameets`,
+                description: admitCard.description || "Admission details",
+                images: [
+                  {
+                    url: "https://exameets.in/images/logo-final.webp",
+                    width: 800,
+                    height: 600,
+                    alt: "Exameets Logo",
+                  },
+                ],
+              }}
+            />
 
       <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
         <div className="flex justify-between items-start mb-6">

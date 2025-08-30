@@ -63,7 +63,7 @@ const AdmissionDetails = ({ admission, error }) => {
           description: admission.description || "Admission details",
           images: [
             {
-              url: "https://exameets.in/images/logo-final.png",
+              url: "https://exameets.in/images/logo-final.webp",
               width: 800,
               height: 600,
               alt: "Exameets Logo",
