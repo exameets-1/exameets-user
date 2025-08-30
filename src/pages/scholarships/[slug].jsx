@@ -50,19 +50,19 @@ const ScholarshipDetails = ({ scholarship, error }) => {
     return (
         <>
             <Head>
-                <link rel="canonical" href={`https://exameets.com/scholarships/${scholarship.slug}`} />
+                <link rel="canonical" href={`https://exameets.in/scholarships/${scholarship.slug}`} />
             </Head>
             <NextSeo
                 title={`${scholarship.title || "Scholarship Details"} | Exameets`}
                 description={scholarship.description || ""}
                 openGraph={{
                     type: "website",
-                    url: `https://exameets.com/scholarships/${scholarship.slug}`,
+                    url: `https://exameets.in/scholarships/${scholarship.slug}`,
                     title: `${scholarship.title || "Scholarship Details"} | Exameets`,
                     description: scholarship.description || "",
                     images: [
                         {
-                            url: "https://exameets.com/images/logo.png",
+                            url: "https://exameets.in/images/logo.png",
                             width: 800,
                             height: 600,
                             alt: "Exameets Scholarship",

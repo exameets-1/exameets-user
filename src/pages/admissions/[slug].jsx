@@ -50,20 +50,20 @@ const AdmissionDetails = ({ admission, error }) => {
       <Head>
         <link
           rel="canonical"
-          href={`https://exameets.com/admissions/${admission.slug}`}
+          href={`https://exameets.in/admissions/${admission.slug}`}
         />
       </Head>
       <NextSeo
         title={`${admission.title || "Admission Details"} | Exameets`}
         description={admission.description || "Admission details"}
-        canonical={`https://exameets.com/admissions/${admission.slug}`}
+        canonical={`https://exameets.in/admissions/${admission.slug}`}
         openGraph={{
-          url: `https://exameets.com/admissions/${admission.slug}`,
+          url: `https://exameets.in/admissions/${admission.slug}`,
           title: `${admission.title || "Admission Details"} | Exameets`,
           description: admission.description || "Admission details",
           images: [
             {
-              url: "https://exameets.com/images/logo.png",
+              url: "https://exameets.in/images/logo-final.png",
               width: 800,
               height: 600,
               alt: "Exameets Logo",

@@ -48,15 +48,15 @@ const InternshipDetails = ({ internship, error }) => {
       <Head>
         <link
           rel="canonical"
-          href={`https://exameets.com/internships/${internship.slug}`}
+          href={`https://exameets.in/internships/${internship.slug}`}
         />
       </Head>
       <NextSeo
         title={`${internship.title} | Exameets`}
         description={internship.description || "Internship details"}
-        canonical={`https://exameets.com/internships/${internship.slug}`}
+        canonical={`https://exameets.in/internships/${internship.slug}`}
         openGraph={{
-          url: `https://exameets.com/internships/${internship.slug}`,
+          url: `https://exameets.in/internships/${internship.slug}`,
           title: `${internship.title} | Exameets`,
           description: internship.description || "Internship details",
         }}

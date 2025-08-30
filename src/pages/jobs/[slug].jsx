@@ -69,14 +69,14 @@ const JobDetails = ({ job, error }) => {
   return (
     <div className="relative max-w-6xl mx-auto">
       <Head>
-        <link rel="canonical" href={`https://exameets.com/jobs/${job.slug}`} />
+        <link rel="canonical" href={`https://exameets.in/jobs/${job.slug}`} />
       </Head>
       <NextSeo
         title={`${job.jobTitle} | ${job.companyName} | Job Details`}
         description={job.positionSummary}
-        canonical={`https://exameets.com/jobs/${job.slug}`}
+        canonical={`https://exameets.in/jobs/${job.slug}`}
         openGraph={{
-          url: `https://exameets.com/jobs/${job.slug}`,
+          url: `https://exameets.in/jobs/${job.slug}`,
           title: `${job.jobTitle} | ${job.companyName} | Job Details`,
           description: job.positionSummary,
         }}
