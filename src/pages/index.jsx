@@ -20,11 +20,13 @@ const Home = () => {
     </Head>
     {scrollToTop()}
     <div className="bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-screen-2xl mx-auto h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 max-w-screen-2xl mx-auto h-full">
         {isAuthenticated ? (
           <SelectedJobs className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
         ) : (
-          <Welcome className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
+          <div className="hidden md:block h-full bg-gray-100 dark:bg-gray-800 p-5">
+            <Welcome className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
+          </div>
         )}
         <WhatsNew className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
       </div>
