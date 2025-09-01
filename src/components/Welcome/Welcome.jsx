@@ -41,7 +41,7 @@ const Welcome = () => {
       className={`
         hidden md:flex flex-col flex-1
         justify-center items-center md:items-start
-        bg-gradient-to-br from-[#dbe8f3] to-[#f0f7ff] dark:bg-gray-800
+        bg-[#d5e5f6] dark:bg-gray-800
         rounded-lg shadow-md
         p-5
         min-h-[32rem] h-full

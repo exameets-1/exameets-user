@@ -342,8 +342,14 @@ const GovtJobDetails = ({ job, error }) => {
             <ul className="space-y-4">
               {job.faq.map((item, index) => (
                 <li key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                  <strong className="text-gray-800 dark:text-gray-200">Q:</strong> {item.question}<br />
-                  <strong className="text-gray-800 dark:text-gray-200 mt-2">A:</strong> {item.answer}
+                  <div className="flex items-start gap-2">
+                    <strong className="text-gray-800 dark:text-gray-200 flex-shrink-0">Q:</strong>
+                    <span className="font-semibold">{item.question}</span>
+                  </div>
+                  <div className="flex items-start gap-2 mt-2">
+                    <strong className="text-gray-800 dark:text-gray-200 flex-shrink-0">A:</strong>
+                    <span>{item.answer}</span>
+                  </div>
                 </li>
               ))}
             </ul>
