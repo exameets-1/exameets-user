@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import { FaSearch } from 'react-icons/fa';
+import { GraduationCap, MapPin } from 'lucide-react';
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
@@ -89,11 +91,35 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
   });
   const [searchKeyword, setSearchKeyword] = useState(initialSearch || "");
   const [currentPage, setCurrentPage] = useState(initialFilters.page || 1);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  
   const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
+  const searchInputRef = useRef(null);
+  const categoryDropdownRef = useRef(null);
+  const locationDropdownRef = useRef(null);
+  
   // Mock user state - in real app, this would come from auth context
   const [user, setUser] = useState({ role: 'user', isAuthenticated: false });
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)) {
+        setShowCategoryDropdown(false);
+      }
+      if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // When filters or debounced search term change, update the URL to trigger a new SSR render
   useEffect(() => {
@@ -105,7 +131,14 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
     router.push(`/admissions?${params.toString()}`);
   }, [filters, debouncedSearchKeyword, currentPage]);
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (filterType, value) => {
+    setFilters((prev) => ({ ...prev, [filterType]: value }));
+    setCurrentPage(1);
+    setShowCategoryDropdown(false);
+    setShowLocationDropdown(false);
+  };
+
+  const handleDesktopFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
     setCurrentPage(1);
@@ -159,6 +192,30 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
   const isAuthenticated = user?.isAuthenticated;
   const canonicalUrl = generateCanonicalUrl();
 
+  const categoryOptions = [
+    { value: 'All', label: 'All Categories' },
+    { value: 'Engineering', label: 'Engineering' },
+    { value: 'Medical', label: 'Medical' },
+    { value: 'Arts', label: 'Arts' },
+    { value: 'Science', label: 'Science' },
+    { value: 'Commerce', label: 'Commerce' },
+    { value: 'Management', label: 'Management' },
+    { value: 'Law', label: 'Law' },
+    { value: 'Design', label: 'Design' },
+    { value: 'Other', label: 'Other' }
+  ];
+
+  const locationOptions = [
+    { value: 'All', label: 'All Locations' },
+    { value: 'Mumbai', label: 'Mumbai' },
+    { value: 'Delhi', label: 'Delhi' },
+    { value: 'Bangalore', label: 'Bangalore' },
+    { value: 'Chennai', label: 'Chennai' },
+    { value: 'Kolkata', label: 'Kolkata' },
+    { value: 'Hyderabad', label: 'Hyderabad' },
+    { value: 'Pune', label: 'Pune' }
+  ];
+
   return (
     <>
       <Head>
@@ -199,8 +256,6 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
         <div className="max-w-7xl mx-auto">
-
-
           <div className="bg-[#e6f4ff] dark:bg-gray-800 p-6 rounded-lg mb-8">
             <div className="mb-6">
               <h2 className="text-3xl font-bold text-[#003366] dark:text-white">
@@ -208,11 +263,91 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
               </h2>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
+            {/* Mobile Layout */}
+            <div className="md:hidden">
+              <div className="flex gap-2 mb-6">
+                <div className="flex-1 relative">
+                  <input
+                    id="admission-search"
+                    name="admission-search"
+                    type="text"
+                    placeholder="Search admissions..."
+                    value={searchKeyword}
+                    onChange={handleSearch}
+                    ref={searchInputRef}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                  />
+                  <FaSearch className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+                </div>
+                
+                {/* Category Dropdown */}
+                <div className="relative" ref={categoryDropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowCategoryDropdown(!showCategoryDropdown);
+                      setShowLocationDropdown(false);
+                    }}
+                    className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <GraduationCap className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  {showCategoryDropdown && (
+                    <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                      {categoryOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => handleFilterChange('category', option.value)}
+                          className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                            filters.category === option.value
+                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'text-gray-700 dark:text-gray-200'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Location Dropdown */}
+                <div className="relative" ref={locationDropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowLocationDropdown(!showLocationDropdown);
+                      setShowCategoryDropdown(false);
+                    }}
+                    className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <MapPin className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  {showLocationDropdown && (
+                    <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                      {locationOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => handleFilterChange('location', option.value)}
+                          className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                            filters.location === option.value
+                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'text-gray-700 dark:text-gray-200'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Layout - Unchanged */}
+            <div className="hidden md:flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
-                  id="admissions-search"
-                  name="admissions-search"
+                  id="admissions-search-desktop"
+                  name="admissions-search-desktop"
                   type="text"
                   placeholder="Search admissions..."
                   value={searchKeyword}
@@ -225,7 +360,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
                   id="admissions-category"
                   name="category"
                   value={filters.category}
-                  onChange={handleFilterChange}
+                  onChange={handleDesktopFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
                   <option value="All">All Categories</option>
@@ -242,7 +377,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
                 <select
                   name="location"
                   value={filters.location}
-                  onChange={handleFilterChange}
+                  onChange={handleDesktopFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
                   <option value="All">All Locations</option>

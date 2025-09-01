@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { ArrowDown10, MapPinCheck } from 'lucide-react';
 import dbConnect from '@/lib/dbConnect';
 import { GovtJob } from '@/lib/models/GovtJob';
 import useDebounce from '@/hooks/useDebounce'; // Create this hook or use a utility
@@ -39,8 +40,12 @@ const formatDate = (dateString) => {
 const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) => {
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState(router.query.searchKeyword || '');
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
   const debouncedSearchTerm = useDebounce(searchKeyword, 500);
   const searchInputRef = useRef(null);
+  const locationDropdownRef = useRef(null);
+  const sortDropdownRef = useRef(null);
 
   // Sync search keyword with query parameter
   useEffect(() => {
@@ -66,11 +71,30 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
     setSearchKeyword(router.query.searchKeyword || '');
   }, [router.query.searchKeyword]);
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+      if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target)) {
+        setShowSortDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleFilterChange = (filterType, value) => {
     const query = { ...router.query };
     query[filterType] = value;
     query.page = 1;
     router.push({ pathname: router.pathname, query });
+    setShowLocationDropdown(false);
+    setShowSortDropdown(false);
   };
 
   const handlePageChange = (newPage) => {
@@ -87,6 +111,24 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
     return <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">Error: {error}</div>;
   }
 
+  const locationOptions = [
+    { value: 'All', label: 'All Cities' },
+    { value: 'Ahmedabad', label: 'Ahmedabad' },
+    { value: 'Bangalore', label: 'Bangalore' },
+    { value: 'Chennai', label: 'Chennai' },
+    { value: 'Delhi', label: 'Delhi' },
+    { value: 'Hyderabad', label: 'Hyderabad' },
+    { value: 'Kolkata', label: 'Kolkata' },
+    { value: 'Mumbai', label: 'Mumbai' },
+    { value: 'Pune', label: 'Pune' }
+  ];
+
+  const sortOptions = [
+    { value: 'All', label: 'Default' },
+    { value: 'recent', label: 'Recent First' },
+    { value: 'deadline', label: 'Nearest Deadline' }
+  ];
+
   return (
     <>
       <Head>
@@ -101,9 +143,10 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
             <h2 className="text-3xl font-bold text-[#003366] dark:text-white">Government Jobs</h2>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="flex-1">
-              <div className="relative">
+          {/* Mobile Layout */}
+          <div className="md:hidden">
+            <div className="flex gap-2 mb-6">
+              <div className="flex-1 relative">
                 <input
                   id="govtjobs-search"
                   name="govtjobs-search"
@@ -112,6 +155,84 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   ref={searchInputRef}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                />
+                <FaSearch className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+              </div>
+              
+              {/* Location Dropdown */}
+              <div className="relative" ref={locationDropdownRef}>
+                <button
+                  onClick={() => {
+                    setShowLocationDropdown(!showLocationDropdown);
+                    setShowSortDropdown(false);
+                  }}
+                  className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <MapPinCheck className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                </button>
+                {showLocationDropdown && (
+                  <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                    {locationOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => handleFilterChange('location', option.value)}
+                        className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                          (router.query.location || 'All') === option.value
+                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                            : 'text-gray-700 dark:text-gray-200'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Sort Dropdown */}
+              <div className="relative" ref={sortDropdownRef}>
+                <button
+                  onClick={() => {
+                    setShowSortDropdown(!showSortDropdown);
+                    setShowLocationDropdown(false);
+                  }}
+                  className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <ArrowDown10 className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                </button>
+                {showSortDropdown && (
+                  <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                    {sortOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => handleFilterChange('sort', option.value)}
+                        className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                          (router.query.sort || 'All') === option.value
+                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                            : 'text-gray-700 dark:text-gray-200'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout - Unchanged */}
+          <div className="hidden md:flex flex-col md:flex-row gap-4 mb-6">
+            <div className="flex-1">
+              <div className="relative">
+                <input
+                  id="govtjobs-search-desktop"
+                  name="govtjobs-search-desktop"
+                  type="text"
+                  placeholder="Search jobs..."
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                 />
                 <FaSearch className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />

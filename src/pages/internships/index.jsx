@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import { FaSearch } from 'react-icons/fa';
+import { Briefcase, MapPinCheck } from 'lucide-react';
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
@@ -36,7 +38,30 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
   });
   const [searchKeyword, setSearchKeyword] = useState(initialSearch || "");
   const [currentPage, setCurrentPage] = useState(initialFilters.page || 1);
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [showTypeDropdown, setShowTypeDropdown] = useState(false);
+  
   const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
+  const searchInputRef = useRef(null);
+  const locationDropdownRef = useRef(null);
+  const typeDropdownRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+      if (typeDropdownRef.current && !typeDropdownRef.current.contains(event.target)) {
+        setShowTypeDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // When filters or debounced search term change, update the URL to trigger a new SSR render
   useEffect(() => {
@@ -49,7 +74,14 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
     router.push(`/internships?${params.toString()}`);
   }, [filters, debouncedSearchKeyword, currentPage]);
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (filterType, value) => {
+    setFilters((prev) => ({ ...prev, [filterType]: value }));
+    setCurrentPage(1);
+    setShowLocationDropdown(false);
+    setShowTypeDropdown(false);
+  };
+
+  const handleDesktopFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
     setCurrentPage(1);
@@ -92,6 +124,25 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
     return `https://exameets.in/internships?${params.toString()}`;
   })();
 
+  const locationOptions = [
+    { value: 'All', label: 'All Cities' },
+    { value: 'Delhi', label: 'Delhi' },
+    { value: 'Mumbai', label: 'Mumbai' },
+    { value: 'Bangalore', label: 'Bangalore' },
+    { value: 'Hyderabad', label: 'Hyderabad' },
+    { value: 'Chennai', label: 'Chennai' },
+    { value: 'Kolkata', label: 'Kolkata' },
+    { value: 'Pune', label: 'Pune' },
+    { value: 'Ahmedabad', label: 'Ahmedabad' },
+    { value: 'Remote', label: 'Remote' }
+  ];
+
+  const typeOptions = [
+    { value: 'All', label: 'All Types' },
+    { value: 'Remote', label: 'Remote' },
+    { value: 'On-Site', label: 'On-Site' }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <Head>
@@ -118,11 +169,91 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
             </h2>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
+          {/* Mobile Layout */}
+          <div className="md:hidden">
+            <div className="flex gap-2 mb-6">
+              <div className="flex-1 relative">
+                <input
+                  id="internship-search"
+                  name="internship-search"
+                  type="text"
+                  placeholder="Search internships..."
+                  value={searchKeyword}
+                  onChange={handleSearch}
+                  ref={searchInputRef}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                />
+                <FaSearch className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+              </div>
+              
+              {/* Location Dropdown */}
+              <div className="relative" ref={locationDropdownRef}>
+                <button
+                  onClick={() => {
+                    setShowLocationDropdown(!showLocationDropdown);
+                    setShowTypeDropdown(false);
+                  }}
+                  className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <MapPinCheck className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                </button>
+                {showLocationDropdown && (
+                  <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                    {locationOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => handleFilterChange('city', option.value)}
+                        className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                          filters.city === option.value
+                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                            : 'text-gray-700 dark:text-gray-200'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Type Dropdown */}
+              <div className="relative" ref={typeDropdownRef}>
+                <button
+                  onClick={() => {
+                    setShowTypeDropdown(!showTypeDropdown);
+                    setShowLocationDropdown(false);
+                  }}
+                  className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <Briefcase className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                </button>
+                {showTypeDropdown && (
+                  <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                    {typeOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => handleFilterChange('internship_type', option.value)}
+                        className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                          filters.internship_type === option.value
+                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                            : 'text-gray-700 dark:text-gray-200'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout - Unchanged */}
+          <div className="hidden md:flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1">
               <input
-                id="internship-search"
-                name="internship-search"
+                id="internship-search-desktop"
+                name="internship-search-desktop"
                 type="text"
                 placeholder="Search internships..."
                 value={searchKeyword}
@@ -133,9 +264,9 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
             <div className="flex gap-2">
               <select
                 id="internship-location"
-                name="internship_location"
+                name="city"
                 value={filters.city}
-                onChange={handleFilterChange}
+                onChange={handleDesktopFilterChange}
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               >
                 <option value="All">All Cities</option>
@@ -153,7 +284,7 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                 id="internship-type"
                 name="internship_type"
                 value={filters.internship_type}
-                onChange={handleFilterChange}
+                onChange={handleDesktopFilterChange}
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               >
                 <option value="All">All Types</option>

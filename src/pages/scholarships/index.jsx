@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import { FaSearch } from 'react-icons/fa';
+import { School, GraduationCap } from 'lucide-react';
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
@@ -77,7 +79,30 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
   });
   const [searchKeyword, setSearchKeyword] = useState(initialSearch || "");
   const [currentPage, setCurrentPage] = useState(initialFilters.page || 1);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [showQualificationDropdown, setShowQualificationDropdown] = useState(false);
+  
   const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
+  const searchInputRef = useRef(null);
+  const categoryDropdownRef = useRef(null);
+  const qualificationDropdownRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)) {
+        setShowCategoryDropdown(false);
+      }
+      if (qualificationDropdownRef.current && !qualificationDropdownRef.current.contains(event.target)) {
+        setShowQualificationDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   
   // When filters or debounced search term change, update the URL to trigger a new SSR render
   useEffect(() => {
@@ -89,7 +114,14 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
     router.push(`/scholarships?${params.toString()}`);
   }, [filters, debouncedSearchKeyword, currentPage]);
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (filterType, value) => {
+    setFilters((prev) => ({ ...prev, [filterType]: value }));
+    setCurrentPage(1);
+    setShowCategoryDropdown(false);
+    setShowQualificationDropdown(false);
+  };
+
+  const handleDesktopFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
     setCurrentPage(1);
@@ -141,6 +173,38 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
   };
 
   const canonicalUrl = generateCanonicalUrl();
+
+  const categoryOptions = [
+    { value: 'All', label: 'All Categories' },
+    { value: 'Merit-based', label: 'Merit Based' },
+    { value: 'Need-based', label: 'Need Based' },
+    { value: 'Research', label: 'Research' },
+    { value: 'Sports', label: 'Sports' },
+    { value: 'Cultural', label: 'Cultural' },
+    { value: 'International', label: 'International' },
+    { value: 'Government', label: 'Government' },
+    { value: 'Private', label: 'Private' },
+    { value: 'Other', label: 'Other' }
+  ];
+
+  const qualificationOptions = [
+    { value: 'All', label: 'All Qualifications' },
+    { value: 'Class 8', label: 'Class 8' },
+    { value: 'Class 9', label: 'Class 9' },
+    { value: 'Class 10', label: 'Class 10' },
+    { value: 'Class 11', label: 'Class 11' },
+    { value: 'Class 12', label: 'Class 12' },
+    { value: 'Graduation', label: 'Graduation' },
+    { value: 'Post Graduation', label: 'Post Graduation' },
+    { value: 'Post Graduation Diploma', label: 'Post Graduation Diploma' },
+    { value: 'Phd', label: 'Phd' },
+    { value: 'ITI', label: 'ITI' },
+    { value: 'Polytechnic/Diploma', label: 'Polytechnic/Diploma' },
+    { value: 'Post Doctoral', label: 'Post Doctoral' },
+    { value: 'Vocational Course', label: 'Vocational Course' },
+    { value: 'Coaching classes', label: 'Coaching classes' },
+    { value: 'Other', label: 'Other' }
+  ];
 
   return (
     <>
@@ -194,11 +258,91 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
               </h2>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
+            {/* Mobile Layout */}
+            <div className="md:hidden">
+              <div className="flex gap-2 mb-6">
+                <div className="flex-1 relative">
+                  <input
+                    id="scholarship-search"
+                    name="scholarship-search"
+                    type="text"
+                    placeholder="Search scholarships..."
+                    value={searchKeyword}
+                    onChange={handleSearch}
+                    ref={searchInputRef}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                  />
+                  <FaSearch className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+                </div>
+                
+                {/* Category Dropdown */}
+                <div className="relative" ref={categoryDropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowCategoryDropdown(!showCategoryDropdown);
+                      setShowQualificationDropdown(false);
+                    }}
+                    className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <GraduationCap className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  {showCategoryDropdown && (
+                    <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                      {categoryOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => handleFilterChange('category', option.value)}
+                          className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                            filters.category === option.value
+                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'text-gray-700 dark:text-gray-200'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Qualification Dropdown */}
+                <div className="relative" ref={qualificationDropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowQualificationDropdown(!showQualificationDropdown);
+                      setShowCategoryDropdown(false);
+                    }}
+                    className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <School className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  {showQualificationDropdown && (
+                    <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                      {qualificationOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => handleFilterChange('qualification', option.value)}
+                          className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                            filters.qualification === option.value
+                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'text-gray-700 dark:text-gray-200'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Layout - Unchanged */}
+            <div className="hidden md:flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
-                  id="scholarships-search"
-                  name="scholarships-search"
+                  id="scholarships-search-desktop"
+                  name="scholarships-search-desktop"
                   type="text"
                   placeholder="Search scholarships..."
                   value={searchKeyword}
@@ -210,9 +354,9 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
               <div className="flex gap-2">
                 <select
                   id="scholarships-category"
-                  name="scholarships-category"
+                  name="category"
                   value={filters.category}
-                  onChange={handleFilterChange}
+                  onChange={handleDesktopFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
                   <option value="All">All Categories</option>
@@ -228,9 +372,9 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                 </select>
                 <select
                   id="scholarships-qualification"
-                  name="scholarships-qualification"
+                  name="qualification"
                   value={filters.qualification}
-                  onChange={handleFilterChange}
+                  onChange={handleDesktopFilterChange}
                   className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
                   <option value="All">All Qualifications</option>

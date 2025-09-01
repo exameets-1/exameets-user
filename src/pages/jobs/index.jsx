@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
+import { MapPinCheck, Briefcase } from 'lucide-react';
 import dbConnect from '@/lib/dbConnect';
 import { Job } from '@/lib/models/Job';
 
@@ -81,7 +82,12 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
   });
 
   const [searchKeyword, setSearchKeyword] = useState(initialSearch || "");
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [showPositionTypeDropdown, setShowPositionTypeDropdown] = useState(false);
   const debouncedSearchTerm = useDebounce(searchKeyword, 500);
+  
+  const locationDropdownRef = useRef(null);
+  const positionTypeDropdownRef = useRef(null);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -92,6 +98,23 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
     router.push(`/jobs?${params.toString()}`);
   }, [filters, debouncedSearchTerm]);
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+      if (positionTypeDropdownRef.current && !positionTypeDropdownRef.current.contains(event.target)) {
+        setShowPositionTypeDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleSearch = (e) => {
     setSearchKeyword(e.target.value);
     setFilters(prev => ({ ...prev, page: 1 }));
@@ -99,6 +122,8 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({ ...prev, [filterType]: value, page: 1 }));
+    setShowLocationDropdown(false);
+    setShowPositionTypeDropdown(false);
   };
 
   const handlePageChange = (newPage) => {
@@ -112,6 +137,22 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
       .replace(/>/g, '\\u003e')
       .replace(/&/g, '\\u0026');
   };
+
+  const locationOptions = [
+    { value: 'All', label: 'All Locations' },
+    { value: 'Bangalore', label: 'Bangalore' },
+    { value: 'Mumbai', label: 'Mumbai' },
+    { value: 'Delhi', label: 'Delhi' },
+    { value: 'Hyderabad', label: 'Hyderabad' },
+    { value: 'Chennai', label: 'Chennai' }
+  ];
+
+  const positionTypeOptions = [
+    { value: 'All', label: 'All Types' },
+    { value: 'Full-Time', label: 'Full-Time' },
+    { value: 'Part-Time', label: 'Part-Time' },
+    { value: 'Contract', label: 'Contract' }
+  ];
 
   return (
     <>
@@ -138,8 +179,86 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                 Job Openings
               </h2>
             </div>
+
+            {/* Mobile Layout */}
+            <div className="md:hidden">
+              <div className="flex gap-2 mb-6">
+                <div className="flex-1">
+                  <input
+                    id="job-search-mobile"
+                    name="job-search-mobile"
+                    type="search"
+                    placeholder="Search Jobs..."
+                    value={searchKeyword}
+                    onChange={handleSearch}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                  />
+                </div>
+                
+                {/* Location Dropdown */}
+                <div className="relative" ref={locationDropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowLocationDropdown(!showLocationDropdown);
+                      setShowPositionTypeDropdown(false);
+                    }}
+                    className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <MapPinCheck className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  {showLocationDropdown && (
+                    <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[150px]">
+                      {locationOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => handleFilterChange('city', option.value)}
+                          className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                            filters.city === option.value
+                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'text-gray-700 dark:text-gray-200'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Position Type Dropdown */}
+                <div className="relative" ref={positionTypeDropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowPositionTypeDropdown(!showPositionTypeDropdown);
+                      setShowLocationDropdown(false);
+                    }}
+                    className="p-2 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <Briefcase className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  {showPositionTypeDropdown && (
+                    <div className="absolute top-full right-0 mt-1 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg shadow-lg z-10 min-w-[120px]">
+                      {positionTypeOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => handleFilterChange('positionType', option.value)}
+                          className={`w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg last:rounded-b-lg ${
+                            filters.positionType === option.value
+                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'text-gray-700 dark:text-gray-200'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
   
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
+            {/* Desktop Layout - Unchanged */}
+            <div className="hidden md:flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
                   id="job-search"
