@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { logout, clearAllUserErrors, getUser } from "@/store/slices/userSlice";
-import { LuMoveRight } from "react-icons/lu";
+import { Settings } from 'lucide-react';
 import { FaUser, FaEdit, FaKey, FaSignOutAlt, FaTrash } from "react-icons/fa";
 import MyProfile from "@/components/MyProfile/MyProfile";
 import UpdateProfile from "@/components/UpdateProfile/UpdateProfile";
@@ -72,7 +72,7 @@ const Dashboard = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-[#005587] dark:text-blue-400 text-2xl p-2"
             >
-              <LuMoveRight className={`transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+              <Settings className={`transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
             </button>
           </div>
 
