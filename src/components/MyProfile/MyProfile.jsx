@@ -17,13 +17,17 @@ const MyProfile = () => {
     { label: "Phone", value: user?.phone, icon: <Phone className="w-5 h-5 text-gray-600" /> },
     {
       label: "Date of Birth",
-      value: user?.dob ? new Date(user.dob).toLocaleDateString() : null,
+      value: user?.dob
+        ? new Date(user.dob).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        : null,
       icon: <Cake className="w-5 h-5 text-gray-600" />
     },
     { label: "Gender", value: user?.gender === "male" ? "Male" : "Female", icon: <User className="w-5 h-5 text-gray-600" /> },
     {
       label: "Joined",
-      value: user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : null,
+      value: user?.createdAt
+        ? new Date(user.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        : null,
       icon: <Calendar className="w-5 h-5 text-gray-600" />
     }
   ];
