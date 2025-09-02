@@ -117,8 +117,8 @@ const GovtJobDetails = ({ job, error }) => {
         </div>
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-4xl font-bold text-white text-center">{job.jobTitle || "Government Job"}</h1>
-          <p className="mt-2 text-2xl text-white font-mono text-center">{job.organization || "Not specified"}</p>
+          <h1 className="text-2xl font-bold text-white text-center">{job.jobTitle || "Government Job"}</h1>
+          <p className="mt-2 text-xl text-white text-center">{job.organization || "Not specified"}</p>
           {/* {job.year && <p className="text-white text-center">Year: {job.year}</p>} */}
         </div>
 
@@ -277,32 +277,49 @@ const GovtJobDetails = ({ job, error }) => {
           </div>
         </section>
 
-        {/* Exam Details */}
-        {Array.isArray(job.examSubjects) && job.examSubjects.length > 0 && (
-          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Exam Details</h2>
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-100 dark:bg-gray-800">
-                  <th className="px-4 py-2 text-left">Exam Subject</th>
-                  <th className="px-4 py-2 text-left">Question Count</th>
-                  <th className="px-4 py-2 text-left">Marks Distribution</th>
-                  <th className="px-4 py-2 text-left">Exam Duration</th>
-                </tr>
-              </thead>
-              <tbody>
-                {job.examSubjects.map((subject, index) => (
-                  <tr key={index} className="border-t border-b border-gray-200 dark:border-gray-700">
-                    <td className="px-4 py-2">{subject}</td>
-                    <td className="px-4 py-2">{job.examQuestionCounts?.[index]}</td>
-                    <td className="px-4 py-2">{job.examMarks?.[index]}</td>
-                    <td className="px-4 py-2">{job.examDurations?.[index]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
-        )}
+{/* Exam Details */}
+{Array.isArray(job.examSubjects) && job.examSubjects.length > 0 && (
+  <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+    <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">
+      Exam Details
+    </h2>
+
+    <div className="overflow-x-auto">
+      <table className="table-auto w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-100 dark:bg-gray-800">
+            <th className="px-4 py-2 text-left break-words whitespace-normal">Exam Subject</th>
+            <th className="px-4 py-2 text-left break-words whitespace-normal">Question Count</th>
+            <th className="px-4 py-2 text-left break-words whitespace-normal">Marks Distribution</th>
+            <th className="px-4 py-2 text-left break-words whitespace-normal">Exam Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {job.examSubjects.map((subject, index) => (
+            <tr
+              key={index}
+              className="border-t border-b border-gray-200 dark:border-gray-700"
+            >
+              <td className="px-4 py-2 break-words whitespace-normal">
+                {subject}
+              </td>
+              <td className="px-4 py-2 break-words whitespace-normal">
+                {job.examQuestionCounts?.[index]}
+              </td>
+              <td className="px-4 py-2 break-words whitespace-normal">
+                {job.examMarks?.[index]}
+              </td>
+              <td className="px-4 py-2 break-words whitespace-normal">
+                {job.examDurations?.[index]}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+)}
+
 
         {/* Important Links */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">

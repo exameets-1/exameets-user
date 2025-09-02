@@ -74,8 +74,8 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
         </div>
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-4xl font-bold text-white text-center">{result.title}</h1>
-          <p className="mt-2 text-2xl font-mono text-white text-center">{result.organization}</p>
+          <h1 className="text-2xl font-bold text-white text-center">{result.title}</h1>
+          <p className="mt-2 text-xl text-white text-center">{result.organization}</p>
         </div>
 
         {/* Basic Info Grid */}

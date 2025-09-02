@@ -81,8 +81,8 @@ const ScholarshipDetails = ({ scholarship, error }) => {
                 </div>
 
                 <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-                    <h1 className="text-4xl font-bold text-white text-center">{scholarship.title || "Scholarship Details"}</h1>
-                    <p className="mt-2 text-2xl font-mono text-white text-center">{scholarship.organization || "Not specified"}</p>
+                    <h1 className="text-2xl font-bold text-white text-center">{scholarship.title || "Scholarship Details"}</h1>
+                    <p className="mt-2 text-xl font-mono text-white text-center">{scholarship.organization || "Not specified"}</p>
                 </div>
 
                 {/* Scholarship Details */}
