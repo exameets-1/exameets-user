@@ -329,109 +329,71 @@ const Register = () => {
 
           <div className="mb-5">
             <label className="block text-[#015990] font-medium mb-2 dark:text-gray-100" htmlFor="email">Email ID</label>
-            <input
-              type="email"
-              id="email"
-              autoComplete="email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={emailVerified}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-            />
-          </div>
-
-         {/* <div className="flex items-center gap-2 mb-5">
-            <input
-              type="text"
-              placeholder="Enter Mobile OTP"
-              value={otp}
-              onChange={(e) => handleOtpChange(e, setOtp)}
-              maxLength="6"
-              required={otpSent}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-            />
-            {!otpVerified && (
-              <>
-                {!otpSent ? (
-                  <button 
-                    type="button" 
-                    onClick={handleSendOTP}
-                    disabled={sendingPhoneOtp}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-                  >
-                    {sendingPhoneOtp ? "Sending..." : "Send OTP"}
-                  </button>
-                ) : (
-                  <>
-                    {resendTimer > 0 ? (
-                      <span className="text-gray-600 whitespace-nowrap">Resend in {resendTimer}s</span>
-                    ) : (
-                      <button 
-                        type="button" 
-                        onClick={handleSendOTP}
-                        disabled={sendingPhoneOtp}
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-                      >
-                        {sendingPhoneOtp ? "Sending..." : "Resend"}
-                      </button>
-                    )}
-                  </>
-                )}
-              </>
-            )}
-            {otpVerified && (
-              <span className="text-green-600 text-sm">Verified</span>
-            )}
-          </div>*/}
-
-            <label htmlFor="email-otp" className="block text-[#015990] font-medium mb-2 dark:text-gray-100">Email OTP</label>
-          <div className="flex items-center gap-2 mb-5">
-            <input
-              type="text"
-              id="email-otp"
-              
-              placeholder="Enter Email OTP"
-              value={emailOtp}
-              onChange={(e) => handleOtpChange(e, setEmailOtp)}
-              maxLength="6"
-              required={emailOtpSent}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-            />
-            {!emailVerified && (
-              <>
-                {!emailOtpSent ? (
-                  <button 
-                    type="button" 
-                    onClick={handleSendEmailOTP}
-                    disabled={sendingEmailOtp}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-                  >
-                    {sendingEmailOtp ? "Sending..." : "Send OTP"}
-                  </button>
-                ) : (
-                  <>
-                    {emailResendTimer > 0 ? (
-                      <span className="text-gray-600 whitespace-nowrap">Resend in {emailResendTimer}s</span>
-                    ) : (
-                      <button 
-                        type="button" 
-                        onClick={handleSendEmailOTP}
-                        disabled={sendingEmailOtp}
-                        className="p-2 bg-[#015990] text-white border-none rounded cursor-pointer whitespace-nowrap hover:bg-blue-900 disabled:bg-gray-400"
-                      >
-                        {sendingEmailOtp ? "Sending..." : "Resend"}
-                      </button>
-                    )}
-                  </>
-                )}
-              </>
-            )}
-            {emailVerified && (
-              <span className="text-green-600 text-sm">Verified</span>
+            <div className="flex gap-2">
+              <input
+                type="email"
+                id="email"
+                autoComplete="email"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={emailVerified}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+              />
+              {!emailVerified && (
+                <button 
+                  type="button" 
+                  onClick={handleSendEmailOTP}
+                  disabled={sendingEmailOtp}
+                  className="px-4 py-2 bg-[#015990] text-white border-none rounded-lg cursor-pointer whitespace-nowrap hover:bg-blue-900 disabled:bg-gray-400"
+                >
+                  {sendingEmailOtp ? "Sending..." : (emailOtpSent ? "Resend OTP" : "Send OTP")}
+                </button>
+              )}
+            </div>
+            {emailOtpSent && emailResendTimer > 0 && (
+              <span className="text-gray-600 text-xs mt-1 block">Resend in {emailResendTimer}s</span>
             )}
           </div>
+
+          {/* OTP input as 6 boxes */}
+          {emailOtpSent && !emailVerified && (
+            <div className="mb-5">
+              <label htmlFor="email-otp" className="block text-[#015990] font-medium mb-2 dark:text-gray-100">Enter Email OTP</label>
+              <div className="flex gap-2 justify-center">
+                {[...Array(6)].map((_, idx) => (
+                  <input
+                    key={idx}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={emailOtp[idx] || ""}
+                    onChange={e => {
+                      const val = e.target.value.replace(/[^0-9]/g, "");
+                      let newOtp = emailOtp.split("");
+                      newOtp[idx] = val;
+                      setEmailOtp(newOtp.join(""));
+                      // Move to next box if value entered
+                      if (val && idx < 5) {
+                        document.getElementById(`otp-box-${idx + 1}`)?.focus();
+                      }
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === "Backspace" && !emailOtp[idx] && idx > 0) {
+                        document.getElementById(`otp-box-${idx - 1}`)?.focus();
+                      }
+                    }}
+                    id={`otp-box-${idx}`}
+                    className="w-10 h-12 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+                  />
+                ))}
+              </div>
+              {emailVerified && (
+                <span className="text-green-600 text-sm block mt-2">Verified</span>
+              )}
+            </div>
+          )}
 
           <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
             <label htmlFor="password">Create Password</label>
