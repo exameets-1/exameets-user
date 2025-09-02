@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { UserCog, X, Menu, ChevronDown } from 'lucide-react';
+import { UserCog, X, Menu, ChevronDown, MoonStar, Sun} from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import Image from 'next/image';
 
@@ -44,15 +44,55 @@ const Navbar = () => {
 
   return (
     <header className="w-full dark:bg-gray-800">
-      {/* Top Line */}
-      <div className="bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 text-center py-2 flex items-center justify-center px-4">
+      {/* Top Line - Hidden on mobile, visible on desktop */}
+      <div className="hidden md:block bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 text-center py-2 flex items-center justify-center px-4">
         <p className="text-base md:text-xl">
           Exameets is a one-step platform for students, where all the needs are met !
         </p>
       </div>
 
-      {/* Logo and Menu */}
-      <div className="flex items-center justify-between px-5 py-4 relative dark:bg-gray-800">
+      {/* Mobile Header - Visible only on mobile */}
+      <div className="md:hidden flex items-center justify-between px-5 py-4 bg-[#015990] dark:bg-gray-950">
+        {/* Logo - Left side, compact */}
+        <Link href="/" className="flex-shrink-0">
+          <Image
+            src={darkMode ? "/images/logo-final-dark.webp" : "/images/logo-final-dark.webp"}
+            alt="Exameets Logo"
+            width={120}
+            height={42}
+            priority
+            fetchPriority="high"
+            sizes="120px"
+            className="w-auto h-auto max-h-[42px]"
+          />
+        </Link>
+
+        {/* Right side controls */}
+        <div className="flex items-center gap-3">
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={toggleDarkMode}
+            className="p-2 rounded-md"
+            aria-label="Toggle dark mode"
+          >
+            <span className="flex items-center">
+              {darkMode ? <Sun size={24} color="white" /> : <MoonStar size={24} color="white" />}
+            </span>
+          </button>
+
+          {/* Hamburger Menu Button */}
+          <button 
+            className="p-2 rounded-md"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            <Menu size={28} color="white" />
+          </button>
+        </div>
+      </div>
+
+      {/* Desktop Logo and Menu - Hidden on mobile */}
+      <div className="hidden md:flex items-center justify-between px-5 py-4 relative dark:bg-gray-800">
         {/* Logo */}
         <Link href="/" className="max-w-[320px] mx-auto">
           <Image
@@ -67,60 +107,8 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Hamburger Menu Button */}
-        <button 
-          className="p-2 rounded-md md:hidden"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <Menu size={28} color={darkMode ? 'white' : 'black'} />
-        </button>
-
-        {/* Sliding Mobile Menu */}
-        <div className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white dark:bg-gray-800 z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden overflow-y-auto`}>
-          <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
-            <h2 className="text-xl font-semibold dark:text-white">Menu</h2>
-            <button onClick={closeMobileMenu} className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-              <X size={24} color={darkMode ? 'white' : 'black'} />
-            </button>
-          </div>
-          
-          <div className="flex flex-col p-4 space-y-4">
-            <Link href="/" onClick={closeMobileMenu} className={getNavItemStyle('/')}>Home</Link>
-            <Link href="/govtjobs" onClick={closeMobileMenu} className={getNavItemStyle('/govtjobs')}>Govt Jobs</Link>
-            <Link href="/admitcards" onClick={closeMobileMenu} className={getNavItemStyle('/admitcards')}>Admit Cards</Link>
-            <Link href="/results" onClick={closeMobileMenu} className={getNavItemStyle('/results')}>Results</Link>
-            <Link href="/jobs" onClick={closeMobileMenu} className={getNavItemStyle('/jobs')}>Tech Jobs</Link>
-            <Link href="/internships" onClick={closeMobileMenu} className={getNavItemStyle('/internships')}>Internships</Link>
-            <Link href="/admissions" onClick={closeMobileMenu} className={getNavItemStyle('/admissions')}>Admissions</Link>
-            <Link href="/papers" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link>
-            <Link href="/scholarships" onClick={closeMobileMenu} className={getNavItemStyle('/scholarships')}>Scholarships</Link>
-          </div>
-          
-          {/* Footer for mobile menu */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t dark:border-gray-700">
-            <div className="flex justify-center items-center">
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-md flex items-center gap-2"
-              >
-                <span>{darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Overlay for mobile menu */}
-        {isMenuOpen && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" 
-            onClick={closeMobileMenu}
-            aria-hidden="true"
-          />
-        )}
-
         {/* Desktop Navigation Menu */}
-        <nav className="hidden md:flex md:flex-wrap md:justify-center md:gap-4 md:items-center">
+        <nav className="flex flex-wrap justify-center gap-4 items-center">
           <div className="flex flex-col items-center m-4 group">
             <Link href="/" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
@@ -198,9 +186,89 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Bottom Line */}
-      <div className={`bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 h-auto min-h-[50px] py-2 flex flex-col md:flex-row items-center justify-between px-5 relative`}>
-        {/* Dark Mode Toggle */}
+      {/* Sliding Mobile Menu */}
+      <div className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white dark:bg-gray-800 z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden overflow-y-auto`}>
+        <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-semibold dark:text-white">Menu</h2>
+          <button onClick={closeMobileMenu} className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+            <X size={24} color={darkMode ? 'white' : 'black'} />
+          </button>
+        </div>
+        
+        <div className="flex flex-col p-4 space-y-4 flex-1">
+          <Link href="/" onClick={closeMobileMenu} className={getNavItemStyle('/')}>Home</Link>
+          <Link href="/govtjobs" onClick={closeMobileMenu} className={getNavItemStyle('/govtjobs')}>Govt Jobs</Link>
+          <Link href="/admitcards" onClick={closeMobileMenu} className={getNavItemStyle('/admitcards')}>Admit Cards</Link>
+          <Link href="/results" onClick={closeMobileMenu} className={getNavItemStyle('/results')}>Results</Link>
+          <Link href="/jobs" onClick={closeMobileMenu} className={getNavItemStyle('/jobs')}>Tech Jobs</Link>
+          <Link href="/internships" onClick={closeMobileMenu} className={getNavItemStyle('/internships')}>Internships</Link>
+          <Link href="/admissions" onClick={closeMobileMenu} className={getNavItemStyle('/admissions')}>Admissions</Link>
+          <Link href="/papers" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link>
+          <Link href="/scholarships" onClick={closeMobileMenu} className={getNavItemStyle('/scholarships')}>Scholarships</Link>
+        </div>
+        
+        {/* Footer for mobile menu - Login/Register or Profile - moved to bottom */}
+        <div className="absolute bottom-0 left-0 right-0 border-t dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
+          {isAuthenticated ? (
+            <div className="space-y-3">
+              {/* <p className="text-lg font-semibold dark:text-white">Hi, {user.name}</p> */}
+              <Link 
+                href="/dashboard" 
+                onClick={closeMobileMenu} 
+                className="block w-full text-center py-2 px-4 bg-[#015990] text-white rounded-md hover:bg-[#014070] transition-colors duration-200"
+              >
+                Profile
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <Link 
+                href="/login" 
+                onClick={closeMobileMenu} 
+                className="block w-full text-center py-2 px-4 bg-[#015990] text-white rounded-md hover:bg-[#014070] transition-colors duration-200"
+              >
+                Login
+              </Link>
+              <Link 
+                href="/register" 
+                onClick={closeMobileMenu} 
+                className="block w-full text-center py-2 px-4 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors duration-200"
+              >
+                Register
+              </Link>
+            </div>
+          )}
+        </div>
+        
+        {/* Dark mode toggle commented out for future use */}
+        {/* 
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t dark:border-gray-700">
+          <div className="flex justify-center items-center">
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-md flex items-center gap-2"
+            >
+              <span className="flex items-center gap-1 text-xl">
+                {darkMode ? <Sun /> : <MoonStar />}
+              </span>
+            </button>
+          </div>
+        </div>
+        */}
+      </div>
+      
+      {/* Overlay for mobile menu */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" 
+          onClick={closeMobileMenu}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Bottom Line - Desktop only */}
+      <div className={`hidden md:flex bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 h-auto min-h-[50px] py-2 flex-col md:flex-row items-center justify-between px-5 relative`}>
+        {/* Dark Mode Toggle - Desktop only */}
         <button
           onClick={toggleDarkMode}
           className="absolute right-4 rounded-full backdrop-blur-sm hidden md:block"
@@ -208,7 +276,10 @@ const Navbar = () => {
             cursor: 'pointer'
           }}
         >
-          <span className="text-xl">{darkMode ? '| ☀️' : '| 🌙'}</span>
+          <span className="text-xl flex items-center gap-1">
+            |
+            {darkMode ? <Sun /> : <MoonStar />}
+          </span>
         </button>
 
         {isAuthenticated ? (

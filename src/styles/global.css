@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-toast-width {
+  width: 350px;
+  max-width: 90vw;
+}
+
+@media (max-width: 640px) {
+  .custom-toast-width {
+    width: 90vw !important;
+    left: 8vw !important;
+    right: auto !important;
+  }
+}

@@ -61,7 +61,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8 bg-gray-100 dark:bg-gray-900 flex justify-center items-start">
+    <div className="min-h-screen p-4 md:p-8 bg-gray-50 dark:bg-gray-900 flex justify-center items-start">
       <div className="bg-white dark:bg-gray-800 dark:text-white rounded-xl shadow-md p-6 md:p-8 w-full max-w-lg mt-4 md:mt-8">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2">

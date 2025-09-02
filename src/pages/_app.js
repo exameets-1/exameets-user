@@ -40,8 +40,8 @@ function AppContent({ Component, pageProps }) {
       {loading && <Loader />}
       <Layout>
         <Component {...pageProps} />
-        <ToastContainer 
-          position="top-right" 
+        <ToastContainer
+          position="top-right"
           autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -51,6 +51,7 @@ function AppContent({ Component, pageProps }) {
           draggable
           pauseOnHover
           theme="light"
+          className="custom-toast-width"
         />
       </Layout>
     </ThemeProvider>
