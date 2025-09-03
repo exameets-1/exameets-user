@@ -202,10 +202,10 @@ const WhatsNew = () => {
                             </p>
                         )}
 
-                        <Link href={section.viewAll} className="mt-auto">
-                            <button className="mt-4 bg-[#015990] dark:bg-gray-950 text-white px-4 py-2 rounded hover:bg-[#014d7a] dark:hover:bg-[#013A5C] transition">
-                                View All
-                            </button>
+                        <Link href={section.viewAll} className="mt-auto flex justify-center">
+                          <button className="mt-4 bg-[#015990] dark:bg-gray-950 text-white px-4 py-2 rounded hover:bg-[#014d7a] dark:hover:bg-[#013A5C] transition">
+                            View All
+                          </button>
                         </Link>
                     </div>
                 ))}

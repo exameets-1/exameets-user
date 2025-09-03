@@ -331,9 +331,9 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                 </div>
                 {/* Footer Section */}
                 <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
-                  {/* <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+                  <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
                     Stipend: {internship.stipend}
-                  </span> */}
+                  </span>
                   <button
                     className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
                     onClick={(e) => {

@@ -53,21 +53,25 @@ const PreviousYearPage = ({ subjects, error }) => {
             <div className="max-w-7xl mx-auto px-5 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {filteredSubjects.map((subject) => (
-                            
-                            <div
-                                key={subject}
-                                className="group h-[200px] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col transition-transform duration-300 hover:scale-105 cursor-pointer"
-                            >
-                                <div className="flex-grow flex items-center justify-center p-5">
-                                    <h2 className="text-[23px] font-semibold text-center text-[#015990] dark:text-white">
-                                        {subject}
-                                    </h2>
-                                </div>
-                                <button onClick={() => handleViewDetails(subject)} className="bg-[#015990] dark:bg-gray-950 h-[50px] flex items-center justify-center text-white text-[20px] font-bold">
-                                    View Papers
-                                </button>
-                            </div>
-                    
+                    <div
+                        key={subject}
+                        className="group h-[200px] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col transition-transform duration-300 hover:scale-105 cursor-pointer"
+                        onClick={() => handleViewDetails(subject)}
+                        tabIndex={0}
+                        role="button"
+                        aria-label={`View papers for ${subject}`}
+                    >
+                        <div className="flex-grow flex items-center justify-center p-5">
+                        <h2 className="text-[23px] font-semibold text-center text-[#015990] dark:text-white">
+                            {subject}
+                        </h2>
+                        </div>
+                        <button
+                        className="bg-[#015990] dark:bg-gray-950 h-[50px] flex items-center justify-center text-white text-[20px] font-bold pointer-events-none"
+                        >
+                        View Papers
+                        </button>
+                    </div>
                     ))}
                 </div>
     
