@@ -14,3 +14,15 @@
     right: auto !important;
   }
 }
+
+/* In your global CSS if the issue persists */
+select {
+  max-width: 100% !important;
+}
+
+/* For mobile devices */
+@media (max-width: 640px) {
+  select {
+    max-width: calc(100vw - 2rem) !important;
+  }
+}

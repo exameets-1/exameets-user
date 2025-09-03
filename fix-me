@@ -1,7 +1,0 @@
-Done || --->> Govt Jobs ---> Search bar is adding the search term to url but is not fetching dynamically.
-
-Done || --->> Global Search Bar ---> When searching the global search bar it breaks the search bar UI
-
-Duplicate Phone Entered ---> While registering if a person enters a number which is already registered then two toasts are shown(Optional)
-
-Done || --->> For You Section ---> This section is not rendering posts correctly for Govt Jobs, IT and NON - IT

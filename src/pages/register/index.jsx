@@ -7,6 +7,10 @@ import { register, clearAllUserErrors } from "@/store/slices/userSlice.js";
 import { toast } from "react-toastify";
 import PreferencesModal from "@/components/PreferencesModal/PreferencesModal.jsx";
 import useScrollToTop from "@/hooks/useScrollToTop.js";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import CustomSelect from '@/components/CustomSelect/CustomSelect'; // Adjust path as needed
+
+
 
 
 const Register = () => {
@@ -36,6 +40,7 @@ const Register = () => {
   const [showPreferences, setShowPreferences] = useState(false);
   const [sendingEmailOtp, setSendingEmailOtp] = useState(false);
   const [sendingPhoneOtp, setSendingPhoneOtp] = useState(false);
+  const [countryCode, setCountryCode] = useState("+91"); // Default country code
 
   // Password validation states
   const [passwordValidation, setPasswordValidation] = useState({
@@ -57,6 +62,19 @@ const Register = () => {
       matches: password === confirmPass && password !== "",
     });
   };
+
+  const genderOptions = [
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const countryCodeOptions = [
+    { value: '+91', label: '+91' },
+    // { value: '+1', label: '+1 (US/Canada)' },
+    // { value: '+44', label: '+44 (UK)' },
+  // Add more as needed
+  ];
 
   useEffect(() => {
     validatePassword(password, confirmPassword);
@@ -243,11 +261,19 @@ const Register = () => {
     }
   };
 
-  const handleOtpChange = (e, setOtpFunction) => {
-    const value = e.target.value;
-    if (value === '' || /^\d+$/.test(value)) {
-      setOtpFunction(value);
-    }
+  // const handleOtpChange = (e, setOtpFunction) => {
+  //   const value = e.target.value;
+  //   if (value === '' || /^\d+$/.test(value)) {
+  //     setOtpFunction(value);
+  //   }
+  // };
+
+  const handleTogglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleToggleConfirmPassword = () => {
+    setShowConfirmPassword((prev) => !prev);
   };
 
   return (
@@ -266,7 +292,7 @@ const Register = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+              className="w-full pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
             />
           </div>
 
@@ -278,54 +304,53 @@ const Register = () => {
               value={dob}
               onChange={(e) => setDob(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+              className="w-full pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
             />
           </div>
 
           <div className="mb-5">
-            <label className="block text-[#015990] font-medium mb-2 dark:text-gray-100" htmlFor="gender">Gender</label>
-            <select
+            <CustomSelect
               id="gender"
+              label="Gender"
               value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              required
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+              onChange={(value) => setGender(value)}
+              options={genderOptions}
+              placeholder="Select Gender"
+              required={true}
+            />
           </div>
 
           <div className="mb-5">
-            <label className="block text-[#015990] dark:text-gray-100 font-medium mb-2" htmlFor="phone">Phone Number</label>
-            <div className="flex gap-2">
-              <select 
-                id="country-code"
-                className="border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-              >
-                <option value="+91">+91</option>
-              </select>
-              <input
-                type="tel"
-                autoComplete="tel"
-                id="phone"
-                placeholder="Enter 10-digit Mobile Number"
-                value={phone}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value === '' || /^\d+$/.test(value)) {
-                    setPhone(value);
-                  }
-                }}
-                maxLength="10"
-                required
-                disabled={otpVerified}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
-              />
-            </div>
-          </div>
+  <label className="block text-[#015990] dark:text-gray-100 font-medium mb-2" htmlFor="phone">Phone Number</label>
+  <div className="flex gap-2">
+    <div className="w-32">
+      <CustomSelect
+        id="country-code"
+        value={countryCode} // You'll need to add this state
+        onChange={(value) => setCountryCode(value)} // You'll need to add this setter
+        options={countryCodeOptions}
+        placeholder="+91"
+      />
+    </div>
+    <input
+      type="tel"
+      autoComplete="tel"
+      id="phone"
+      placeholder="Enter 10-digit Mobile Number"
+      value={phone}
+      onChange={(e) => {
+        const value = e.target.value;
+        if (value === '' || /^\d+$/.test(value)) {
+          setPhone(value);
+        }
+      }}
+      maxLength="10"
+      required
+      disabled={otpVerified}
+      className="flex-1 pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+    />
+  </div>
+</div>
 
           <div className="mb-5">
             <label className="block text-[#015990] font-medium mb-2 dark:text-gray-100" htmlFor="email">Email ID</label>
@@ -339,7 +364,7 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={emailVerified}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+                className="w-full pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
               />
               {!emailVerified && (
                 <button 
@@ -398,7 +423,7 @@ const Register = () => {
           <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
             <label htmlFor="password">Create Password</label>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -408,13 +433,27 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+              className="w-full pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
             />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={handleTogglePassword}
+              tabIndex={0}
+              role="button"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? (
+                <FaEyeSlash className="text-[#015990] dark:text-gray-300" />
+              ) : (
+                <FaEye className="text-[#015990] dark:text-gray-300" />
+              )}
+            </span>
           </div>
+
           <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
             <label htmlFor="confirm-password">Confirm Password</label>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirm-password"
@@ -423,8 +462,21 @@ const Register = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
+              className="w-full pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#015990] focus:ring-1 focus:ring-[#015990]"
             />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={handleToggleConfirmPassword}
+              tabIndex={0}
+              role="button"
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+            >
+              {showConfirmPassword ? (
+                <FaEyeSlash className="text-[#015990] dark:text-gray-300" />
+              ) : (
+                <FaEye className="text-[#015990] dark:text-gray-300" />
+              )}
+            </span>
           </div>
 
           <div className="mt-2 mb-4 text-xs text-gray-600">
