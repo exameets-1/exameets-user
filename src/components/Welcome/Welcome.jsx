@@ -1,39 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// ✅ Custom Hook for Typing Effect
-const useTypingEffect = (text, typingSpeed = 150, pause = 1000) => {
-  const [displayed, setDisplayed] = React.useState("");
-  const [index, setIndex] = React.useState(0);
-  const [deleting, setDeleting] = React.useState(false);
-
-  React.useEffect(() => {
-    let timer;
-
-    if (!deleting && index < text.length) {
-      timer = setTimeout(() => {
-        setDisplayed((prev) => prev + text[index]);
-        setIndex((i) => i + 1);
-      }, typingSpeed);
-    } else if (!deleting && index === text.length) {
-      timer = setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && index > 0) {
-      timer = setTimeout(() => {
-        setDisplayed((prev) => prev.slice(0, -1));
-        setIndex((i) => i - 1);
-      }, typingSpeed / 1.5);
-    } else if (deleting && index === 0) {
-      timer = setTimeout(() => setDeleting(false), pause / 2);
-    }
-
-    return () => clearTimeout(timer);
-  }, [index, deleting, text, typingSpeed, pause]);
-
-  return displayed;
-};
+// ✅ Custom Hook for Typing Effect (commented out)
+// const useTypingEffect = (text, typingSpeed = 150, pause = 1000) => {
+//   const [displayed, setDisplayed] = React.useState("");
+//   const [index, setIndex] = React.useState(0);
+//   const [deleting, setDeleting] = React.useState(false);
+//
+//   React.useEffect(() => {
+//     let timer;
+//
+//     if (!deleting && index < text.length) {
+//       timer = setTimeout(() => {
+//         setDisplayed((prev) => prev + text[index]);
+//         setIndex((i) => i + 1);
+//       }, typingSpeed);
+//     } else if (!deleting && index === text.length) {
+//       timer = setTimeout(() => setDeleting(true), pause);
+//     } else if (deleting && index > 0) {
+//       timer = setTimeout(() => {
+//         setDisplayed((prev) => prev.slice(0, -1));
+//         setIndex((i) => i - 1);
+//       }, typingSpeed / 1.5);
+//     } else if (deleting && index === 0) {
+//       timer = setTimeout(() => setDeleting(false), pause / 2);
+//     }
+//
+//     return () => clearTimeout(timer);
+//   }, [index, deleting, text, typingSpeed, pause]);
+//
+//   return displayed;
+// };
 
 const Welcome = () => {
-  const displayed = useTypingEffect("Welcome to Exameets");
+  // const displayed = useTypingEffect("MEETS YOUR NEEDS!");
 
   return (
     <section
@@ -53,15 +53,15 @@ const Welcome = () => {
         boxSizing: "border-box",
       }}
     >
-      {/* Typing heading */}
+      {/* Static heading (typing effect removed) */}
       <motion.h2
         className="mb-2 text-2xl sm:text-4xl md:text-5xl font-bold text-[#002e5b] dark:text-white"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        {displayed}
-        <span className="animate-blink">|</span>
+        MEETS YOUR NEEDS!
+        {/* <span className="animate-blink">|</span> */}
       </motion.h2>
 
       {/* Subtitle */}
@@ -96,8 +96,8 @@ const Welcome = () => {
       >
         Join Exameets today and let us help you achieve your dreams –
         <br />
-        <span className="text-3xl text-[#002e5b] dark:text-white font-extrabold">
-          "Meet All Your Needs."
+        <span className="text-2xl text-[#015990] dark:text-blue-200 font-bold italic">
+          because we truly understand what it means to
         </span>
       </motion.p>
 
@@ -110,7 +110,8 @@ const Welcome = () => {
         style={{ originX: 0 }}
       />
 
-      {/* Cursor Blink */}
+      {/* Cursor Blink (commented out) */}
+      {/**
       <style jsx>{`
         @keyframes blink {
           0%, 100% { opacity: 1; }
@@ -122,6 +123,7 @@ const Welcome = () => {
           animation: blink 1s steps(1) infinite;
         }
       `}</style>
+      */}
     </section>
   );
 };
