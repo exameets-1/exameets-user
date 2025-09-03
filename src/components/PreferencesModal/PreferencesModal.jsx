@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updatePreferences } from '@/store/slices/userSlice';
 import { toast } from 'react-toastify';
-import styles from './PreferencesModal.module.css';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 const PreferencesModal = ({ onClose }) => {
     const dispatch = useDispatch();
@@ -15,8 +15,7 @@ const PreferencesModal = ({ onClose }) => {
         techJobCategory: ''
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const handleChange = (name, value) => {
         setFormData(prev => ({
             ...prev,
             [name]: value,
@@ -53,134 +52,157 @@ const PreferencesModal = ({ onClose }) => {
         }
     };
 
+    // Options for all select components
+    const notificationOptions = [
+        { value: 'govtjobs', label: 'Government Jobs' },
+        { value: 'techjobs', label: 'Tech Jobs' },
+        { value: 'internships', label: 'Internships' },
+        { value: 'admissions', label: 'Admissions' },
+        { value: 'scholarships', label: 'Scholarships' },
+        { value: 'results', label: 'Results' }
+    ];
+
+    const governmentJobOptions = [
+        { value: 'UPSC', label: 'UPSC (Union Public Service Commission)' },
+        { value: 'SSC (Staff Selection Commission)', label: 'SSC (Staff Selection Commission)' },
+        { value: 'IBPS and Banking Jobs', label: 'IBPS and Banking Jobs' },
+        { value: 'Teaching and Academia', label: 'Teaching and Academia' },
+        { value: 'Railway Recruitment', label: 'Railway Recruitment' },
+        { value: 'Defense and Paramilitary', label: 'Defense and Paramilitary' },
+        { value: 'State Government Jobs', label: 'State Government Jobs' },
+        { value: 'Public Sector Undertakings (PSUs)', label: 'Public Sector Undertakings (PSUs)' },
+        { value: 'Medical Sector', label: 'Medical Sector' },
+        { value: 'Judiciary and Legal Services', label: 'Judiciary and Legal Services' },
+        { value: 'Insurance Sector Jobs', label: 'Insurance Sector Jobs' },
+        { value: 'Teaching & Research', label: 'Teaching & Research' },
+        { value: 'Post Office Jobs', label: 'Post Office Jobs' },
+        { value: 'Agriculture and Rural Development', label: 'Agriculture and Rural Development' },
+        { value: 'Indian Railways', label: 'Indian Railways' },
+        { value: 'Defense Research and Development', label: 'Defense Research and Development' },
+        { value: 'Law and Judiciary', label: 'Law and Judiciary' },
+        { value: 'Environment and Forest Services', label: 'Environment and Forest Services' },
+        { value: 'Economic and Statistical Services', label: 'Economic and Statistical Services' },
+        { value: 'Media and Communication', label: 'Media and Communication' },
+        { value: 'Public Sector Energy Companies', label: 'Public Sector Energy Companies' },
+        { value: 'Social and Welfare Sector', label: 'Social and Welfare Sector' },
+        { value: 'Customs and Excise', label: 'Customs and Excise' },
+        { value: 'Taxation Services', label: 'Taxation Services' },
+        { value: 'Cooperative Sector Jobs', label: 'Cooperative Sector Jobs' },
+        { value: 'Transport and Civil Aviation', label: 'Transport and Civil Aviation' },
+        { value: 'Tourism and Hospitality', label: 'Tourism and Hospitality' },
+        { value: 'Cultural and Heritage Jobs', label: 'Cultural and Heritage Jobs' },
+        { value: 'Science and Technology', label: 'Science and Technology' },
+        { value: 'Meteorological Department Jobs', label: 'Meteorological Department Jobs' }
+    ];
+
+    const techJobOptions = [
+        { value: 'IT', label: 'IT' },
+        { value: 'NON-IT', label: 'NON-IT' }
+    ];
+
+    const studyingOptions = [
+        { value: 'yes', label: 'Yes' },
+        { value: 'no', label: 'No' }
+    ];
+
+    const educationOptions = [
+        { value: 'high-school', label: 'High School' },
+        { value: 'undergraduate', label: 'Undergraduate' },
+        { value: 'postgraduate', label: 'Postgraduate' },
+        { value: 'other', label: 'Other' }
+    ];
+
     return (
-        <div className={styles.preferencesModalOverlay}>
-            <div className={styles.preferencesModal}>
-                <div className={styles.contentContainer}>
-                    <h1 className={styles.heading}>Get Notifications & Prepare</h1>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-5 max-w-lg w-[90%] max-h-[90vh] overflow-y-auto shadow-2xl">
+                <div className="p-5">
+                    <h1 className="text-center text-[#015990] dark:text-blue-400 text-xl md:text-2xl font-bold mb-5">
+                        Get Notifications & Prepare
+                    </h1>
 
                     <form onSubmit={handleSubmit}>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="notifications_about">Select Exams/Jobs for Notifications</label>
-                            <select 
+                        <div className="mb-5">
+                            <CustomSelect
                                 id="notifications_about"
                                 name="notifications_about"
+                                label="Select Exams/Jobs for Notifications"
+                                options={notificationOptions}
                                 value={formData.notifications_about}
-                                onChange={handleChange}
-                                className={styles.selectType}
-                                required
-                            >
-                                <option value="">Select your preference</option>
-                                <option value="govtjobs">Government Jobs</option>
-                                <option value="techjobs">Tech Jobs</option>
-                                <option value="internships">Internships</option>
-                                <option value="admissions">Admissions</option>
-                                <option value="scholarships">Scholarships</option>
-                                <option value="results">Results</option>
-                            </select>
+                                onChange={(value) => handleChange('notifications_about', value)}
+                                placeholder="Select your preference"
+                                required={true}
+                                className="mb-0"
+                            />
                         </div>
 
                         {/* Government Job Type dropdown - only shown when Government Jobs is selected */}
                         {formData.notifications_about === 'govtjobs' && (
-                            <div className={styles.formGroup}>
-                                <label htmlFor="governmentJobType">Select Your Job Type (Government Job)</label>
-                                <select
+                            <div className="mb-5">
+                                <CustomSelect
                                     id="governmentJobType"
                                     name="governmentJobType"
+                                    label="Select Your Job Type (Government Job)"
+                                    options={governmentJobOptions}
                                     value={formData.governmentJobType}
-                                    onChange={handleChange}
-                                    className={styles.selectType}
-                                    required
-                                >
-                                    <option value="">Select government job type</option>
-                                    <option value="UPSC">UPSC (Union Public Service Commission)</option>
-                                    <option value="SSC (Staff Selection Commission)">SSC (Staff Selection Commission)</option>
-                                    <option value="IBPS and Banking Jobs">IBPS and Banking Jobs</option>
-                                    <option value="Teaching and Academia">Teaching and Academia</option>
-                                    <option value="Railway Recruitment">Railway Recruitment</option>
-                                    <option value="Defense and Paramilitary">Defense and Paramilitary</option>
-                                    <option value="State Government Jobs">State Government Jobs</option>
-                                    <option value="Public Sector Undertakings (PSUs)">Public Sector Undertakings (PSUs)</option>
-                                    <option value="Medical Sector">Medical Sector</option>
-                                    <option value="Judiciary and Legal Services">Judiciary and Legal Services</option>
-                                    <option value="Insurance Sector Jobs">Insurance Sector Jobs</option>
-                                    <option value="Teaching & Research">Teaching & Research</option>
-                                    <option value="Post Office Jobs">Post Office Jobs</option>
-                                    <option value="Agriculture and Rural Development">Agriculture and Rural Development</option>
-                                    <option value="Indian Railways">Indian Railways</option>
-                                    <option value="Defense Research and Development">Defense Research and Development</option>
-                                    <option value="Law and Judiciary">Law and Judiciary</option>
-                                    <option value="Environment and Forest Services">Environment and Forest Services</option>
-                                    <option value="Economic and Statistical Services">Economic and Statistical Services</option>
-                                    <option value="Media and Communication">Media and Communication</option>
-                                    <option value="Public Sector Energy Companies">Public Sector Energy Companies</option>
-                                    <option value="Social and Welfare Sector">Social and Welfare Sector</option>
-                                    <option value="Customs and Excise">Customs and Excise</option>
-                                    <option value="Taxation Services">Taxation Services</option>
-                                    <option value="Cooperative Sector Jobs">Cooperative Sector Jobs</option>
-                                    <option value="Transport and Civil Aviation">Transport and Civil Aviation</option>
-                                    <option value="Tourism and Hospitality">Tourism and Hospitality</option>
-                                    <option value="Cultural and Heritage Jobs">Cultural and Heritage Jobs</option>
-                                    <option value="Science and Technology">Science and Technology</option>
-                                    <option value="Meteorological Department Jobs">Meteorological Department Jobs</option>
-                                </select>
+                                    onChange={(value) => handleChange('governmentJobType', value)}
+                                    placeholder="Select government job type"
+                                    required={true}
+                                    className="mb-0"
+                                />
                             </div>
                         )}
 
                         {/* Tech Jobs Category dropdown - only shown when Tech Jobs is selected */}
                         {formData.notifications_about === 'techjobs' && (
-                            <div className={styles.formGroup}>
-                                <label htmlFor="techJobCategory">Select Tech Job Category</label>
-                                <select
+                            <div className="mb-5">
+                                <CustomSelect
                                     id="techJobCategory"
                                     name="techJobCategory"
+                                    label="Select Tech Job Category"
+                                    options={techJobOptions}
                                     value={formData.techJobCategory}
-                                    onChange={handleChange}
-                                    required
-                                    className={styles.selectType}
-                                >
-                                    <option value="">Select category</option>
-                                    <option value="IT">IT</option>
-                                    <option value="NON-IT">NON-IT</option>
-                                </select>
+                                    onChange={(value) => handleChange('techJobCategory', value)}
+                                    placeholder="Select category"
+                                    required={true}
+                                    className="mb-0"
+                                />
                             </div>
                         )}
 
-                        <div className={styles.formGroup}>
-                            <label htmlFor="isStudying">Are you currently studying?</label>
-                            <select
+                        <div className="mb-5">
+                            <CustomSelect
                                 id="isStudying"
                                 name="isStudying"
+                                label="Are you currently studying?"
+                                options={studyingOptions}
                                 value={formData.isStudying}
-                                onChange={handleChange}
-                                required
-                                className={styles.selectType}
-                            >
-                                <option value="">Select an option</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
+                                onChange={(value) => handleChange('isStudying', value)}
+                                placeholder="Select an option"
+                                required={true}
+                                className="mb-0"
+                            />
                         </div>
 
-                        <div className={styles.formGroup}>
-                            <label htmlFor="educationLevel">Education Level</label>
-                            <select
+                        <div className="mb-5">
+                            <CustomSelect
                                 id="educationLevel"
                                 name="educationLevel"
+                                label="Education Level"
+                                options={educationOptions}
                                 value={formData.educationLevel}
-                                onChange={handleChange}
-                                required
-                                className={styles.selectType}
-                            >
-                                <option value="">Select your education level</option>
-                                <option value="high-school">High School</option>
-                                <option value="undergraduate">Undergraduate</option>
-                                <option value="postgraduate">Postgraduate</option>
-                                <option value="other">Other</option>
-                            </select>
+                                onChange={(value) => handleChange('educationLevel', value)}
+                                placeholder="Select your education level"
+                                required={true}
+                                className="mb-0"
+                            />
                         </div>
 
-                        <button type="submit" className={styles.submitBtn}>Done</button>
+                        <button
+                            type="submit"
+                            className="w-full py-3 mt-6 mb-2 bg-gradient-to-r from-[#015990] to-[#0177b7] dark:from-blue-600 dark:to-blue-500 text-white font-semibold text-base md:text-lg rounded-xl shadow-lg transition-all duration-200 hover:from-[#0177b7] hover:to-[#015990] dark:hover:from-blue-500 dark:hover:to-blue-600 hover:-translate-y-0.5 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-[#015990] dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                        >
+                            Done
+                        </button>
                     </form>
                 </div>
             </div>
