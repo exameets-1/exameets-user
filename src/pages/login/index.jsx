@@ -22,7 +22,7 @@ const Login = () => {
   const [showOTPModal, setShowOTPModal] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
-  const [otp, setOTP] = useState("");
+  const [otp, setOTP] = useState(""); // Keep as string
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [resendTimer, setResendTimer] = useState(0);
@@ -363,14 +363,34 @@ const handleResetPassword = async (e) => {
             <form onSubmit={handleVerifyOTP}>
               <div className="mb-5">
                 <label className="block font-medium text-[#005587] dark:text-gray-300 mb-2">OTP</label>
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOTP(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#005587] focus:ring-1 focus:ring-[#005587]"
-                />
+                <div className="flex gap-2 justify-center">
+                  {[...Array(6)].map((_, idx) => (
+                    <input
+                      key={idx}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={1}
+                      value={otp[idx] || ""}
+                      onChange={e => {
+                        const val = e.target.value.replace(/[^0-9]/g, "");
+                        let newOtp = otp.split("");
+                        newOtp[idx] = val;
+                        setOTP(newOtp.join(""));
+                        // Move to next box if value entered
+                        if (val && idx < 5) {
+                          document.getElementById(`otp-box-${idx + 1}`)?.focus();
+                        }
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === "Backspace" && !otp[idx] && idx > 0) {
+                          document.getElementById(`otp-box-${idx - 1}`)?.focus();
+                        }
+                      }}
+                      id={`otp-box-${idx}`}
+                      className="w-10 h-12 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-[#005587] focus:ring-1 focus:ring-[#005587]"
+                    />
+                  ))}
+                </div>
               </div>
               {resendTimer > 0 && (
                 <div className="text-center text-sm text-gray-600 dark:text-gray-400 mb-4">
