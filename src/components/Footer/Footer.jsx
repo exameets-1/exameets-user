@@ -221,7 +221,7 @@ const Footer = () => {
         </div>
 
         {/* Quotes */}
-        <div className="border-t dark:border-gray-700 pt-2">
+        <div className="border-t dark:border-gray-700 pt-2 pb-2">
           <div className={`text-center transition-opacity duration-1000 min-h-[2em] ${
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}>
