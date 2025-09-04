@@ -41,6 +41,9 @@ const Register = () => {
   const [sendingEmailOtp, setSendingEmailOtp] = useState(false);
   const [sendingPhoneOtp, setSendingPhoneOtp] = useState(false);
   const [countryCode, setCountryCode] = useState("+91"); // Default country code
+  // Checkbox states
+  const [is13Checked, setIs13Checked] = useState(false);
+  const [isTermsChecked, setIsTermsChecked] = useState(false);
 
   // Password validation states
   const [passwordValidation, setPasswordValidation] = useState({
@@ -316,7 +319,7 @@ const Register = () => {
               onChange={(value) => setGender(value)}
               options={genderOptions}
               placeholder="Select Gender"
-              required={true}
+              // required={true}
             />
           </div>
 
@@ -500,10 +503,36 @@ const Register = () => {
             </p>
           </div>
           
+          {/* Age and Terms checkboxes */}
+          <div className="mb-4 mt-6">
+            <label className="flex items-center gap-2 text-gray-700 dark:text-gray-200 text-sm">
+              <input
+                type="checkbox"
+                checked={is13Checked}
+                onChange={e => setIs13Checked(e.target.checked)}
+                className="accent-[#015990] w-4 h-4 rounded"
+                required
+              />
+              I'm at least 13 years old
+            </label>
+            <label className="flex items-center gap-2 text-gray-700 dark:text-gray-200 text-sm mt-3">
+              <input
+                type="checkbox"
+                checked={isTermsChecked}
+                onChange={e => setIsTermsChecked(e.target.checked)}
+                className="accent-[#015990] w-4 h-4 rounded"
+                required
+              />
+              I agree to the
+              <Link href="/terms-of-service" className="text-[#015990] underline hover:text-blue-700 ml-1" target="_blank">Terms of Service</Link>
+              and
+              <Link href="/privacy-policy" className="text-[#015990] underline hover:text-blue-700 ml-1" target="_blank">Privacy Policy</Link>
+            </label>
+          </div>
           <button 
             type="submit" 
             className="w-full py-3 mt-2 bg-[#015990] text-white border-none dark:bg-gray-950 dark:text-gray-100 rounded cursor-pointer text-base hover:bg-gray-950 disabled:bg-gray-400"
-            disabled={loading}
+            disabled={loading || !is13Checked || !isTermsChecked}
           >
             {loading ? "Registering..." : "Next"}
           </button>
