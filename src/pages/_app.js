@@ -1,10 +1,12 @@
 import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import store from "@/store/store";
 import { getUser } from "@/store/slices/userSlice";
 import Layout from "@/components/Layout/index";
+import CookieConsent from "@/components/CookieConsent";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Loader from "@/components/Loader";
 import "@/styles/global.css";
@@ -40,6 +42,7 @@ function AppContent({ Component, pageProps }) {
       {loading && <Loader />}
       <Layout>
         <Component {...pageProps} />
+        <CookieConsent />
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -60,9 +63,11 @@ function AppContent({ Component, pageProps }) {
 
 function MyApp(props) {
   return (
-    <Provider store={store}>
-      <AppContent {...props} />
-    </Provider>
+    <CookiesProvider>
+      <Provider store={store}>
+        <AppContent {...props} />
+      </Provider>
+    </CookiesProvider>
   );
 }
 
