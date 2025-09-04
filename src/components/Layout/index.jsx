@@ -24,10 +24,23 @@ const Layout = ({ children }) => {
       <main>{children}</main>
       {/* Footer: always visible on desktop, only on home page for mobile */}
       <div>
-        {/* Only show Footer on mobile if home page, always show on desktop */}
-        <div className={`md:block ${pathname === '/' ? 'block' : 'hidden'}`}>
-          <Footer />
-        </div>
+        {/* Only show Footer on mobile for selected pages, always show on desktop */}
+        {(() => {
+          const footerPages = [
+            '/',
+            '/contact-us',
+            '/about-us',
+            '/community',
+            '/cookie-policy',
+            '/privacy-policy',
+            '/terms-of-service',
+          ];
+          return (
+            <div className={`md:block ${footerPages.includes(pathname) ? 'block' : 'hidden'}`}>
+              <Footer />
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
