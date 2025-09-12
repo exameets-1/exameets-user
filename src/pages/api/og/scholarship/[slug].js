@@ -18,7 +18,8 @@ export default async function handler(req) {
   if (!res.ok) {
     return new Response('Scholarship not found', { status: 404 });
   }
-  const scholarship = await res.json();
+  const data = await res.json();
+  const scholarship = data.scholarship; // Use the scholarship object from the response
 
   return new ImageResponse(
     (

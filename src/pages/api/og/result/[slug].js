@@ -18,7 +18,8 @@ export default async function handler(req) {
   if (!res.ok) {
     return new Response('Result not found', { status: 404 });
   }
-  const result = await res.json();
+  const data = await res.json();
+  const result = data.result; // Use the result object from the response
 
   return new ImageResponse(
     (

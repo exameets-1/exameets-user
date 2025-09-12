@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import { Result } from '@/lib/models/Result';
 import { catchAsync } from '@/lib/middlewares/catchAsync';
+import mongoose from 'mongoose';
 
 export default catchAsync(async (req, res) => {
   try {
@@ -16,7 +17,12 @@ export default catchAsync(async (req, res) => {
       });
     }
 
-    const result = await Result.findById(id);
+    let result;
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      result = await Result.findById(id);
+    } else {
+      result = await Result.findOne({ slug: id });
+    }
     if (!result) {
       return res.status(404).json({
         success: false,

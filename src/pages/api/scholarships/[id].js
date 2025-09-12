@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import { Scholarship } from '@/lib/models/Scholarship';
 import { catchAsync } from '@/lib/middlewares/catchAsync';
+import mongoose from 'mongoose';
 
 export default catchAsync(async (req, res) => {
   await dbConnect();
@@ -13,7 +14,12 @@ export default catchAsync(async (req, res) => {
       return res.status(405).json({ success: false, message: `Method ${method} Not Allowed` });
   }
 
-  const scholarship = await Scholarship.findById(id);
+  let scholarship;
+  if (mongoose.Types.ObjectId.isValid(id)) {
+      scholarship = await Scholarship.findById(id);
+  } else {
+      scholarship = await Scholarship.findOne({ slug: id });
+  }
   if (!scholarship) {
       return res.status(404).json({ success: false, message: 'Scholarship not found' });
   }
