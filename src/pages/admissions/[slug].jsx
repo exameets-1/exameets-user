@@ -72,14 +72,14 @@ const AdmissionDetails = ({ admission, error }) => {
           url: `https://exameets.in/admissions/${admission.slug}`,
           title: `${admission.title || "Admission Details"} | Exameets`,
           description: admission.description || "Admission details",
-          images: [
-            {
-              url: "https://exameets.in/images/logo-final.webp",
-              width: 800,
-              height: 600,
-              alt: "Exameets Logo",
-            },
-          ],
+                    images: [
+                {
+                  url: `https://exameets.in/api/og/admission/${admission.slug}`,
+                  width: 1200,
+                  height: 630,
+                  alt: `${admission.title} at ${admission.institute}`,
+                },
+              ],
         }}
       />
 

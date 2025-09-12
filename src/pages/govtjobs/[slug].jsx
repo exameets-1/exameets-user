@@ -104,14 +104,14 @@ const GovtJobDetails = ({ job, error }) => {
           url: `https://exameets.in/govtjobs/${job.slug}`,
           title: `${job.jobTitle || "Job Details"} | Exameets`,
           description: job.jobOverview?.substring(0, 150) || "Government job details",
-          images: [
-            {
-              url: job.image_url || "https://exameets.in/images/logo-final.webp",
-              width: 1200,
-              height: 630,
-              alt: "Job Banner",
-            },
-          ],
+                    images: [
+                {
+                  url: `https://exameets.in/api/og/govtjob/${job.slug}`,
+                  width: 1200,
+                  height: 630,
+                  alt: `${job.jobTitle} at ${job.organization}`,
+                },
+              ],
         }}
       />
 

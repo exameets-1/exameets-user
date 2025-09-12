@@ -66,14 +66,14 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
                 url: `https://exameets.in/admitcards/${admitCard.slug}`,
                 title: `${admitCard.title || "AdmitCard Details"} | Exameets`,
                 description: admitCard.description || "Admission details",
-                images: [
-                  {
-                    url: "https://exameets.in/images/logo-final.webp",
-                    width: 800,
-                    height: 600,
-                    alt: "Exameets Logo",
-                  },
-                ],
+                          images: [
+                {
+                  url: `https://exameets.in/api/og/admitcard/${admitCard.slug}`,
+                  width: 1200,
+                  height: 630,
+                  alt: `${admitCard.title} at ${admitCard.organization}`,
+                },
+              ],
               }}
             />
 

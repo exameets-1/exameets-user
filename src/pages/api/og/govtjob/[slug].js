@@ -13,12 +13,12 @@ export default async function handler(req) {
     return new Response('Slug is required', { status: 400 });
   }
 
-  // Fetch job data
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/${slug}`);
+  // Fetch govtJob data
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/govtjobs/${slug}`);
   if (!res.ok) {
-    return new Response('Job not found', { status: 404 });
+    return new Response('Govt Job not found', { status: 404 });
   }
-  const job = await res.json();
+  const govtJob = await res.json();
 
   return new ImageResponse(
     (
@@ -27,7 +27,7 @@ export default async function handler(req) {
           width: '1200px',
           height: '630px',
           display: 'flex',
-          backgroundImage: `url("https://exameets.in/images/og-images/jobs-og.png")`,
+          backgroundImage: `url("https://exameets.in/images/og-images/govtjobs-og.png")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -48,7 +48,7 @@ export default async function handler(req) {
             boxSizing: 'border-box',
           }}
         >
-          {/* Job Title */}
+          {/* Govt Job Title */}
           <h1
             style={{
               fontSize: '42px', // Reduced for better balance
@@ -64,7 +64,7 @@ export default async function handler(req) {
               textAlign: 'center',
             }}
           >
-            {job.jobTitle}
+            {govtJob.jobTitle}
           </h1>
           
           {/* Separator Line after Title */}
@@ -99,7 +99,7 @@ export default async function handler(req) {
                 textAlign: 'center',
               }}
             >
-              {job.companyName}
+              {govtJob.organization}
             </p>
 
             {/* Separator Line between Company and Location */}
@@ -124,7 +124,7 @@ export default async function handler(req) {
                 textAlign: 'center',
               }}
             >
-             {job.state}, {job.country}
+             {govtJob.jobLocation}
             </p>
           </div>
           

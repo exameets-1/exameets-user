@@ -8,7 +8,7 @@ import { Scholarship } from '@/lib/models/Scholarship';
 import { Result } from '@/lib/models/Result';
 import { PreviousYear } from '@/lib/models/PreviousYear';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 function generateUrls(section, items) {
   return items

@@ -47,14 +47,14 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
                 url: `https://exameets.in/results/${result.slug}`,
                 title: `${result.title || "Results Details"} | Exameets`,
                 description: result.description || "Results details",
-                images: [
-                  {
-                    url: "https://exameets.in/images/logo-final.webp",
-                    width: 800,
-                    height: 600,
-                    alt: "Exameets Logo",
-                  },
-                ],
+                          images: [
+                {
+                  url: `https://exameets.in/api/og/result/${result.slug}`,
+                  width: 1200,
+                  height: 630,
+                  alt: `${result.title} at ${result.organization}`,
+                },
+              ],
               }}
       />
 

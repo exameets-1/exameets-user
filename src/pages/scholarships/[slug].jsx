@@ -71,14 +71,14 @@ const ScholarshipDetails = ({ scholarship, error }) => {
                     url: `https://exameets.in/scholarships/${scholarship.slug}`,
                     title: `${scholarship.title || "Scholarship Details"} | Exameets`,
                     description: scholarship.description || "",
-                    images: [
-                        {
-                            url: "https://exameets.in/images/logo-final.webp",
-                            width: 800,
-                            height: 600,
-                            alt: "Exameets Scholarship",
-                        },
-                    ],
+                              images: [
+                {
+                  url: `https://exameets.in/api/og/scholarship/${scholarship.slug}`,
+                  width: 1200,
+                  height: 630,
+                  alt: `${scholarship.title} at ${scholarship.organization}`,
+                },
+              ],
                 }}
             />
             <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
