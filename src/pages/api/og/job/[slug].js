@@ -13,7 +13,7 @@ export default async function handler(req) {
   }
 
   // Fetch job data from Node.js API
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/${slug}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/jobs/${slug}`);
   if (!res.ok) {
     return new Response('Job not found', { status: 404 });
   }
