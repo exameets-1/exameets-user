@@ -11,6 +11,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@reduxjs/toolkit": "^2.5.1",
+    "@vercel/og": "^0.8.5",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cookie": "^1.0.2",
