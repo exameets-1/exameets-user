@@ -61,19 +61,19 @@ const ScholarshipDetails = ({ scholarship, error }) => {
     return (
         <>
             <Head>
-                <link rel="canonical" href={`https://exameets.in/scholarships/${scholarship.slug}`} />
+                <link rel="canonical" href={`https://www.exameets.in/scholarships/${scholarship.slug}`} />
             </Head>
             <NextSeo
                 title={`${scholarship.title || "Scholarship Details"} | Exameets`}
                 description={scholarship.description || ""}
                 openGraph={{
                     type: "website",
-                    url: `https://exameets.in/scholarships/${scholarship.slug}`,
+                    url: `https://www.exameets.in/scholarships/${scholarship.slug}`,
                     title: `${scholarship.title || "Scholarship Details"} | Exameets`,
                     description: scholarship.description || "",
                               images: [
                 {
-                  url: `https://exameets.in/api/og/scholarship/${scholarship.slug}`,
+                  url: `https://www.exameets.in/api/og/scholarship/${scholarship.slug}`,
                   width: 1200,
                   height: 630,
                   alt: `${scholarship.title} at ${scholarship.organization}`,
@@ -112,7 +112,7 @@ const ScholarshipDetails = ({ scholarship, error }) => {
         <ShareModal
           open={showShare}
           onClose={() => setShowShare(false)}
-          url={`https://exameets.in${router.asPath}`}
+          url={`https://www.exameets.in${router.asPath}`}
           title={scholarship.title || "Scholarship Details"}
           details={shareDetails}
         />

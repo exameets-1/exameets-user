@@ -11,7 +11,7 @@ const AboutUs = () => {
         <Head>
           <title>About Us | Exameets</title>
           <meta name="description" content="Learn more about Exameets, our mission, vision, and the services we offer to students and job seekers." />
-          <link rel="canonical" href="https://exameets.in/about-us" />
+          <link rel="canonical" href="https://www.exameets.in/about-us" />
         </Head>
         <div className="min-h-screen bg-gradient-to-br from-[#eaf6fb] via-white to-[#d5e5f6] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">

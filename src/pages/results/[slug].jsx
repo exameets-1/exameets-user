@@ -42,14 +42,14 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
       <NextSeo
               title={`${result.title || "Results Details"} | Exameets`}
               description={result.description || "Results details"}
-              canonical={`https://exameets.in/results/${result.slug}`}
+              canonical={`https://www.exameets.in/results/${result.slug}`}
               openGraph={{
-                url: `https://exameets.in/results/${result.slug}`,
+                url: `https://www.exameets.in/results/${result.slug}`,
                 title: `${result.title || "Results Details"} | Exameets`,
                 description: result.description || "Results details",
                           images: [
                 {
-                  url: `https://exameets.in/api/og/result/${result.slug}`,
+                  url: `https://www.exameets.in/api/og/result/${result.slug}`,
                   width: 1200,
                   height: 630,
                   alt: `${result.title} at ${result.organization}`,
@@ -90,7 +90,7 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
         <ShareModal
           open={showShare}
           onClose={() => setShowShare(false)}
-          url={`https://exameets.in${router.asPath}`}
+          url={`https://www.exameets.in${router.asPath}`}
           title={result.title || "Government Job"}
           details={shareDetails}
         />

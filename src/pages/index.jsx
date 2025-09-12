@@ -16,7 +16,7 @@ const Home = () => {
     <Head>
         <title>Exameets</title>
         <meta name="description" content="Welcome to Exameets - Your gateway to success." />
-        <link rel="canonical" href={`https://exameets.in`} />
+        <link rel="canonical" href={`https://www.exameets.in`} />
     </Head>
     {scrollToTop()}
     <div className="bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600">

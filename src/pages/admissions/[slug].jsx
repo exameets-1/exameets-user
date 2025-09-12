@@ -61,20 +61,20 @@ const AdmissionDetails = ({ admission, error }) => {
       <Head>
         <link
           rel="canonical"
-          href={`https://exameets.in/admissions/${admission.slug}`}
+          href={`https://www.exameets.in/admissions/${admission.slug}`}
         />
       </Head>
       <NextSeo
         title={`${admission.title || "Admission Details"} | Exameets`}
         description={admission.description || "Admission details"}
-        canonical={`https://exameets.in/admissions/${admission.slug}`}
+        canonical={`https://www.exameets.in/admissions/${admission.slug}`}
         openGraph={{
-          url: `https://exameets.in/admissions/${admission.slug}`,
+          url: `https://www.exameets.in/admissions/${admission.slug}`,
           title: `${admission.title || "Admission Details"} | Exameets`,
           description: admission.description || "Admission details",
                     images: [
                 {
-                  url: `https://exameets.in/api/og/admission/${admission.slug}`,
+                  url: `https://www.exameets.in/api/og/admission/${admission.slug}`,
                   width: 1200,
                   height: 630,
                   alt: `${admission.title} at ${admission.institute}`,
@@ -113,7 +113,7 @@ const AdmissionDetails = ({ admission, error }) => {
         <ShareModal
           open={showShare}
           onClose={() => setShowShare(false)}
-          url={`https://exameets.in${router.asPath}`}
+          url={`https://www.exameets.in${router.asPath}`}
           title={admission.title || "Admission Details"}
           details={shareDetails}
         />

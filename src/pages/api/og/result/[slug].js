@@ -28,7 +28,7 @@ export default async function handler(req) {
           width: '1200px',
           height: '630px',
           display: 'flex',
-          backgroundImage: `url("https://exameets.in/images/og-images/results-og.png")`,
+          backgroundImage: `url("https://www.exameets.in/images/og-images/results-og.png")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

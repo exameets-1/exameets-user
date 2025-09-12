@@ -220,7 +220,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
     <>
       <Head>
         <title>Admissions | Exameets</title>
-        <link rel="canonical" href={`https://exameets.in/admissions`} />
+        <link rel="canonical" href={`https://www.exameets.in/admissions`} />
         < meta name="description" content="Explore the latest admission opportunities across various fields and locations. Find your next educational opportunity with Exameets." />
       </Head>
 

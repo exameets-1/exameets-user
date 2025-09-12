@@ -72,7 +72,7 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
           name="description"
           content="Find latest admit cards and recruitment hall tickets for government jobs and competitive exams. Get direct download links and important exam dates."
         />
-        <link rel="canonical" href={`https://exameets.in/admitcards`} />
+        <link rel="canonical" href={`https://www.exameets.in/admitcards`} />
       </Head>
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">

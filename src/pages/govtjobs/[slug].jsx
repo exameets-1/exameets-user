@@ -94,19 +94,19 @@ const GovtJobDetails = ({ job, error }) => {
   return (
     <>
       <Head>
-        <link rel="canonical" href={`https://exameets.in/govtjobs/${job.slug}`} />
+        <link rel="canonical" href={`https://www.exameets.in/govtjobs/${job.slug}`} />
       </Head>
       <NextSeo
         title={`${job.jobTitle || "Job Details"} | Exameets`}
         description={job.jobOverview?.substring(0, 150) || "Government job details"}
-        canonical={`https://exameets.in/govtjobs/${job.slug}`}
+        canonical={`https://www.exameets.in/govtjobs/${job.slug}`}
         openGraph={{
-          url: `https://exameets.in/govtjobs/${job.slug}`,
+          url: `https://www.exameets.in/govtjobs/${job.slug}`,
           title: `${job.jobTitle || "Job Details"} | Exameets`,
           description: job.jobOverview?.substring(0, 150) || "Government job details",
                     images: [
                 {
-                  url: `https://exameets.in/api/og/govtjob/${job.slug}`,
+                  url: `https://www.exameets.in/api/og/govtjob/${job.slug}`,
                   width: 1200,
                   height: 630,
                   alt: `${job.jobTitle} at ${job.organization}`,
@@ -146,7 +146,7 @@ const GovtJobDetails = ({ job, error }) => {
         <ShareModal
           open={showShare}
           onClose={() => setShowShare(false)}
-          url={`https://exameets.in${router.asPath}`}
+          url={`https://www.exameets.in${router.asPath}`}
           title={job.jobTitle || "Government Job"}
           details={shareDetails}
         />

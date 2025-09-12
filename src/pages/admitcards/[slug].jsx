@@ -61,14 +61,14 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
             <NextSeo
               title={`${admitCard.title || "AdmitCard Details"} | Exameets`}
               description={admitCard.description || "Admission details"}
-              canonical={`https://exameets.in/admitcards/${admitCard.slug}`}
+              canonical={`https://www.exameets.in/admitcards/${admitCard.slug}`}
               openGraph={{
-                url: `https://exameets.in/admitcards/${admitCard.slug}`,
+                url: `https://www.exameets.in/admitcards/${admitCard.slug}`,
                 title: `${admitCard.title || "AdmitCard Details"} | Exameets`,
                 description: admitCard.description || "Admission details",
                           images: [
                 {
-                  url: `https://exameets.in/api/og/admitcard/${admitCard.slug}`,
+                  url: `https://www.exameets.in/api/og/admitcard/${admitCard.slug}`,
                   width: 1200,
                   height: 630,
                   alt: `${admitCard.title} at ${admitCard.organization}`,
@@ -108,7 +108,7 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
         <ShareModal
           open={showShare}
           onClose={() => setShowShare(false)}
-          url={`https://exameets.in${router.asPath}`}
+          url={`https://www.exameets.in${router.asPath}`}
           title={admitCard.title || "Admit Card Details"}
           details={shareDetails}
         />

@@ -134,7 +134,7 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
       <Head>
         <title>Government Jobs | Exameets</title>
         <meta name="description" content="Find the latest government job listings in India on Exameets. Stay updated with job alerts and resources to help you succeed." />
-        <link rel="canonical" href={`https://exameets.in/govtjobs`} />
+        <link rel="canonical" href={`https://www.exameets.in/govtjobs`} />
       </Head>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <div className="max-w-7xl mx-auto">

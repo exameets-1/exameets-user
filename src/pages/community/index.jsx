@@ -48,7 +48,7 @@ const Community = () => {
       <Head>
         <title>Community | Exameets</title>
         <meta name="description" content="Join the Exameets community and connect with fellow aspirants. Share resources, tips, and stay updated on the latest exam news." />
-        <link rel="canonical" href={`https://exameets.in/community`} />
+        <link rel="canonical" href={`https://www.exameets.in/community`} />
       </Head>
       <div className="min-h-screen bg-gradient-to-br from-[#eaf6fb] via-white to-[#d5e5f6] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">

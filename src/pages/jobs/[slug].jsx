@@ -78,19 +78,19 @@ const JobDetails = ({ job, error }) => {
   return (
     <div className="relative max-w-6xl mx-auto">
       <Head>
-        <link rel="canonical" href={`https://exameets.in/jobs/${job.slug}`} />
+        <link rel="canonical" href={`https://www.exameets.in/jobs/${job.slug}`} />
       </Head>
       <NextSeo
         title={`${job.jobTitle} | ${job.companyName} | Job Details`}
         description={job.positionSummary}
-        canonical={`https://exameets.in/jobs/${job.slug}`}
+        canonical={`https://www.exameets.in/jobs/${job.slug}`}
         openGraph={{
-          url: `https://exameets.in/jobs/${job.slug}`,
+          url: `https://www.exameets.in/jobs/${job.slug}`,
           title: `${job.jobTitle} | ${job.companyName} | Job Details`,
           description: job.positionSummary,
           images: [
                 {
-                  url: `https://exameets.in/api/og/job/${job.slug}`,
+                  url: `https://www.exameets.in/api/og/job/${job.slug}`,
                   width: 1200,
                   height: 630,
                   alt: `${job.jobTitle} at ${job.companyName}`,
@@ -129,7 +129,7 @@ const JobDetails = ({ job, error }) => {
         <ShareModal
           open={showShare}
           onClose={() => setShowShare(false)}
-          url={`https://exameets.in${router.asPath}`}
+          url={`https://www.exameets.in${router.asPath}`}
           title={job.jobTitle || "Tech Job"}
           details={shareDetails}
         />

@@ -129,7 +129,7 @@ try {
       <Head>
         <title>Contact Us | Exameets</title>
         <meta name="description" content="Get in touch with Exameets for any inquiries, feedback, or support. We're here to help you succeed." />
-        <link rel="canonical" href={`https://exameets.in/contact-us`} />
+        <link rel="canonical" href={`https://www.exameets.in/contact-us`} />
       </Head>
         <div className="min-h-screen bg-gradient-to-br from-[#eaf6fb] via-white to-[#d5e5f6] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">

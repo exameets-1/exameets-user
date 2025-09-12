@@ -121,7 +121,7 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
       params.append("internship_type", filters.internship_type);
     if (searchKeyword) params.append("q", searchKeyword);
     params.append("page", currentPage);
-    return `https://exameets.in/internships?${params.toString()}`;
+    return `https://www.exameets.in/internships?${params.toString()}`;
   })();
 
   const locationOptions = [
