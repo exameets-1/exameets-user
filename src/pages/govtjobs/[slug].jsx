@@ -4,6 +4,8 @@ import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
 import { GovtJob } from "@/lib/models/GovtJob";
 import { useRouter } from 'next/router';
+import ShareModal from "@/modals/ShareModal";
+import { FaShareAlt } from "react-icons/fa";
 
 // Helper function for consistent date formatting
 const formatDate = (dateString) => {
@@ -55,6 +57,13 @@ const renderArrayAsList = (array, emptyMessage = "None specified") => {
 
 const GovtJobDetails = ({ job, error }) => {
   const router = useRouter();
+  const [showShare, setShowShare] = React.useState(false);
+
+  const shareDetails = [
+    job.organization && `Organization: ${job.organization}`,
+    job.jobLocation && `Location: ${job.jobLocation}`,
+    Array.isArray(job.postNames) && job.postNames.length > 0 && `Post: ${job.postNames.join(", ")}`
+  ].filter(Boolean).join("\n");
 
   const handleKeywordClick = (keyword) => {
     router.push(`/govtjobs?page=1&searchKeyword=${encodeURIComponent(keyword)}`);
@@ -116,12 +125,31 @@ const GovtJobDetails = ({ job, error }) => {
           </button>
         </div>
 
-        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-white text-center">{job.jobTitle || "Government Job"}</h1>
-          <p className="mt-2 text-xl text-white text-center">{job.organization || "Not specified"}</p>
-          {/* {job.year && <p className="text-white text-center">Year: {job.year}</p>} */}
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
+          <button
+            className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            onClick={() => setShowShare(true)}
+            aria-label="Share"
+          >
+            <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
+          </button>
+          
+          <h1 className="text-2xl font-bold text-white text-center px-12">
+            {job.jobTitle || "Government Job"}
+          </h1>
+          
+          <p className="mt-2 text-xl text-white text-center px-12">
+            {job.organization || "Not specified"}
+          </p>
         </div>
 
+        <ShareModal
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          url={`https://exameets.in${router.asPath}`}
+          title={job.jobTitle || "Government Job"}
+          details={shareDetails}
+        />
         {/* Job Overview */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Job Overview</h2>
@@ -416,55 +444,6 @@ const GovtJobDetails = ({ job, error }) => {
   );
 };
 
-// export async function getServerSideProps(context) {
-//   await dbConnect();
-//   const { slug } = context.params;
-
-//   try {
-//     const job = await GovtJob.findOne({ slug }).lean();
-    
-//     if (!job) {
-//       return { notFound: true };
-//     }
-
-//     // Convert ObjectId and other non-serializable fields
-//     const formattedJob = {
-//       ...job,
-//       _id: job._id ? job._id.toString() : null,
-//       faq: job.faq?.map(faqItem => ({
-//         ...faqItem,
-//         _id: faqItem._id ? faqItem._id.toString() : null
-//       })) || [],
-//       createdAt: job.createdAt ? job.createdAt.toString() : null,
-//       postedBy: job.postedBy ? job.postedBy.toString() : null
-//     };
-
-//     // Format date fields
-//     const dateFields = [
-//       'notificationReleaseDate',
-//       'applicationStartDate',
-//       'applicationEndDate',
-//       'examInterviewDate'
-//     ];
-    
-//     dateFields.forEach(field => {
-//       formattedJob[field] = job[field] ? formatDate(job[field]) : null;
-//     });
-
-//     return {
-//       props: {
-//         job: formattedJob,
-//       },
-//     };
-//   } catch (error) {
-//     console.error('Error fetching job details:', error);
-//     return {
-//       props: {
-//         error: error.message || "Failed to load job details",
-//       },
-//     };
-//   }
-// }
 
 export async function getServerSideProps(context) {
   await dbConnect();

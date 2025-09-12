@@ -1,9 +1,11 @@
 import React from "react";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft , FaShareAlt} from "react-icons/fa";
 import dbConnect from "@/lib/dbConnect";
 import { Internship } from "@/lib/models/Internship";
+import ShareModal from "@/modals/ShareModal";
+import { useRouter } from "next/router";
 
 // Helper function to format dates in a fixed MM/DD/YYYY format
 const formatDate = (dateString) => {
@@ -15,6 +17,15 @@ const formatDate = (dateString) => {
 };
 
 const InternshipDetails = ({ internship, error }) => {
+  const router = useRouter();
+  const [showShare, setShowShare] = React.useState(false);
+
+  const shareDetails = [
+    internship.organization && `Organization: ${internship.organization}`,
+    internship.location && `Location: ${internship.location}`,
+  ].filter(Boolean).join("\n");
+
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -79,10 +90,31 @@ const InternshipDetails = ({ internship, error }) => {
         </button>
       </div>
 
-      <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-        <h1 className="text-2xl font-bold text-white text-center">{internship.title}</h1>
-        <p className="mt-2 text-xl text-white text-center">{internship.organization}</p>
-      </div>
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
+          <button
+            className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            onClick={() => setShowShare(true)}
+            aria-label="Share"
+          >
+            <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
+          </button>
+          
+          <h1 className="text-2xl font-bold text-white text-center px-12">
+            {internship.title || "Internship Title"}
+          </h1>
+          
+          <p className="mt-2 text-xl text-white text-center px-12">
+            {internship.organization || "Not specified"}
+          </p>
+        </div>
+
+        <ShareModal
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          url={`https://exameets.in${router.asPath}`}
+          title={internship.title || "Internship Title"}
+          details={shareDetails}
+        />
 
       {/* Organization Details */}
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">

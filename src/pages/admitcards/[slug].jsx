@@ -1,12 +1,21 @@
+import React from 'react';
 import Head from 'next/head';
 import dbConnect from '@/lib/dbConnect';
 import { AdmitCard } from '@/lib/models/AdmitCard';
 import { useRouter } from 'next/router';
-import { FaExternalLinkAlt, FaLink } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaLink, FaShareAlt } from 'react-icons/fa';
 import { NextSeo } from 'next-seo';
+import ShareModal from '@/modals/ShareModal';
 
 const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
   const router = useRouter();
+  const [showShare, setShowShare] = React.useState(false);
+
+    const shareDetails = [
+    admitCard.organization && `Organization: ${admitCard.organization}`,
+    admitCard.vacancies && `Vacancies: ${admitCard.vacancies}`,
+  ].filter(Boolean).join("\n");
+  
 
   if (router.isFallback) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -78,10 +87,31 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
           </button>
         </div>
 
-        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-white text-center">{admitCard.title}</h1>
-          <p className="mt-2 text-xl text-white text-center">{admitCard.organization}</p>
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
+          <button
+            className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            onClick={() => setShowShare(true)}
+            aria-label="Share"
+          >
+            <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
+          </button>
+          
+          <h1 className="text-2xl font-bold text-white text-center px-12">
+            {admitCard.title || "Admit Card Details"}
+          </h1>
+          
+          <p className="mt-2 text-xl text-white text-center px-12">
+            {admitCard.organization || "Not specified"}
+          </p>
         </div>
+
+        <ShareModal
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          url={`https://exameets.in${router.asPath}`}
+          title={admitCard.title || "Admit Card Details"}
+          details={shareDetails}
+        />
 
         {/* Basic Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">

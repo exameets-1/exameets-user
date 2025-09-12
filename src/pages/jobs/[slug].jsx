@@ -4,6 +4,8 @@ import { NextSeo } from "next-seo";
 import { useRouter } from 'next/router';
 import dbConnect from "@/lib/dbConnect";
 import { Job } from "@/lib/models/Job";
+import { FaShareAlt } from "react-icons/fa";
+import ShareModal from "@/modals/ShareModal";
 
 // Helper function to format dates consistently (MM/DD/YYYY)
 const formatDate = (dateString) => {
@@ -18,6 +20,13 @@ const formatDate = (dateString) => {
 
 const JobDetails = ({ job, error }) => {
   const router = useRouter();
+  const [showShare, setShowShare] = React.useState(false);
+
+  const shareDetails = [
+    job.jobTitle && `Job Title: ${job.jobTitle}`,
+    job.companyName && `Company: ${job.companyName}`,
+    job.location && `Location: ${job.city}, ${job.state}, ${job.country}`,
+  ].filter(Boolean).join("\n");
 
   // Function to handle keyword clicks
   const handleKeywordClick = (keyword) => {
@@ -98,10 +107,31 @@ const JobDetails = ({ job, error }) => {
           ← Back to Jobs
         </button>
 
-        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-white text-center">{job.jobTitle}</h1>
-          <p className="mt-2 text-xl text-white text-center">{job.companyName}</p>
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
+          <button
+            className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            onClick={() => setShowShare(true)}
+            aria-label="Share"
+          >
+            <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
+          </button>
+          
+          <h1 className="text-2xl font-bold text-white text-center px-12">
+            {job.jobTitle || "Tech Job"}
+          </h1>
+          
+          <p className="mt-2 text-xl text-white text-center px-12">
+            {job.companyName || "Not specified"}
+          </p>
         </div>
+
+        <ShareModal
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          url={`https://exameets.in${router.asPath}`}
+          title={job.jobTitle || "Tech Job"}
+          details={shareDetails}
+        />
 
         {/* Category & Position Type */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
