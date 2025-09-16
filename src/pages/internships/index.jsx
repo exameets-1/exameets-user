@@ -335,7 +335,7 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                     Stipend: {internship.stipend}
                   </span>
                   <button
-                    className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
+                    className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                     onClick={(e) => {
                       e.preventDefault();
                       handleInternshipClick(internship.slug);

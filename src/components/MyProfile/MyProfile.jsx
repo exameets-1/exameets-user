@@ -59,7 +59,7 @@ const MyProfile = () => {
             >
               <div className="flex items-center space-x-3 w-2/5">
                 <span className="text-xl" aria-hidden="true">{field.icon}</span>
-                <span className="font-medium text-gray-700 dark:text-gray-300 hidden md:inline">{field.label}</span>
+                <span className="font-bold text-gray-700 dark:text-gray-300 hidden md:inline">{field.label}</span>
               </div>
               <div className={`w-3/5 text-right ${!field.value ? "text-gray-400 dark:text-gray-500 italic" : "text-gray-800 dark:text-gray-200"}`}>
                 {field.value || "Not provided"}

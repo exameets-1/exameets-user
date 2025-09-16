@@ -68,7 +68,7 @@
 //                                             <Link 
 //                                                 href={`/papers/${encodeURIComponent(subject)}/${year}`}
 //                                             >
-//                                                 <span className="text-[#015990] dark:text-blue-400 font-medium hover:underline cursor-pointer">
+//                                                 <span className="text-[#015990] dark:text-blue-400 font-bold hover:underline cursor-pointer">
 //                                                     View Details →
 //                                                 </span>
 //                                             </Link>
@@ -215,7 +215,7 @@ const SubjectPapers = ({ subject, papersByYear, error }) => {
                                             <Link 
                                                 href={`/papers/${encodeURIComponent(subject)}/${paper.slug}`}
                                             >
-                                                <span className="text-[#015990] dark:text-blue-400 font-medium hover:underline cursor-pointer">
+                                                <span className="text-[#015990] dark:text-blue-400 font-bold hover:underline cursor-pointer">
                                                     View Details →
                                                 </span>
                                             </Link>

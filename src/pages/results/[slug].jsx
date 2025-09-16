@@ -202,11 +202,11 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">SEO Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Slug</h3>
+              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Slug</h3>
               <p className="text-gray-700 dark:text-gray-300">{result.slug}</p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Search Description</h3>
+              <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Search Description</h3>
               <p className="text-gray-700 dark:text-gray-300">{result.searchDescription}</p>
             </div>
           </div>
@@ -218,7 +218,7 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(result.importantLinks || {}).map(([key, value]) => (
               <div key={key} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2 capitalize">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2 capitalize">
                   {key.replace(/([A-Z])/g, ' $1')}
                 </h3>
                 {value ? (

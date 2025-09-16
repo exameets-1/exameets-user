@@ -61,20 +61,20 @@
 //                                                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1 capitalize">
 //                                                     {field.replace("_", " ")}
 //                                                 </p>
-//                                                 <p className="font-medium text-gray-800 dark:text-gray-200">{paper[field]}</p>
+//                                                 <p className="font-bold text-gray-800 dark:text-gray-200">{paper[field]}</p>
 //                                             </div>
 //                                         ))}
 
 //                                         {/* Category Field */}
 //                                         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
 //                                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Category</p>
-//                                             <p className="font-medium text-gray-800 dark:text-gray-200">{paper.category}</p>
+//                                             <p className="font-bold text-gray-800 dark:text-gray-200">{paper.category}</p>
 //                                         </div>
 
 //                                         {/* Slug Field */}
 //                                         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
 //                                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Slug</p>
-//                                             <p className="font-medium text-gray-800 dark:text-gray-200">{paper.slug}</p>
+//                                             <p className="font-bold text-gray-800 dark:text-gray-200">{paper.slug}</p>
 //                                         </div>
 //                                     </div>
 //                                 </div>
@@ -270,7 +270,7 @@ const SlugPaper = ({ paper, subject, slug, error }) => {
                                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-1 capitalize">
                                                 {field.replace("_", " ")}
                                             </p>
-                                            <p className="font-medium text-gray-800 dark:text-gray-200">
+                                            <p className="font-bold text-gray-800 dark:text-gray-200">
                                                 {paper[field]}
                                             </p>
                                         </div>
@@ -279,7 +279,7 @@ const SlugPaper = ({ paper, subject, slug, error }) => {
                                     {/* Category Field */}
                                     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
                                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Category</p>
-                                        <p className="font-medium text-gray-800 dark:text-gray-200">
+                                        <p className="font-bold text-gray-800 dark:text-gray-200">
                                             {paper.category || "Not specified"}
                                         </p>
                                     </div>
@@ -287,7 +287,7 @@ const SlugPaper = ({ paper, subject, slug, error }) => {
                                     {/* Slug Field */}
                                     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
                                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Slug</p>
-                                        <p className="font-medium text-gray-800 dark:text-gray-200">
+                                        <p className="font-bold text-gray-800 dark:text-gray-200">
                                             {paper.slug}
                                         </p>
                                     </div>

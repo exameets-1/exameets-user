@@ -48,7 +48,7 @@ const DeleteAccount = () => {
   
       <form onSubmit={handleSubmit} className="bg-gray-50 dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-sm">
         <div className="mb-6">
-          <label htmlFor="password" className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+          <label htmlFor="password" className="block text-gray-700 dark:text-gray-300 font-bold mb-2">
             Enter Your Password
           </label>
           <input

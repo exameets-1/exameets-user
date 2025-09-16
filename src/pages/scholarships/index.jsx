@@ -450,7 +450,7 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                       {scholarship.qualification}
                     </span>
                     <button
-                      className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
+                      className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                       onClick={() => handleViewDetails(scholarship.slug)}
                     >
                       View Details →

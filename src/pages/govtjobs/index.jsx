@@ -291,27 +291,27 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
                 <div className="grid gap-2 mb-4 overflow-hidden">
                   {job.jobLocation && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
-                      <span className="font-medium">Location:</span> {job.jobLocation}
+                      <span className="font-bold">Location:</span> {job.jobLocation}
                     </div>
                   )}
                   {job.postNames && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
-                      <span className="font-medium">Post:</span> {Array.isArray(job.postNames) ? job.postNames.join(', ') : job.postNames}
+                      <span className="font-bold">Post:</span> {Array.isArray(job.postNames) ? job.postNames.join(', ') : job.postNames}
                     </div>
                   )}
                   {job.educationalQualifications && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
-                      <span className="font-medium">Qualification:</span> {Array.isArray(job.educationalQualifications) ? job.educationalQualifications[0] : job.educationalQualifications}
+                      <span className="font-bold">Qualification:</span> {Array.isArray(job.educationalQualifications) ? job.educationalQualifications[0] : job.educationalQualifications}
                     </div>
                   )}
                   {job.applicationStartDate && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
-                      <span className="font-medium">Start:</span> {job.applicationStartDate}
+                      <span className="font-bold">Start:</span> {job.applicationStartDate}
                     </div>
                   )}
                   {job.applicationEndDate && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
-                      <span className="font-medium">Close:</span> {job.applicationEndDate}
+                      <span className="font-bold">Close:</span> {job.applicationEndDate}
                     </div>
                   )}
                 </div>
@@ -321,7 +321,7 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error }) =
                   </span>
                   <Link 
                     href={`/govtjobs/${job.slug}`}
-                    className="text-[#015990] dark:text-blue-400 font-medium hover:underline whitespace-nowrap ml-2 flex-shrink-0"
+                    className="text-[#015990] dark:text-blue-400 font-bold hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                   >
                     View Details →
                   </Link>

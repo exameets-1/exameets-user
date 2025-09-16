@@ -175,7 +175,7 @@ const AdmissionDetails = ({ admission, error }) => {
               key={index}
               className={`flex justify-between items-center ${index < 2 ? 'border-b pb-2 border-gray-200 dark:border-gray-700' : ''}`}
             >
-              <span className="font-medium">{label}:</span>
+              <span className="font-bold">{label}:</span>
               <span>{formatDate(date)}</span>
             </li>
           ))}
@@ -190,7 +190,7 @@ const AdmissionDetails = ({ admission, error }) => {
             href={admission.application_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
+            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
           >
             Apply Now
           </a>

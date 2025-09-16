@@ -346,7 +346,7 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                     </span>
                     <a 
                       href={`/jobs/${job.slug}`}
-                      className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
+                      className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                     >
                       View Details →
                     </a>

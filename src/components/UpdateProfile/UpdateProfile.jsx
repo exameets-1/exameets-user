@@ -65,7 +65,7 @@ const UpdateProfile = () => {
       <div className="bg-white dark:bg-gray-800 dark:text-white rounded-xl shadow-md p-6 md:p-8 w-full max-w-lg mt-4 md:mt-8">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2">
-            <label className="text-gray-600 dark:text-gray-300 font-medium text-sm">Full Name</label>
+            <label className="text-gray-600 dark:text-gray-300 font-bold text-sm">Full Name</label>
             <input
               type="text"
               id="name"
@@ -79,7 +79,7 @@ const UpdateProfile = () => {
           </div>
 
           <div className="flex flex-col space-y-2">
-            <label className="text-gray-600 dark:text-gray-300 font-medium text-sm">Date of Birth</label>
+            <label className="text-gray-600 dark:text-gray-300 font-bold text-sm">Date of Birth</label>
             <input
               type="date"
               id="dob"
@@ -90,7 +90,7 @@ const UpdateProfile = () => {
           </div>
 
           <div className="flex flex-col space-y-2">
-            <label className="text-gray-600 dark:text-gray-300 font-medium text-sm">Gender</label>
+            <label className="text-gray-600 dark:text-gray-300 font-bold text-sm">Gender</label>
             <select
               id="gender"
               value={formData.gender}

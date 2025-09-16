@@ -97,7 +97,7 @@ const CustomSelect = ({
     <div className={`relative ${className}`} ref={selectRef}>
       {label && (
         <label 
-          className="block text-[#015990] font-medium mb-2 dark:text-gray-100" 
+          className="block text-[#015990] font-bold mb-2 dark:text-gray-100" 
           htmlFor={id}
         >
           {label}

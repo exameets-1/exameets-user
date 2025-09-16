@@ -122,20 +122,20 @@ const ScholarshipDetails = ({ scholarship, error }) => {
                     <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Scholarship Details</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Qualification</h3>
+                            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Qualification</h3>
                             <p className="text-gray-700 dark:text-gray-300">{scholarship.qualification || 'Not specified'}</p>
                         </div>
                         <div>
-                            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Category</h3>
+                            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Category</h3>
                             <p className="text-gray-700 dark:text-gray-300">{scholarship.category || 'Not specified'}</p>
                         </div>
                         <div>
-                            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Amount</h3>
+                            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Amount</h3>
                             <p className="text-gray-700 dark:text-gray-300">{scholarship.amount || 'Not specified'}</p>
                         </div>
                         {scholarship.is_featured && (
                             <div>
-                                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Featured</h3>
+                                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Featured</h3>
                                 <p className="text-gray-700 dark:text-gray-300">Yes</p>
                             </div>
                         )}
@@ -173,16 +173,16 @@ const ScholarshipDetails = ({ scholarship, error }) => {
                     <div className="space-y-3">
                         {scholarship.start_date && (
                             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                                <p className="font-medium text-gray-800 dark:text-gray-200">Start Date</p>
+                                <p className="font-bold text-gray-800 dark:text-gray-200">Start Date</p>
                                 <p className="text-gray-700 dark:text-gray-300">{formatDate(scholarship.start_date)}</p>
                             </div>
                         )}
                         <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                            <p className="font-medium text-gray-800 dark:text-gray-200">Posted Date</p>
+                            <p className="font-bold text-gray-800 dark:text-gray-200">Posted Date</p>
                             <p className="text-gray-700 dark:text-gray-300">{formatDate(scholarship.post_date)}</p>
                         </div>
                         <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                            <p className="font-medium text-gray-800 dark:text-gray-200">Last Date to Apply</p>
+                            <p className="font-bold text-gray-800 dark:text-gray-200">Last Date to Apply</p>
                             <p className="text-gray-700 dark:text-gray-300">{formatDate(scholarship.last_date)}</p>
                         </div>
                     </div>

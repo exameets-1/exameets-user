@@ -164,7 +164,7 @@ You must not disrupt the platform's functionality or compromise the experience o
               <h1 className="text-4xl font-extrabold text-center text-[#015990] dark:text-[#90cdf4] mb-2 tracking-tight">
                 Terms and Conditions
               </h1>
-              <span className="text-sm text-[#015990] dark:text-[#90cdf4] font-medium bg-[#eaf6fb] dark:bg-[#015990]/30 px-3 py-1 rounded-full shadow">
+              <span className="text-sm text-[#015990] dark:text-[#90cdf4] font-bold bg-[#eaf6fb] dark:bg-[#015990]/30 px-3 py-1 rounded-full shadow">
                 Effective Date: September 5, 2025
               </span>
             </div>

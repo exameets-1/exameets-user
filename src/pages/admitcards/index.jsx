@@ -136,7 +136,7 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
                       
                     </span>
                     <button
-                      className="text-[#015990] dark:text-blue-400 font-medium hover:underline"
+                      className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                       onClick={() => handleViewDetails(admitCard.slug)}
                     >
                       View Details →

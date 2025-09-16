@@ -121,11 +121,11 @@ const InternshipDetails = ({ internship, error }) => {
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Organization Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Location</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Location</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.location || 'Not specified'}</p>
           </div>
           <div>
-            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Field</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Field</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.field || 'Not specified'}</p>
           </div>
         </div>
@@ -136,15 +136,15 @@ const InternshipDetails = ({ internship, error }) => {
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Internship Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Type</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Type</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.internship_type || 'Not specified'}</p>
           </div>
           <div>
-            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Duration</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Duration</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.duration || 'Not specified'}</p>
           </div>
           <div>
-            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Stipend</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Stipend</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.stipend || 'Not specified'}</p>
           </div>
         </div>
@@ -187,13 +187,13 @@ const InternshipDetails = ({ internship, error }) => {
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
         <div className="space-y-3">
           <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex justify-between items-center">
-            <p className="font-medium text-gray-800 dark:text-gray-200">Start Date</p>
+            <p className="font-bold text-gray-800 dark:text-gray-200">Start Date</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.start_date ? formatDate(internship.start_date) : 'Not specified'}
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex justify-between items-center">
-            <p className="font-medium text-gray-800 dark:text-gray-200">Last Date to Apply</p>
+            <p className="font-bold text-gray-800 dark:text-gray-200">Last Date to Apply</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.last_date ? formatDate(internship.last_date) : 'Not specified'}
             </p>

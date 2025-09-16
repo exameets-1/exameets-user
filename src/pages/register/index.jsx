@@ -286,7 +286,7 @@ const Register = () => {
           <h2 className="text-2xl text-center text-[#015990] dark:text-gray-100 mb-8">Register</h2>
 
           <div className="mb-5">
-            <label className="block text-[#015990] font-medium mb-2 dark:text-gray-100" htmlFor="name">Full Name</label>
+            <label className="block text-[#015990] font-bold mb-2 dark:text-gray-100" htmlFor="name">Full Name</label>
             <input
               type="text"
               id="name"
@@ -300,7 +300,7 @@ const Register = () => {
           </div>
 
           <div className="mb-5">
-            <label className="block text-[#015990] font-medium mb-2 dark:text-gray-100" htmlFor="dob">Date of Birth</label>
+            <label className="block text-[#015990] font-bold mb-2 dark:text-gray-100" htmlFor="dob">Date of Birth</label>
             <input
               type="date"
               id="dob"
@@ -324,7 +324,7 @@ const Register = () => {
           </div>
 
           <div className="mb-5">
-  <label className="block text-[#015990] dark:text-gray-100 font-medium mb-2" htmlFor="phone">Phone Number</label>
+  <label className="block text-[#015990] dark:text-gray-100 font-bold mb-2" htmlFor="phone">Phone Number</label>
   <div className="flex gap-2">
     <div className="w-32">
       <CustomSelect
@@ -356,7 +356,7 @@ const Register = () => {
 </div>
 
           <div className="mb-5">
-            <label className="block text-[#015990] font-medium mb-2 dark:text-gray-100" htmlFor="email">Email ID</label>
+            <label className="block text-[#015990] font-bold mb-2 dark:text-gray-100" htmlFor="email">Email ID</label>
             <div className="flex gap-2">
               <input
                 type="email"
@@ -388,7 +388,7 @@ const Register = () => {
           {/* OTP input as 6 boxes */}
           {emailOtpSent && !emailVerified && (
             <div className="mb-5">
-              <label htmlFor="email-otp" className="block text-[#015990] font-medium mb-2 dark:text-gray-100">Enter Email OTP</label>
+              <label htmlFor="email-otp" className="block text-[#015990] font-bold mb-2 dark:text-gray-100">Enter Email OTP</label>
               <div className="flex gap-2 justify-center">
                 {[...Array(6)].map((_, idx) => (
                   <input
@@ -423,7 +423,7 @@ const Register = () => {
             </div>
           )}
 
-          <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
+          <div className="mb-2 text-[#015990] dark:text-gray-100 font-bold">
             <label htmlFor="password">Create Password</label>
           </div>
           <div className="mb-4 relative">
@@ -453,7 +453,7 @@ const Register = () => {
             </span>
           </div>
 
-          <div className="mb-2 text-[#015990] dark:text-gray-100 font-medium">
+          <div className="mb-2 text-[#015990] dark:text-gray-100 font-bold">
             <label htmlFor="confirm-password">Confirm Password</label>
           </div>
           <div className="mb-4 relative">

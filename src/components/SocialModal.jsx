@@ -305,7 +305,7 @@
 //               </p>
 //               <button
 //                 onClick={handleClose}
-//                 className="mt-3 text-sm text-[#015990] hover:text-[#01467c] font-medium transition-colors"
+//                 className="mt-3 text-sm text-[#015990] hover:text-[#01467c] font-bold transition-colors"
 //               >
 //                 Maybe later
 //               </button>
@@ -477,7 +477,7 @@ const SocialModal = () => {
               </p>
               <button
                 onClick={handleClose}
-                className="mt-2 text-xs text-[#015990] hover:text-[#01467c] font-medium transition-colors"
+                className="mt-2 text-xs text-[#015990] hover:text-[#01467c] font-bold transition-colors"
               >
                 Maybe later
               </button>

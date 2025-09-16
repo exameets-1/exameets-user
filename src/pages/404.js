@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <div className={`flex flex-col items-center justify-center min-h-screen px-4 text-center ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'}`}>
       <h1 className="text-6xl font-bold mb-4">404</h1>
-      <p className="text-2xl font-medium mb-6">Oops! This page missed its destination 📝</p>
+      <p className="text-2xl font-bold mb-6">Oops! This page missed its destination 📝</p>
       <p className="mb-8 text-lg">But don’t worry, you can head back and find the right place!</p>
 
       <div className="flex flex-wrap justify-center gap-4">

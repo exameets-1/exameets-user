@@ -60,7 +60,7 @@ const Dashboard = () => {
         <div className="hidden md:flex bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8 justify-between items-center">
           <h1 className="text-2xl font-semibold text-[#005587] dark:text-gray-400 mr-4">Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Welcome, <span className="text-[#005587] dark:text-gray-400 font-medium">{user && user.name}</span> !
+            Welcome, <span className="text-[#005587] dark:text-gray-400 font-bold">{user && user.name}</span> !
           </p>
         </div>
 

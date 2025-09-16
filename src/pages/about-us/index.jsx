@@ -22,7 +22,7 @@ const AboutUs = () => {
                   <h1 className="text-4xl font-extrabold text-center text-[#015990] dark:text-[#90cdf4] mb-2 tracking-tight">
                     Welcome to Exameets
                   </h1>
-                  <span className="text-sm text-[#015990] dark:text-[#90cdf4] font-medium bg-[#eaf6fb] dark:bg-[#015990]/30 px-3 py-1 rounded-full shadow">
+                  <span className="text-sm text-[#015990] dark:text-[#90cdf4] font-bold bg-[#eaf6fb] dark:bg-[#015990]/30 px-3 py-1 rounded-full shadow">
                     Empowering Students & Job Seekers
                   </span>
                 </div>
@@ -85,7 +85,7 @@ const AboutUs = () => {
                   </div>
                   <div className="flex justify-center mt-8">
                     <Link href="/register">
-                      <button className="bg-[#015990] dark:bg-blue-500 text-white px-6 py-3 rounded-lg text-xl font-medium hover:bg-[#0788d8] dark:hover:bg-blue-400 transition-colors">
+                      <button className="bg-[#015990] dark:bg-blue-500 text-white px-6 py-3 rounded-lg text-xl font-bold hover:bg-[#0788d8] dark:hover:bg-blue-400 transition-colors">
                         Join Us Today
                       </button>
                     </Link>

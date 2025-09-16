@@ -95,14 +95,11 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   
   const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const searchInputRef = useRef(null);
   const categoryDropdownRef = useRef(null);
   const locationDropdownRef = useRef(null);
   
-  // Mock user state - in real app, this would come from auth context
-  const [user, setUser] = useState({ role: 'user', isAuthenticated: false });
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -189,7 +186,6 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
     nextPage: currentPage < totalPages ? currentPage + 1 : null,
   };
 
-  const isAuthenticated = user?.isAuthenticated;
   const canonicalUrl = generateCanonicalUrl();
 
   const categoryOptions = [
@@ -426,22 +422,22 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
                   <div className="grid gap-2 mb-4 overflow-hidden">
                     {admission.location && (
                       <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
-                        <span className="font-medium">Location:</span> {admission.location}
+                        <span className="font-bold">Location:</span> {admission.location}
                       </div>
                     )}
                     {admission.last_date && (
                       <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
-                        <span className="font-medium">Last Date:</span> {formatDate(admission.last_date)}
+                        <span className="font-bold">Last Date:</span> {formatDate(admission.last_date)}
                       </div>
                     )}
                     {admission.eligibility_criteria && (
                       <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
-                        <span className="font-medium">Eligibility:</span> {admission.eligibility_criteria}
+                        <span className="font-bold">Eligibility:</span> {admission.eligibility_criteria}
                       </div>
                     )}
                     {admission.fees && (
                       <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
-                        <span className="font-medium">Fees:</span> {admission.fees}
+                        <span className="font-bold">Fees:</span> {admission.fees}
                       </div>
                     )}
                   </div>
@@ -451,7 +447,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
                     </span>
                     <Link 
                       href={`/admissions/${admission.slug}`}
-                      className="text-[#015990] dark:text-blue-400 font-medium hover:underline whitespace-nowrap ml-2 flex-shrink-0"
+                      className="text-[#015990] dark:text-blue-400 font-bold hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                     >
                       View Details →
                     </Link>

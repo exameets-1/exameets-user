@@ -139,7 +139,7 @@ try {
                   <h1 className="text-4xl font-extrabold text-center text-[#015990] dark:text-[#90cdf4] mb-2 tracking-tight">
                     Contact Us
                   </h1>
-                  <span className="text-sm text-[#015990] dark:text-[#90cdf4] font-medium bg-[#eaf6fb] dark:bg-[#015990]/30 px-3 py-1 rounded-full shadow">
+                  <span className="text-sm text-[#015990] dark:text-[#90cdf4] font-bold bg-[#eaf6fb] dark:bg-[#015990]/30 px-3 py-1 rounded-full shadow">
                     We're here to help you succeed
                   </span>
                 </div>
@@ -186,7 +186,7 @@ try {
                         </div>
                       )}
                       <div className="mb-6">
-                        <label htmlFor="name" className="block text-lg text-gray-700 dark:text-gray-300 font-medium mb-2">
+                        <label htmlFor="name" className="block text-lg text-gray-700 dark:text-gray-300 font-bold mb-2">
                           Name: <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -201,7 +201,7 @@ try {
                         />
                       </div>
                       <div className="mb-6">
-                        <label htmlFor="email" className="block text-lg text-gray-700 dark:text-gray-300 font-medium mb-2">
+                        <label htmlFor="email" className="block text-lg text-gray-700 dark:text-gray-300 font-bold mb-2">
                           Email:
                         </label>
                         <input
@@ -216,7 +216,7 @@ try {
                         />
                       </div>
                       <div className="mb-6">
-                        <label htmlFor="suggestion" className="block text-lg text-gray-700 dark:text-gray-300 font-medium mb-2">
+                        <label htmlFor="suggestion" className="block text-lg text-gray-700 dark:text-gray-300 font-bold mb-2">
                           Your Suggestion: <span className="text-red-500">*</span>
                         </label>
                         <textarea
@@ -231,7 +231,7 @@ try {
                         />
                       </div>
                       <div className="mb-8">
-                        <label htmlFor="screenshot" className="block text-lg text-gray-700 dark:text-gray-300 font-medium mb-2">
+                        <label htmlFor="screenshot" className="block text-lg text-gray-700 dark:text-gray-300 font-bold mb-2">
                           Upload Screenshot (optional):
                         </label>
                         <input
@@ -246,7 +246,7 @@ try {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[#015990] dark:bg-blue-500 text-white py-3 px-6 rounded-md text-lg font-medium hover:bg-[#014570] dark:hover:bg-blue-400 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                        className="w-full bg-[#015990] dark:bg-blue-500 text-white py-3 px-6 rounded-md text-lg font-bold hover:bg-[#014570] dark:hover:bg-blue-400 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                       >
                         {loading ? 'Sending...' : 'Submit Feedback'}
                       </button>

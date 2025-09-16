@@ -83,7 +83,7 @@ export default function ShareModal({ open, onClose, url, title, details }) {
         <div className={`${color} text-3xl`}>
           <Icon />
         </div>
-        <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+        <span className="text-xs font-bold text-gray-600 dark:text-gray-400">
           {name}
         </span>
       </a>
@@ -95,7 +95,7 @@ export default function ShareModal({ open, onClose, url, title, details }) {
         {/* Copy Link Section */}
         <div className="px-6 pb-6">
           <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-            <p className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+            <p className="text-sm font-bold text-gray-900 dark:text-white mb-3">
               Tap to Copy link
             </p>
             <div

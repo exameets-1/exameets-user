@@ -158,17 +158,17 @@ const Results = ({ initialData, initialSearch, baseUrl }) => {
                 <div className="grid gap-2 mb-4 overflow-hidden">
                   {result.postName && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 overflow-hidden break-words">
-                      <span className="font-medium">Post:</span> {result.postName}
+                      <span className="font-bold">Post:</span> {result.postName}
                     </div>
                   )}
                   {result.resultDate && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
-                      <span className="font-medium">Result Date:</span> {formatDate(result.resultDate)}
+                      <span className="font-bold">Result Date:</span> {formatDate(result.resultDate)}
                     </div>
                   )}
                   {result.exam_type && (
                     <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden break-words">
-                      <span className="font-medium">Exam Type:</span> {result.exam_type}
+                      <span className="font-bold">Exam Type:</span> {result.exam_type}
                     </div>
                   )}
                 </div>
@@ -178,7 +178,7 @@ const Results = ({ initialData, initialSearch, baseUrl }) => {
                   </span>
                   <Link 
                     href={`/results/${result.slug}`}
-                    className="text-[#015990] dark:text-blue-400 font-medium hover:underline whitespace-nowrap ml-2 flex-shrink-0"
+                    className="text-[#015990] dark:text-blue-400 font-bold hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                   >
                     View Details →
                   </Link>

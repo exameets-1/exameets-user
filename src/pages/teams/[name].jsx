@@ -62,7 +62,7 @@ const TeamDetails = ({ teamData, error: serverError }) => {
           className="mb-8 flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
         >
           <FaArrowLeft className="mr-2" />
-          <span className="font-medium">Back to Team</span>
+          <span className="font-bold">Back to Team</span>
         </button>
 
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
@@ -148,7 +148,7 @@ const TeamDetails = ({ teamData, error: serverError }) => {
                       </div>
                       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all" />
                       <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
-                        <span className="text-white text-sm font-medium">
+                        <span className="text-white text-sm font-bold">
                           Certificate {index + 1}
                         </span>
                       </div>

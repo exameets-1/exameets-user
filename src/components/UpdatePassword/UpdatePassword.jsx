@@ -75,7 +75,7 @@ const UpdatePassword = () => {
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <label className="text-gray-700 dark:text-gray-300 text-sm font-medium">Current Password</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm font-bold">Current Password</label>
             <div className="relative flex items-center">
               <input
                 type={showOldPassword ? "text" : "password"}
@@ -97,7 +97,7 @@ const UpdatePassword = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-gray-700 dark:text-gray-300 text-sm font-medium">New Password</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm font-bold">New Password</label>
             <div className="relative flex items-center">
               <input
                 type={showNewPassword ? "text" : "password"}
@@ -119,7 +119,7 @@ const UpdatePassword = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-gray-700 dark:text-gray-300 text-sm font-medium">Confirm New Password</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm font-bold">Confirm New Password</label>
             <div className="relative flex items-center">
               <input
                 type={showConfirmPassword ? "text" : "password"}
