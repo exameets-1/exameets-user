@@ -121,13 +121,13 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
 
                   {/* Vacancies */}
                   <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                    <span className="font-semibold">Vacancies:</span> {admitCard.vacancies || 'Not specified'}
+                    <span className="font-bold">Vacancies:</span> {admitCard.vacancies || 'Not specified'}
                   </div>
 
                   {/* Content Section */}
                   <div className="grid gap-2 mb-4">
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Exam Date: {admitCard.examDetails?.[0]?.examDate || 'Not available'}
+                     <span className="font-bold">Exam Date:</span> {admitCard.examDetails?.[0]?.examDate || 'Not available'}
                     </div>
                   </div>
                   {/* Footer Section */}

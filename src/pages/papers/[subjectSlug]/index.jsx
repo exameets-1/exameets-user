@@ -200,10 +200,10 @@ const SubjectPapers = ({ subject, papersByYear, error }) => {
                                         {/* Content Section */}
                                         <div className="grid gap-2 mb-4">
                                             <div className="text-sm text-gray-600 dark:text-gray-300">
-                                                Difficulty: {paper.difficulty_level}
+                                                <span className="font-bold">Difficulty:</span> {paper.difficulty_level}
                                             </div>
                                             <div className="text-sm text-gray-600 dark:text-gray-300">
-                                                Year: {year}
+                                                <span className="font-bold">Year:</span> {year}
                                             </div>
                                         </div>
 

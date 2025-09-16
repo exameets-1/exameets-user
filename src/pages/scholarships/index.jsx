@@ -434,10 +434,10 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                   {/* Content Section */}
                   <div className="grid gap-2 mb-4">
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Category: {scholarship.category}
+                      <span className="font-bold">Category:</span> {scholarship.category}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Amount: {scholarship.amount}
+                      <span className="font-bold">Amount:</span> {scholarship.amount}
                     </div>
                     {/* <div className="text-sm text-gray-600 dark:text-gray-300">
                       Last Date: {formatDate(scholarship.last_date)}

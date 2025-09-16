@@ -326,16 +326,16 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                   {/* Content Section */}
                   <div className="grid gap-2 mb-4">
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Location: {job.city}, {job.state}
+                      <span className="font-bold">Location:</span> {job.city}, {job.state}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Experience: {job.experience}
+                      <span className="font-bold">Experience:</span> {job.experience}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Education: {job.education.join(", ")}
+                      <span className="font-bold">Education:</span> {job.education.join(", ")}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Position: {job.positionType}
+                      <span className="font-bold">Position:</span> {job.positionType}
                     </div>
                   </div>
                   

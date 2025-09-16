@@ -317,16 +317,16 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
                 {/* Content Section */}
                 <div className="grid gap-2 mb-4">
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Location: {internship.location}
+                    <span className="font-bold">Location:</span> {internship.location}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Duration: {internship.duration}
+                    <span className="font-bold">Duration:</span> {internship.duration}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Start Date: {(internship.start_date) === "" ? "Not specified" : (internship.start_date)}
+                    <span className="font-bold">Start Date:</span> {(internship.start_date) === "" ? "Not specified" : (internship.start_date)}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Last Date to Apply: {(internship.last_date) === "" ? "Not specified" : (internship.last_date)}
+                    <span className="font-bold">Last Date to Apply:</span> {(internship.last_date) === "" ? "Not specified" : (internship.last_date)}
                   </div>
                 </div>
                 {/* Footer Section */}
