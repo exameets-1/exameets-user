@@ -1,10 +1,63 @@
+import { NextSeo } from 'next-seo';
+import Head from 'next/head';
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import dbConnect from '@/lib/dbConnect';
 import { AdmitCard } from '@/lib/models/AdmitCard';
-import Head from 'next/head';
 
-const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUrl }) => {
+// Add these helper functions before the component
+const generateMetaDescription = (searchKeyword, totalAdmitCards = 0) => {
+  if (totalAdmitCards === 0) {
+    return "No admit cards found. Browse latest admit cards and hall tickets for competitive exams across India on Exameets.";
+  }
+  let description = `Download ${totalAdmitCards} admit cards and hall tickets`;
+  if (searchKeyword) description = `${totalAdmitCards} ${searchKeyword} admit cards available for download`;
+  return description + `. Get direct download links, exam dates, and important instructions on Exameets.`;
+};
+
+const generateAdmitCardListingSchema = (admitCards, baseUrl) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SearchResultsPage",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": admitCards.map((card, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${baseUrl}/admitcards/${card.slug}`,
+        "name": card.title,
+        "item": {
+          "@type": "Event",
+          "@id": `${baseUrl}/admitcards/${card.slug}`,
+          "name": card.title,
+          "description": card.searchDescription,
+          "startDate": card.examDetails?.[0]?.examDate,
+          "eventStatus": "https://schema.org/EventScheduled",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "organizer": {
+            "@type": "Organization",
+            "name": card.organization
+          },
+          "about": {
+            "@type": "ExaminationEvent",
+            "name": card.title,
+            "educationalLevel": "higher education"
+          }
+        }
+      }))
+    }
+  };
+};
+
+const sanitizeJSON = (data) => {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+};
+
+// Update the component props to include totalAdmitCards
+const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUrl, totalAdmitCards = 0 }) => {
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState(initialSearch);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(initialSearch);
@@ -67,6 +120,13 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
   return (
     <>
       <Head>
+        <meta name="robots" content={currentPage === 1 ? "index, follow" : "noindex, follow"} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: sanitizeJSON(generateAdmitCardListingSchema(admitCards || [], baseUrl))
+          }}
+        />
         <title>Admit Cards | Exameets</title>
         <meta
           name="description"
@@ -74,6 +134,40 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
         />
         <link rel="canonical" href={`https://www.exameets.in/admitcards`} />
       </Head>
+
+      <NextSeo
+        canonical={`${baseUrl}/admitcards`}
+        title={`${searchKeyword ? `${searchKeyword} Admit Cards` : 'Latest Admit Cards & Hall Tickets'} | Exameets`}
+        description={generateMetaDescription(searchKeyword, totalAdmitCards)}
+        openGraph={{
+          url: `${baseUrl}/admitcards`,
+          title: `${searchKeyword ? `${searchKeyword} Admit Cards` : 'Latest Admit Cards & Hall Tickets'} | Exameets`,
+          description: generateMetaDescription(searchKeyword, totalAdmitCards),
+          images: [
+            {
+              url: `${baseUrl}/api/og/admitcards`,
+              width: 1200,
+              height: 630,
+              alt: 'Admit Cards and Hall Tickets on Exameets',
+            }
+          ],
+          type: 'website'
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              'admit card',
+              'hall ticket',
+              'exam admit card',
+              'recruitment hall ticket',
+              'competitive exam admit card',
+              'government exam hall ticket',
+              ...(searchKeyword ? [searchKeyword] : [])
+            ].join(', ')
+          }
+        ]}
+      />
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
         <div className="max-w-7xl mx-auto">
@@ -213,12 +307,11 @@ export async function getServerSideProps(context) {
         ? card.createdAt.toISOString() 
         : card.createdAt,
       importantDates: card.importantDates?.map(date => {
-        // Create a new object excluding _id if it's undefined
         const newDate = { ...date };
         if (date._id) {
           newDate._id = date._id.toString();
         } else {
-          delete newDate._id; // Remove _id if undefined
+          delete newDate._id;
         }
         return newDate;
       }),
@@ -252,11 +345,12 @@ export async function getServerSideProps(context) {
   
     return {
       props: {
-        admitCards: serializedAdmitCards,  // Use the serialized version
+        admitCards: serializedAdmitCards,
         totalPages: Math.ceil(total / limit),
         currentPage: page,
         initialSearch: searchKeyword,
-        baseUrl: baseUrl || 'http://localhost:3000'
+        baseUrl: baseUrl || 'http://localhost:3000',
+        totalAdmitCards: total // Add this line
       }
     };
   } catch (error) {
@@ -267,7 +361,8 @@ export async function getServerSideProps(context) {
         totalPages: 0,
         currentPage: 1,
         initialSearch: '',
-        baseUrl: 'http://localhost:3000'
+        baseUrl: 'http://localhost:3000',
+        totalAdmitCards: 0 // Add this line
       }
     };
   }

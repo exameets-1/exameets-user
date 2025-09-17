@@ -11,11 +11,10 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
   const router = useRouter();
   const [showShare, setShowShare] = React.useState(false);
 
-    const shareDetails = [
+  const shareDetails = [
     admitCard.organization && `Organization: ${admitCard.organization}`,
     admitCard.vacancies && `Vacancies: ${admitCard.vacancies}`,
   ].filter(Boolean).join("\n");
-  
 
   if (router.isFallback) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -24,20 +23,6 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
   if (!admitCard) {
     return <div className="max-w-6xl mx-auto p-6">Admit card not found</div>;
   }
-
-  // Schema.org structured data
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": admitCard.title,
-    "description": admitCard.searchDescription,
-    "startDate": admitCard.examDetails[0]?.examDate,
-    "organizer": {
-      "@type": "Organization",
-      "name": admitCard.organization
-    },
-    "url": `${baseUrl}/admitcards/${admitCard.slug}`
-  };
 
   const handleBack = () => router.push('/admitcards');
   
@@ -51,31 +36,123 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
   return (
     <div className="bg-white dark:bg-gray-900">
       <Head>
-        <title>{admitCard.title} - Admit Card Details</title>
-        <meta name="description" content={admitCard.searchDescription} />
         <link rel="canonical" href={`${baseUrl}/admitcards/${admitCard.slug}`} />
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        {/* Enhanced Admit Card Event Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Event",
+              "name": admitCard.title,
+              "description": admitCard.searchDescription,
+              "startDate": admitCard.examDetails?.[0]?.examDate,
+              "eventStatus": "https://schema.org/EventScheduled",
+              "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+              "organizer": {
+                "@type": "Organization",
+                "name": admitCard.organization,
+                "url": admitCard.officialWebsite
+              },
+              "location": {
+                "@type": "Place",
+                "name": "Multiple Centers",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressCountry": "IN"
+                }
+              },
+              "about": {
+                "@type": "ExaminationEvent",
+                "name": admitCard.title,
+                "educationalLevel": "higher education"
+              },
+              "subEvent": admitCard.examDetails?.map(detail => ({
+                "@type": "Event",
+                "name": `${admitCard.title} - ${detail.examDate}`,
+                "startDate": detail.examDate,
+                "startTime": detail.reportingTime,
+                "description": `Shift timings: ${detail.shiftTimings}`
+              })),
+              "offers": {
+                "@type": "Offer",
+                "name": "Admit Card Download",
+                "price": "0",
+                "priceCurrency": "INR",
+                "availability": "https://schema.org/InStock"
+              },
+              "potentialAction": {
+                "@type": "DownloadAction",
+                "name": "Download Admit Card",
+                "target": admitCard.importantLinks?.find(link => link.linkType === 'downloadLink')?.link
+              },
+              "url": `${baseUrl}/admitcards/${admitCard.slug}`
+            })
+          }}
+        />
       </Head>
-            <NextSeo
-              title={`${admitCard.title || "AdmitCard Details"} | Exameets`}
-              description={admitCard.description || "Admission details"}
-              canonical={`https://www.exameets.in/admitcards/${admitCard.slug}`}
-              openGraph={{
-                url: `https://www.exameets.in/admitcards/${admitCard.slug}`,
-                title: `${admitCard.title || "AdmitCard Details"} | Exameets`,
-                description: admitCard.description || "Admission details",
-                          images: [
-                {
-                  url: `https://www.exameets.in/api/og/admitcard/${admitCard.slug}`,
-                  width: 1200,
-                  height: 630,
-                  alt: `${admitCard.title} at ${admitCard.organization}`,
-                },
-              ],
-              }}
-            />
+
+      <NextSeo
+        title={`${admitCard.title} | ${admitCard.organization} | Admit Card Download`}
+        description={admitCard.searchDescription?.substring(0, 150) || `Download ${admitCard.title} admit card. Exam date: ${admitCard.examDetails?.[0]?.examDate}. Get direct download link and important instructions.`}
+        canonical={`${baseUrl}/admitcards/${admitCard.slug}`}
+        openGraph={{
+          url: `${baseUrl}/admitcards/${admitCard.slug}`,
+          title: `${admitCard.title} | ${admitCard.organization} | Admit Card Download`,
+          description: admitCard.searchDescription?.substring(0, 150) || `Download ${admitCard.title} admit card. Exam date: ${admitCard.examDetails?.[0]?.examDate}. Get direct download link and important instructions.`,
+          images: [
+            {
+              url: `${baseUrl}/api/og/admitcard/${admitCard.slug}`,
+              width: 1200,
+              height: 630,
+              alt: `${admitCard.title} Admit Card`,
+            },
+          ],
+          type: 'article',
+          article: {
+            publishedTime: admitCard.createdAt,
+            modifiedTime: admitCard.updatedAt || admitCard.createdAt,
+            section: 'Admit Cards',
+            tags: [
+              'admit card',
+              'hall ticket',
+              admitCard.organization,
+              ...(admitCard.keywords || [])
+            ]
+          }
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              admitCard.title,
+              admitCard.organization,
+              'admit card',
+              'hall ticket',
+              'exam admit card',
+              'recruitment hall ticket',
+              'download admit card',
+              ...(admitCard.keywords || [])
+            ].filter(Boolean).join(', ')
+          },
+          {
+            name: 'author',
+            content: 'Exameets'
+          },
+          {
+            property: 'article:author',
+            content: 'Exameets'
+          },
+          {
+            name: 'exam-date',
+            content: admitCard.examDetails?.[0]?.examDate
+          },
+          {
+            name: 'organization',
+            content: admitCard.organization
+          }
+        ]}
+      />
 
       <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
         <div className="flex justify-between items-start mb-6">
