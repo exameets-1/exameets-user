@@ -23,53 +23,49 @@ const useDebounce = (value, delay) => {
   return debouncedValue;
 };
 
+// const generateMetaDescription = (filters, searchKeyword, totalJobs = 0) => {
+//   let description = `Browse ${totalJobs} open positions`;
+//   if (searchKeyword) {
+//     description = `${totalJobs} ${searchKeyword} jobs available`;
+//   }
+//   if (filters.city && filters.city !== "All") {
+//     description += ` in ${filters.city}`;
+//   }
+//   if (filters.positionType && filters.positionType !== "All") {
+//     description += ` for ${filters.positionType} positions`;
+//   }
+//   return description + ". Find your next career opportunity with us.";
+// };
+
 const generateMetaDescription = (filters, searchKeyword, totalJobs = 0) => {
-  let description = `Browse ${totalJobs} open positions`;
-  if (searchKeyword) {
-    description = `${totalJobs} ${searchKeyword} jobs available`;
+  if (totalJobs === 0) {
+    return "No jobs found. Browse verified job listings across India on Exameets.";
   }
-  if (filters.city && filters.city !== "All") {
-    description += ` in ${filters.city}`;
-  }
-  if (filters.positionType && filters.positionType !== "All") {
-    description += ` for ${filters.positionType} positions`;
-  }
-  return description + ". Find your next career opportunity with us.";
+  let description = `Explore ${totalJobs} verified job openings`;
+  if (searchKeyword) description = `${totalJobs} ${searchKeyword} jobs currently available`;
+  if (filters.city && filters.city !== "All") description += ` in ${filters.city}`;
+  if (filters.positionType && filters.positionType !== "All") description += ` for ${filters.positionType} professionals`;
+  return description + `. Find your next career opportunity on Exameets today.`;
 };
 
+
+
 const generateJobListingSchema = (jobs, baseUrl) => {
-  return jobs.map(job => ({
+  return {
     "@context": "https://schema.org",
-    "@type": "JobPosting",
-    "title": job.jobTitle,
-    "description": job.positionSummary,
-    "datePosted": job.createdAt,
-    "validThrough": job.applicationDeadline,
-    "employmentType": job.positionType,
-    "hiringOrganization": {
-      "@type": "Organization",
-      "name": job.companyName,
-      "description": job.companyOverview,
-      "sameAs": baseUrl
-    },
-    "jobLocation": {
-      "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": job.city,
-        "addressRegion": job.state,
-        "addressCountry": job.country
-      }
-    },
-    "experienceRequirements": job.experience,
-    "qualifications": job.education.join(", "),
-    "skills": [...job.languages, ...job.frameworks, ...job.databases].join(", "),
-    "applicationDeadline": job.applicationDeadline,
-    "occupationalCategory": job.category,
-    "jobBenefits": job.benefits.join(", "),
-    "directApply": job.submissionMethod === 'portal' ? true : false
-  }));
+    "@type": "SearchResultsPage",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": jobs.map((job, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${baseUrl}/jobs/${job.slug}`,
+        "name": job.jobTitle
+      }))
+    }
+  };
 };
+
 
 const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
   const router = useRouter();
@@ -165,11 +161,13 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
           }}
         />
       </Head>
-  
+
       <NextSeo
-        title={`${searchKeyword || 'Job Openings'} ${filters.city !== "All" ? `in ${filters.city}` : ''} | Exameets`}
+        canonical={`${baseUrl}/jobs`}
+        title={`${searchKeyword ? `${searchKeyword} Jobs` : 'Latest Job Openings'}${filters.city !== "All" ? ` in ${filters.city}` : ''} | Exameets`}
         description={generateMetaDescription(filters, searchKeyword, initialData.totalJobs)}
       />
+
   
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
         <div className="max-w-7xl mx-auto">

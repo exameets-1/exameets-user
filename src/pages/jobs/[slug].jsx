@@ -79,6 +79,49 @@ const JobDetails = ({ job, error }) => {
     <div className="relative max-w-6xl mx-auto">
       <Head>
         <link rel="canonical" href={`https://www.exameets.in/jobs/${job.slug}`} />
+        {/* JobPosting Schema.org Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "JobPosting",
+              "title": job.jobTitle,
+              "description": job.positionSummary,
+              "datePosted": job.createdAt,
+              "validThrough": job.applicationDeadline,
+              "employmentType": job.positionType,
+              "hiringOrganization": {
+                "@type": "Organization",
+                "name": job.companyName,
+                "description": job.companyOverview,
+                "sameAs": "https://www.exameets.in"
+              },
+              "jobLocation": {
+                "@type": "Place",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": job.city,
+                  "addressRegion": job.state,
+                  "addressCountry": job.country
+                }
+              },
+              "experienceRequirements": job.experience,
+              "qualifications": job.education?.join(", "),
+              "skills": [...(job.languages || []), ...(job.frameworks || []), ...(job.databases || [])].join(", "),
+              "occupationalCategory": job.category,
+              "jobBenefits": job.benefits?.join(", "),
+              "directApply": job.submissionMethod === 'portal',
+              "applicationContact": job.submissionMethod === 'email'
+                ? {
+                    "@type": "ContactPoint",
+                    "email": job.contactEmail
+                  }
+                : undefined,
+              "url": `https://www.exameets.in/jobs/${job.slug}`
+            })
+          }}
+        />
       </Head>
       <NextSeo
         title={`${job.jobTitle} | ${job.companyName} | Job Details`}
