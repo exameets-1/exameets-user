@@ -28,45 +28,59 @@ const useDebounce = (value, delay) => {
   return debouncedValue;
 };
 
-// Generate description for SEO
-const generateMetaDescription = (filters, searchKeyword, totalScholarships = 0) => {
+// Replace the existing generateMetaDescription function
+const generateMetaDescription = (searchKeyword, totalScholarships = 0, filters = {}) => {
+  if (totalScholarships === 0) {
+    return "No scholarships found. Browse latest scholarship opportunities and educational funding across India on Exameets.";
+  }
   let description = `Browse ${totalScholarships} scholarship opportunities`;
-  if (searchKeyword) {
-    description = `${totalScholarships} ${searchKeyword} scholarships available`;
-  }
-  if (filters.category && filters.category !== "All") {
-    description += ` in ${filters.category} category`;
-  }
-  if (filters.qualification && filters.qualification !== "All") {
-    description += ` for ${filters.qualification} students`;
-  }
-  return description + ". Find your next educational funding opportunity with us.";
+  if (searchKeyword) description = `${totalScholarships} ${searchKeyword} scholarships available`;
+  if (filters.category && filters.category !== 'All') description += ` in ${filters.category} category`;
+  if (filters.qualification && filters.qualification !== 'All') description += ` for ${filters.qualification} students`;
+  return description + `. Find merit-based, need-based, and government scholarships on Exameets.`;
 };
 
-// Generate schema.org structured data
-const generateScholarshipSchema = (scholarships, baseUrl) => {
-  return scholarships.map((scholarship) => ({
+// Replace the existing generateScholarshipSchema function
+const generateScholarshipListingSchema = (scholarships, baseUrl) => {
+  return {
     "@context": "https://schema.org",
-    "@type": "Scholarship",
-    "@id": `${baseUrl}/scholarships/${scholarship.slug || scholarship._id}`,
-    "name": scholarship.title,
-    "description": scholarship.description,
-    "provider": {
-      "@type": "Organization",
-      "name": scholarship.organization,
-      "sameAs": baseUrl,
-    },
-    "awardAmount": {
-      "@type": "MonetaryAmount",
-      "currency": "INR",
-      "value": scholarship.amount,
-    },
-    "eligibilityCriteria": scholarship.eligibility_criteria,
-    "applicationDeadline": scholarship.last_date,
-    "datePosted": scholarship.createdAt,
-    "scholarshipCategory": scholarship.category,
-    "url": `${baseUrl}/scholarships/${scholarship.slug || scholarship._id}`
-  }));
+    "@type": "SearchResultsPage",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": scholarships.map((scholarship, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${baseUrl}/scholarships/${scholarship.slug}`,
+        "name": scholarship.title,
+        "item": {
+          "@type": "Scholarship",
+          "@id": `${baseUrl}/scholarships/${scholarship.slug}`,
+          "name": scholarship.title,
+          "description": scholarship.description,
+          "provider": {
+            "@type": "Organization",
+            "name": scholarship.organization
+          },
+          "awardAmount": {
+            "@type": "MonetaryAmount",
+            "value": scholarship.amount,
+            "currency": "INR"
+          },
+          "eligibilityCriteria": scholarship.eligibility_criteria,
+          "applicationDeadline": scholarship.last_date,
+          "datePosted": scholarship.createdAt,
+          "scholarshipCategory": scholarship.category
+        }
+      }))
+    }
+  };
+};
+
+const sanitizeJSON = (data) => {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
 };
 
 const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
@@ -141,24 +155,6 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const sanitizeJSON = (data) => {
-    return JSON.stringify(data)
-      .replace(/</g, '\\u003c')
-      .replace(/>/g, '\\u003e')
-      .replace(/&/g, '\\u0026')
-      .replace(/'/g, '\\u0027');
-  };
-
-  // Build the canonical URL
-  const generateCanonicalUrl = () => {
-    const params = new URLSearchParams();
-    if (filters.category && filters.category !== "All") params.append("category", filters.category);
-    if (filters.qualification && filters.qualification !== "All") params.append("qualification", filters.qualification);
-    if (searchKeyword) params.append("q", searchKeyword);
-    params.append("page", currentPage);
-    return `${baseUrl}/scholarships?${params.toString()}`;
-  };
-
   const { scholarships = [], totalScholarships = 0 } = initialData || {};
   const totalPages = Math.ceil(totalScholarships / (initialData.limit || 8));
   
@@ -171,8 +167,6 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
     prevPage: currentPage > 1 ? currentPage - 1 : null,
     nextPage: currentPage < totalPages ? currentPage + 1 : null,
   };
-
-  const canonicalUrl = generateCanonicalUrl();
 
   const categoryOptions = [
     { value: 'All', label: 'All Categories' },
@@ -210,43 +204,57 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
     <>
       <Head>
         <meta name="robots" content={currentPage === 1 ? "index, follow" : "noindex, follow"} />
-        <meta name="google" content="nositelinkssearchbox" />
-        <meta name="google" content="notranslate" />
-        <link rel="canonical" href={canonicalUrl} />
-        <link rel="alternate" hrefLang="en-in" href={canonicalUrl} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: sanitizeJSON(generateScholarshipListingSchema(scholarships || [], baseUrl))
+          }}
+        />
+        <link rel="canonical" href={`${baseUrl}/scholarships`} />
       </Head>
 
       <NextSeo
-        title={
-          searchKeyword
-            ? `${searchKeyword} Scholarships ${filters.category !== "All" ? `in ${filters.category}` : ""} | Exameets`
-            : `Scholarship Opportunities ${filters.category !== "All" ? `in ${filters.category}` : ""} | Exameets`
-        }
-        description={generateMetaDescription(filters, searchKeyword, totalScholarships)}
-        canonical={canonicalUrl}
+        canonical={`${baseUrl}/scholarships`}
+        title={`${searchKeyword ? `${searchKeyword} Scholarships` : 'Latest Scholarship Opportunities'} | Exameets`}
+        description={generateMetaDescription(searchKeyword, totalScholarships, filters)}
         openGraph={{
-          title: searchKeyword
-            ? `${searchKeyword} Scholarships ${filters.category !== "All" ? `in ${filters.category}` : ""}`
-            : `Scholarship Opportunities ${filters.category !== "All" ? `in ${filters.category}` : ""}`,
-          description: generateMetaDescription(filters, searchKeyword, totalScholarships),
-          url: canonicalUrl,
-          type: "website",
-          site_name: "Exameets Scholarships",
-          images: [{
-            url: `${baseUrl}/images/scholarships-og.jpg`,
-            width: 1200,
-            height: 630,
-            alt: "Exameets Scholarships"
-          }]
+          url: `${baseUrl}/scholarships`,
+          title: `${searchKeyword ? `${searchKeyword} Scholarships` : 'Latest Scholarship Opportunities'} | Exameets`,
+          description: generateMetaDescription(searchKeyword, totalScholarships, filters),
+          images: [
+            {
+              url: `${baseUrl}/api/og/scholarships`,
+              width: 1200,
+              height: 630,
+              alt: 'Scholarship Opportunities on Exameets',
+            }
+          ],
+          type: 'website'
         }}
-        twitter={{ cardType: "summary_large_image" }}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: sanitizeJSON(generateScholarshipSchema(scholarships || [], baseUrl))
-        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              'scholarships',
+              'educational funding',
+              'merit scholarships',
+              'need based scholarships',
+              'government scholarships',
+              'student financial aid',
+              ...(searchKeyword ? [searchKeyword] : []),
+              ...(filters.category && filters.category !== 'All' ? [filters.category + ' scholarships'] : []),
+              ...(filters.qualification && filters.qualification !== 'All' ? [filters.qualification + ' scholarships'] : [])
+            ].join(', ')
+          },
+          {
+            name: 'author',
+            content: 'Exameets'
+          },
+          {
+            property: 'article:author',
+            content: 'Exameets'
+          }
+        ]}
       />
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
@@ -439,9 +447,6 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       <span className="font-bold">Amount:</span> {scholarship.amount}
                     </div>
-                    {/* <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Last Date: {formatDate(scholarship.last_date)}
-                    </div> */}
                   </div>
                   
                   {/* Footer Section */}
@@ -565,10 +570,13 @@ export async function getServerSideProps(context) {
       return serialized;
     });
 
-    // Generate base URL
-    const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const host = req.headers.host;
-    const baseUrl = `${protocol}://${host}`;
+    // Generate canonical URL  
+    let baseUrl = process.env.BASE_URL;
+    if (!baseUrl && req) {
+      const protocol = req.headers['x-forwarded-proto'] || 'http';
+      const host = req.headers.host;
+      baseUrl = `${protocol}://${host}`;
+    }
 
     return {
       props: {
@@ -580,7 +588,7 @@ export async function getServerSideProps(context) {
         },
         initialFilters: { category, qualification, page },
         initialSearch: searchKeyword,
-        baseUrl
+        baseUrl: baseUrl || 'http://localhost:3000'
       }
     };
   } catch (error) {
@@ -599,7 +607,7 @@ export async function getServerSideProps(context) {
           page: 1
         },
         initialSearch: "",
-        baseUrl: ""
+        baseUrl: "http://localhost:3000"
       }
     };
   }
