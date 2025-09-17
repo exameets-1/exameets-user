@@ -32,52 +32,63 @@ const useDebounce = (value, delay) => {
 
 // Generate description for SEO
 const generateMetaDescription = (filters, searchKeyword, totalAdmissions = 0) => {
-  let description = `Browse ${totalAdmissions} admission opportunities`;
-  if (searchKeyword) {
-    description = `${totalAdmissions} ${searchKeyword} admissions available`;
+  if (totalAdmissions === 0) {
+    return "No admissions found. Browse latest college admission notifications across India on Exameets.";
   }
-  if (filters.location && filters.location !== "All") {
-    description += ` in ${filters.location}`;
-  }
-  if (filters.category && filters.category !== "All") {
-    description += ` in ${filters.category} category`;
-  }
-  return description + ". Find your next educational opportunity with us.";
+  let description = `Explore ${totalAdmissions} college admission notifications`;
+  if (searchKeyword) description = `${totalAdmissions} ${searchKeyword} admissions available`;
+  if (filters.location && filters.location !== "All") description += ` in ${filters.location}`;
+  if (filters.category && filters.category !== "All") description += ` for ${filters.category} courses`;
+  return description + `. Latest admission alerts, application deadlines, and eligibility details on Exameets.`;
 };
 
 // Generate schema.org structured data
 const generateAdmissionListingSchema = (admissions, baseUrl) => {
-  return admissions.map(admission => ({
+  return {
     "@context": "https://schema.org",
-    "@type": "EducationalOccupationalProgram",
-    "@id": `${baseUrl}/admissions/${admission._id}`,
-    "name": admission.title,
-    "description": admission.description,
-    "programPrerequisites": admission.eligibility_criteria,
-    "occupationalCategory": admission.category,
-    "applicationStartDate": admission.start_date,
-    "applicationDeadline": admission.last_date,
-    "provider": {
-      "@type": "EducationalOrganization",
-      "name": admission.institute,
-      "sameAs": baseUrl,
-      "location": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": admission.location.split(',')[0],
-          "addressRegion": admission.location.split(',')[1]?.trim() || "India",
-          "addressCountry": "IN"
+    "@type": "SearchResultsPage",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": admissions.map((admission, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${baseUrl}/admissions/${admission.slug}`,
+        "name": admission.title,
+        "item": {
+          "@type": "Event",
+          "name": admission.title,
+          "description": admission.description,
+          "startDate": admission.start_date,
+          "endDate": admission.last_date,
+          "eventStatus": "https://schema.org/EventScheduled",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "location": {
+            "@type": "Place",
+            "name": admission.institute,
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": admission.location?.split(',')[0]?.trim(),
+              "addressRegion": admission.location?.split(',')[1]?.trim() || "India",
+              "addressCountry": "IN"
+            }
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": admission.institute,
+            "url": baseUrl
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": admission.fees === "N/A" ? "0" : admission.fees,
+            "priceCurrency": "INR",
+            "availability": "https://schema.org/InStock",
+            "validFrom": admission.start_date,
+            "validThrough": admission.last_date
+          }
         }
-      }
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": admission.fees,
-      "priceCurrency": "INR"
-    },
-    "url": admission.application_link
-  }));
+      }))
+    }
+  };
 };
 
 const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
@@ -175,18 +186,10 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
 
   const { admissions = [], totalAdmissions = 0 } = initialData || {};
   const totalPages = Math.ceil(totalAdmissions / (initialData.limit || 8));
-  
-  // Build pagination object based on computed totalPages
-  const pagination = {
-    totalPages,
-    currentPage,
-    hasPrevPage: currentPage > 1,
-    hasNextPage: currentPage < totalPages,
-    prevPage: currentPage > 1 ? currentPage - 1 : null,
-    nextPage: currentPage < totalPages ? currentPage + 1 : null,
-  };
-
   const canonicalUrl = generateCanonicalUrl();
+
+  const hasPrevPage = currentPage > 1;
+  const hasNextPage = currentPage < totalPages;
 
   const categoryOptions = [
     { value: 'All', label: 'All Categories' },
@@ -217,37 +220,49 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
       <Head>
         <title>Admissions | Exameets</title>
         <link rel="canonical" href={`https://www.exameets.in/admissions`} />
-        < meta name="description" content="Explore the latest admission opportunities across various fields and locations. Find your next educational opportunity with Exameets." />
+        <meta name="description" content="Explore the latest admission opportunities across various fields and locations. Find your next educational opportunity with Exameets." />
+        <meta name="robots" content={currentPage === 1 ? "index, follow" : "noindex, follow"} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: sanitizeJSON(generateAdmissionListingSchema(admissions || [], baseUrl))
+          }}
+        />
       </Head>
 
       <NextSeo
-        title={
-          searchKeyword
-            ? `${searchKeyword} Admissions ${filters.location !== "All" ? `in ${filters.location}` : ""} | Exameets`
-            : `Admission Openings ${filters.location !== "All" ? `in ${filters.location}` : ""} | Exameets`
-        }
-        description={generateMetaDescription(filters, searchKeyword, totalAdmissions)}
         canonical={canonicalUrl}
+        title={`${searchKeyword ? `${searchKeyword} Admissions` : 'Latest College Admissions'}${filters.location !== "All" ? ` in ${filters.location}` : ''} | Exameets`}
+        description={generateMetaDescription(filters, searchKeyword, totalAdmissions)}
         openGraph={{
-          title: searchKeyword
-            ? `${searchKeyword} Admissions ${filters.location !== "All" ? `in ${filters.location}` : ""}`
-            : `Admission Openings ${filters.location !== "All" ? `in ${filters.location}` : ""}`,
-          description: generateMetaDescription(filters, searchKeyword, totalAdmissions),
           url: canonicalUrl,
-          images: [{
-            url: `${baseUrl}/images/admissions-og.jpg`,
-            width: 1200,
-            height: 630,
-            alt: 'Exameets Admissions'
-          }]
+          title: `${searchKeyword ? `${searchKeyword} Admissions` : 'Latest College Admissions'}${filters.location !== "All" ? ` in ${filters.location}` : ''} | Exameets`,
+          description: generateMetaDescription(filters, searchKeyword, totalAdmissions),
+          images: [
+            {
+              url: `${baseUrl}/api/og/admissions`,
+              width: 1200,
+              height: 630,
+              alt: 'College Admissions on Exameets',
+            }
+          ],
+          type: 'website'
         }}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: sanitizeJSON(generateAdmissionListingSchema(admissions || [], baseUrl))
-        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              'college admissions',
+              'university admissions',
+              'admission notifications',
+              'college applications',
+              'admission alerts',
+              ...(searchKeyword ? [searchKeyword] : []),
+              ...(filters.category !== "All" ? [filters.category] : []),
+              ...(filters.location !== "All" ? [filters.location] : [])
+            ].join(', ')
+          }
+        ]}
       />
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
@@ -457,28 +472,28 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
             )}
           </div>
 
-          {pagination.totalPages > 1 && (
+          {totalPages > 1 && (
             <div className="flex justify-center items-center gap-4 my-8">
               <button
                 className={`px-4 py-2 bg-[#015990] dark:bg-blue-600 text-white rounded ${
-                  !pagination.hasPrevPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700'
+                  !hasPrevPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700'
                 }`}
-                onClick={() => handlePageChange(pagination.prevPage)}
-                disabled={!pagination.hasPrevPage}
+                onClick={() => hasPrevPage && handlePageChange(currentPage - 1)}
+                disabled={!hasPrevPage}
               >
                 Previous
               </button>
               
               <div className="text-gray-600 dark:text-gray-300">
-                Page {pagination.currentPage} of {pagination.totalPages}
+                Page {currentPage} of {totalPages}
               </div>
 
               <button
                 className={`px-4 py-2 bg-[#015990] dark:bg-blue-600 text-white rounded ${
-                  !pagination.hasNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700'
+                  !hasNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-700'
                 }`}
-                onClick={() => handlePageChange(pagination.nextPage)}
-                disabled={!pagination.hasNextPage}
+                onClick={() => hasNextPage && handlePageChange(currentPage + 1)}
+                disabled={!hasNextPage}
               >
                 Next
               </button>

@@ -63,24 +63,126 @@ const AdmissionDetails = ({ admission, error }) => {
           rel="canonical"
           href={`https://www.exameets.in/admissions/${admission.slug}`}
         />
+        {/* Admission Event Schema.org Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Event",
+              "name": admission.title,
+              "description": admission.description,
+              "startDate": admission.start_date,
+              "endDate": admission.last_date,
+              "eventStatus": "https://schema.org/EventScheduled",
+              "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+              "location": {
+                "@type": "Place",
+                "name": admission.institute,
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": admission.location?.split(',')[0]?.trim(),
+                  "addressRegion": admission.location?.split(',')[1]?.trim() || "India",
+                  "addressCountry": "IN"
+                }
+              },
+              "organizer": {
+                "@type": "Organization",
+                "name": admission.institute,
+                "url": "https://www.exameets.in"
+              },
+              "offers": {
+                "@type": "Offer",
+                "name": `${admission.title} Application`,
+                "price": admission.fees === "N/A" ? "0" : admission.fees,
+                "priceCurrency": "INR",
+                "availability": "https://schema.org/InStock",
+                "validFrom": admission.start_date,
+                "validThrough": admission.last_date,
+                "url": admission.application_link
+              },
+              "audience": {
+                "@type": "EducationalAudience",
+                "educationalRole": "student"
+              },
+              "educationalLevel": admission.category,
+              "courseMode": "full-time",
+              "url": `https://www.exameets.in/admissions/${admission.slug}`,
+              // Additional educational properties
+              "about": {
+                "@type": "Course",
+                "name": admission.course,
+                "description": admission.description,
+                "provider": {
+                  "@type": "Organization",
+                  "name": admission.institute
+                }
+              }
+            })
+          }}
+        />
       </Head>
       <NextSeo
-        title={`${admission.title || "Admission Details"} | Exameets`}
-        description={admission.description || "Admission details"}
+        title={`${admission.title} | ${admission.institute} | Admission Details`}
+        description={
+          admission.description?.substring(0, 150) ||
+          `${admission.title} admission at ${admission.institute}. Application deadline: ${formatDate(admission.last_date)}. Apply online now.`
+        }
         canonical={`https://www.exameets.in/admissions/${admission.slug}`}
         openGraph={{
           url: `https://www.exameets.in/admissions/${admission.slug}`,
-          title: `${admission.title || "Admission Details"} | Exameets`,
-          description: admission.description || "Admission details",
-                    images: [
-                {
-                  url: `https://www.exameets.in/api/og/admission/${admission.slug}`,
-                  width: 1200,
-                  height: 630,
-                  alt: `${admission.title} at ${admission.institute}`,
-                },
-              ],
+          title: `${admission.title} | ${admission.institute} | Admission Details`,
+          description:
+            admission.description?.substring(0, 150) ||
+            `${admission.title} admission at ${admission.institute}. Application deadline: ${formatDate(admission.last_date)}. Apply online now.`,
+          images: [
+            {
+              url: `https://www.exameets.in/api/og/admission/${admission.slug}`,
+              width: 1200,
+              height: 630,
+              alt: `${admission.title} at ${admission.institute}`,
+            },
+          ],
+          type: 'article',
+          article: {
+            publishedTime: admission.createdAt,
+            modifiedTime: admission.updatedAt || admission.createdAt,
+            section: 'College Admissions',
+            tags: [admission.category, admission.course, ...(admission.keywords || [])]
+          }
         }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              admission.title,
+              admission.institute,
+              admission.course,
+              admission.category,
+              'college admission',
+              'university admission',
+              'admission notification',
+              'college application',
+              ...(admission.keywords || [])
+            ].filter(Boolean).join(', ')
+          },
+          {
+            name: 'author',
+            content: 'Exameets'
+          },
+          {
+            property: 'article:author',
+            content: 'Exameets'
+          },
+          {
+            name: 'application-deadline',
+            content: admission.last_date
+          },
+          {
+            name: 'application-start',
+            content: admission.start_date
+          }
+        ]}
       />
 
       <div className="flex justify-between items-start mb-6">
