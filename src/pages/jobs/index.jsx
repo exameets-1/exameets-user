@@ -434,7 +434,7 @@ export async function getServerSideProps(context) {
       return value;
     }));
 
-    let baseUrl = process.env.BASE_URL;
+    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     if (!baseUrl && req) {
       const protocol = req.headers['x-forwarded-proto'] || 'http';
       const host = req.headers.host || 'localhost:3000';
