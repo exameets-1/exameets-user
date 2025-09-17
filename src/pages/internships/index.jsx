@@ -7,28 +7,68 @@ import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
 import { Internship } from "@/lib/models/Internship";
 
-// Custom date formatter for consistent output (MM/DD/YYYY)
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = date.getFullYear();
-  return `${month}/${day}/${year}`;
+// Helper functions for SEO and structured data
+const generateMetaDescription = (searchKeyword, totalInternships = 0, filters = {}) => {
+  if (totalInternships === 0) {
+    return "No internships found. Browse latest internship opportunities across India on Exameets.";
+  }
+  let description = `Browse ${totalInternships} internship opportunities`;
+  if (searchKeyword) description = `${totalInternships} ${searchKeyword} internships available`;
+  if (filters.city && filters.city !== 'All') description += ` in ${filters.city}`;
+  return description + `. Find remote and on-site internships with stipends on Exameets.`;
 };
 
-// Debounce hook to limit rapid state updates
-const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debouncedValue;
+const generateInternshipListingSchema = (internships, baseUrl) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SearchResultsPage",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": internships.map((internship, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${baseUrl}/internships/${internship.slug}`,
+        "name": internship.title,
+        "item": {
+          "@type": "JobPosting",
+          "@id": `${baseUrl}/internships/${internship.slug}`,
+          "title": internship.title,
+          "description": internship.description,
+          "datePosted": internship.createdAt,
+          "validThrough": internship.last_date,
+          "employmentType": "INTERN",
+          "hiringOrganization": {
+            "@type": "Organization",
+            "name": internship.organization
+          },
+          "jobLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": internship.location,
+              "addressCountry": "IN"
+            }
+          },
+          "baseSalary": {
+            "@type": "MonetaryAmount",
+            "value": internship.stipend,
+            "currency": "INR"
+          }
+        }
+      }))
+    }
+  };
 };
 
-const Internships = ({ initialData, initialFilters, initialSearch }) => {
+const sanitizeJSON = (data) => {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+};
+
+// Update component props to include baseUrl
+const Internships = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
   const router = useRouter();
 
   // Initialize state from SSR props
@@ -40,7 +80,19 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
   const [currentPage, setCurrentPage] = useState(initialFilters.page || 1);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
-  
+
+  // Debounce hook to limit rapid state updates
+  const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      return () => clearTimeout(timer);
+    }, [value, delay]);
+    return debouncedValue;
+  };
+
   const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
   const searchInputRef = useRef(null);
   const locationDropdownRef = useRef(null);
@@ -103,7 +155,6 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
 
   const { internships = [], totalInternships = 0 } = initialData || {};
   const totalPages = Math.ceil(totalInternships / (initialData.limit || 8));
-  // Build pagination object based on computed totalPages
   const pagination = {
     totalPages,
     currentPage,
@@ -114,15 +165,7 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
   };
 
   // Build the canonical URL
-  const canonicalUrl = (() => {
-    const params = new URLSearchParams();
-    if (filters.city && filters.city !== "All") params.append("city", filters.city);
-    if (filters.internship_type && filters.internship_type !== "All")
-      params.append("internship_type", filters.internship_type);
-    if (searchKeyword) params.append("q", searchKeyword);
-    params.append("page", currentPage);
-    return `https://www.exameets.in/internships?${params.toString()}`;
-  })();
+  const canonicalUrl = `${baseUrl}/internships`;
 
   const locationOptions = [
     { value: 'All', label: 'All Cities' },
@@ -146,19 +189,56 @@ const Internships = ({ initialData, initialFilters, initialSearch }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <Head>
-        <title>Internships | Exameets</title>
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={currentPage === 1 ? "index, follow" : "noindex, follow"} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: sanitizeJSON(generateInternshipListingSchema(internships || [], baseUrl))
+          }}
+        />
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <NextSeo
-        title="Internships | Exameets"
-        description={`Browse ${totalInternships} internships`}
         canonical={canonicalUrl}
+        title={`${searchKeyword ? `${searchKeyword} Internships` : 'Latest Internship Opportunities'} | Exameets`}
+        description={generateMetaDescription(searchKeyword, totalInternships, filters)}
         openGraph={{
-          title: "Internships | Exameets",
-          description: `Browse ${totalInternships} internships`,
           url: canonicalUrl,
+          title: `${searchKeyword ? `${searchKeyword} Internships` : 'Latest Internship Opportunities'} | Exameets`,
+          description: generateMetaDescription(searchKeyword, totalInternships, filters),
+          images: [
+            {
+              url: `${baseUrl}/api/og/internships`,
+              width: 1200,
+              height: 630,
+              alt: 'Internship Opportunities on Exameets',
+            }
+          ],
+          type: 'website'
         }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              'internships',
+              'internship opportunities',
+              'student internships',
+              'remote internships',
+              'paid internships',
+              'internship program',
+              ...(searchKeyword ? [searchKeyword] : []),
+              ...(filters.city && filters.city !== 'All' ? [filters.city + ' internships'] : [])
+            ].join(', ')
+          },
+          {
+            name: 'author',
+            content: 'Exameets'
+          },
+          {
+            property: 'article:author',
+            content: 'Exameets'
+          }
+        ]}
       />
 
       <div className="max-w-7xl mx-auto">
@@ -394,14 +474,8 @@ export async function getServerSideProps(context) {
 
   // Build query object based on schema
   const dbQuery = {};
-  
-  // Location filter
   if (city !== "All") dbQuery.location = city;
-  
-  // Internship type filter
   if (internship_type !== "All") dbQuery.internship_type = internship_type;
-  
-  // Search filter
   if (searchKeyword) {
     dbQuery.$or = [
       { title: { $regex: searchKeyword, $options: 'i' } },
@@ -424,21 +498,24 @@ export async function getServerSideProps(context) {
       .limit(limit)
       .lean();
 
-// In your getServerSideProps function, update the serializedInternships mapping:
-const serializedInternships = internships.map(internship => ({
-  ...internship,
-  _id: internship._id.toString(),
-  createdAt: internship.createdAt.toISOString(),
-  postedBy: internship.postedBy ? internship.postedBy.toString() : null, // Add this line
-  start_date: internship.start_date,
-  last_date: internship.last_date,
-  skills_required: internship.skills_required || [] 
-}));
+    // Serialize internships
+    const serializedInternships = internships.map(internship => ({
+      ...internship,
+      _id: internship._id.toString(),
+      createdAt: internship.createdAt.toISOString(),
+      postedBy: internship.postedBy ? internship.postedBy.toString() : null,
+      start_date: internship.start_date,
+      last_date: internship.last_date,
+      skills_required: internship.skills_required || []
+    }));
 
     // Generate base URL
-    const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const host = req.headers.host;
-    const baseUrl = `${protocol}://${host}`;
+    let baseUrl = process.env.BASE_URL;
+    if (!baseUrl && req) {
+      const protocol = req.headers['x-forwarded-proto'] || 'http';
+      const host = req.headers.host;
+      baseUrl = `${protocol}://${host}`;
+    }
 
     return {
       props: {
@@ -457,7 +534,7 @@ const serializedInternships = internships.map(internship => ({
         },
         initialFilters: { city, internship_type, page },
         initialSearch: searchKeyword,
-        baseUrl
+        baseUrl: baseUrl || 'http://localhost:3000'
       }
     };
   } catch (error) {

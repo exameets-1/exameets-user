@@ -16,7 +16,8 @@ const formatDate = (dateString) => {
   return `${month}/${day}/${year}`;
 };
 
-const InternshipDetails = ({ internship, error }) => {
+// Change component signature
+const InternshipDetails = ({ internship, error, baseUrl }) => {
   const router = useRouter();
   const [showShare, setShowShare] = React.useState(false);
 
@@ -57,28 +58,112 @@ const InternshipDetails = ({ internship, error }) => {
   return (
     <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
       <Head>
-        <link
-          rel="canonical"
-          href={`https://www.exameets.in/internships/${internship.slug}`}
+        <link rel="canonical" href={`${baseUrl}/internships/${internship.slug}`} />
+        {/* Enhanced Internship Job Posting Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "JobPosting",
+              "title": internship.title,
+              "description": internship.description || `${internship.title} internship opportunity at ${internship.organization}`,
+              "datePosted": internship.createdAt,
+              "validThrough": internship.last_date,
+              "employmentType": "INTERN",
+              "hiringOrganization": {
+                "@type": "Organization",
+                "name": internship.organization
+              },
+              "jobLocation": {
+                "@type": "Place",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": internship.location,
+                  "addressCountry": "IN"
+                }
+              },
+              "baseSalary": {
+                "@type": "MonetaryAmount",
+                "value": internship.stipend,
+                "currency": "INR"
+              },
+              "workHours": internship.duration,
+              "qualifications": internship.eligibility_criteria?.join(', '),
+              "skills": internship.skills_required?.join(', '),
+              "applicationDeadline": internship.last_date,
+              "url": `${baseUrl}/internships/${internship.slug}`
+            })
+          }}
         />
       </Head>
+
       <NextSeo
-        title={`${internship.title} | Exameets`}
-        description={internship.description || "Internship details"}
-        canonical={`https://www.exameets.in/internships/${internship.slug}`}
+        title={`${internship.title} | ${internship.organization} | Internship Opportunity`}
+        description={internship.description?.substring(0, 150) || `Join ${internship.title} internship at ${internship.organization}. Location: ${internship.location}. Duration: ${internship.duration}. Apply now!`}
+        canonical={`${baseUrl}/internships/${internship.slug}`}
         openGraph={{
-          url: `https://www.exameets.in/internships/${internship.slug}`,
-          title: `${internship.title} | Exameets`,
-          description: internship.description || "Internship details",
-                    images: [
-                {
-                  url: `https://www.exameets.in/api/og/internship/${internship.slug}`,
-                  width: 1200,
-                  height: 630,
-                  alt: `${internship.title} at ${internship.organization}`,
-                },
-              ],
+          url: `${baseUrl}/internships/${internship.slug}`,
+          title: `${internship.title} | ${internship.organization} | Internship Opportunity`,
+          description: internship.description?.substring(0, 150) || `Join ${internship.title} internship at ${internship.organization}. Location: ${internship.location}. Duration: ${internship.duration}. Apply now!`,
+          images: [
+            {
+              url: `${baseUrl}/api/og/internship/${internship.slug}`,
+              width: 1200,
+              height: 630,
+              alt: `${internship.title} Internship`,
+            },
+          ],
+          type: 'article',
+          article: {
+            publishedTime: internship.createdAt,
+            section: 'Internships',
+            tags: [
+              'internship',
+              'career opportunity',
+              internship.organization,
+              internship.location,
+              internship.field,
+              ...(internship.skills_required || [])
+            ]
+          }
         }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              internship.title,
+              internship.organization,
+              internship.location,
+              internship.field,
+              'internship',
+              'student opportunity',
+              'career development',
+              'professional experience',
+              ...(internship.skills_required || [])
+            ].filter(Boolean).join(', ')
+          },
+          {
+            name: 'author',
+            content: 'Exameets'
+          },
+          {
+            property: 'article:author',
+            content: 'Exameets'
+          },
+          {
+            name: 'internship-type',
+            content: internship.internship_type
+          },
+          {
+            name: 'location',
+            content: internship.location
+          },
+          {
+            name: 'organization',
+            content: internship.organization
+          }
+        ]}
       />
 
       <div className="flex justify-between items-start mb-6">
@@ -186,16 +271,16 @@ const InternshipDetails = ({ internship, error }) => {
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
         <div className="space-y-3">
-          <div className="p-4 rounded-lg flex justify-between items-center">
-            <p className="font-bold text-gray-800 dark:text-gray-200">Start Date</p>
+          <div className="rounded-lg flex justify-between items-center">
+            <p className="text-gray-800 dark:text-gray-200">Start Date</p>
             <p className="text-gray-700 dark:text-gray-300">
-              {internship.start_date ? formatDate(internship.start_date) : 'Not specified'}
+              {internship.start_date ? internship.start_date : 'Not specified'}
             </p>
           </div>
-          <div className="p-4 rounded-lg flex justify-between items-center">
-            <p className="font-bold text-gray-800 dark:text-gray-200">Last Date to Apply</p>
+          <div className="rounded-lg flex justify-between items-center">
+            <p className=" text-gray-800 dark:text-gray-200">Last Date to Apply</p>
             <p className="text-gray-700 dark:text-gray-300">
-              {internship.last_date ? formatDate(internship.last_date) : 'Not specified'}
+              {internship.last_date ? internship.last_date : 'Not specified'}
             </p>
           </div>
         </div>
@@ -219,27 +304,46 @@ const InternshipDetails = ({ internship, error }) => {
   );
 };
 
+// Replace the entire getServerSideProps function
 export async function getServerSideProps(context) {
   const { slug } = context.query;
+  const { req } = context;
+  
   await dbConnect();
+  
   try {
     const internship = await Internship.findOne({ slug }).lean();
+    
     if (!internship) {
       return { notFound: true };
     }
     
-    // Convert MongoDB _id to string and handle date serialization
+    // Serialize data similar to other pages
     const serializedInternship = JSON.parse(JSON.stringify(internship, (key, value) => {
-      // Convert Date objects to ISO strings
-      if (value instanceof Date) {
-        return value.toISOString();
-      }
-      return value;
+      return key === '_id' ? value.toString() : value;
     }));
     
-    return { props: { internship: serializedInternship } };
+    // Generate canonical URL
+    let baseUrl = process.env.BASE_URL;
+    if (!baseUrl && req) {
+      const protocol = req.headers['x-forwarded-proto'] || 'http';
+      const host = req.headers.host;
+      baseUrl = `${protocol}://${host}`;
+    }
+    
+    return { 
+      props: { 
+        internship: serializedInternship,
+        baseUrl: baseUrl || 'http://localhost:3000'
+      } 
+    };
   } catch (error) {
-    return { props: { error: error.message || "Error fetching internship" } };
+    return { 
+      props: { 
+        error: error.message || "Error fetching internship",
+        baseUrl: 'http://localhost:3000'
+      } 
+    };
   }
 }
 
