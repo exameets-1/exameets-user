@@ -91,27 +91,22 @@ const Results = ({ initialData, initialSearch, baseUrl }) => {
 
         {/* Schema.org structured data */}
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "itemListElement": results.map((result, index) => ({
-              "@type": "JobPosting",
-              "position": index + 1,
-              "name": result.title,
-              "description": `${result.organization} - ${result.postName}`,
-              "datePosted": result.createdAt,
-              "validThrough": result.resultDate,
-              "hiringOrganization": {
-                "@type": "Organization",
-                "name": result.organization
-              },
-              "jobLocation": {
-                "@type": "Country",
-                "name": "India"
-              }
-            }))
-          })}
-        </script>
+{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SearchResultsPage",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": results.map((result, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      // IMPORTANT: point to the actual detail page for each result
+      "url": `https://www.exameets.in/results/${result.slug}`,
+      "name": result.title
+    }))
+  }
+})}
+</script>
+
       </Head>
 
       <div className="max-w-7xl mx-auto">
