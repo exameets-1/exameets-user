@@ -493,7 +493,7 @@ export async function getServerSideProps(context) {
     const skip = (page - 1) * limit;
 
     const internships = await Internship.find(dbQuery)
-      .sort({ post_date: -1, is_featured: -1 })
+      .sort({ createdAt: -1, is_featured: -1 })
       .skip(skip)
       .limit(limit)
       .lean();
