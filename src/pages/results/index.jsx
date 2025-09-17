@@ -152,7 +152,7 @@ const Results = ({ initialData, initialSearch, baseUrl }) => {
                 <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem] overflow-hidden">
                   {result.title}
                 </h3>
-                <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-2 overflow-hidden break-words">
+                <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-2 overflow-hidden break-words">
                   {result.organization}
                 </div>
                 <div className="grid gap-2 mb-4 overflow-hidden">

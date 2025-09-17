@@ -319,7 +319,7 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                   </h3>
 
                   {/* Company with Border */}
-                  <div className="text-sm text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
+                  <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
                     {job.companyName}
                   </div>
                   
