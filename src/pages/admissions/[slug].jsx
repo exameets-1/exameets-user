@@ -184,13 +184,13 @@ const AdmissionDetails = ({ admission, error }) => {
 
       {/* Application Process */}
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-        <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Application Process</h2>
-        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+        {/* <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Application Process</h2> */}
+        <div className="p-4 rounded-lg text-center">
           <a
             href={admission.application_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+            className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors"
           >
             Apply Now
           </a>

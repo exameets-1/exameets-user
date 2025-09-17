@@ -427,8 +427,9 @@ const GovtJobDetails = ({ job, error }) => {
         )}
 
         {/* Apply Button */}
+        <section className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6 text-center">
         {job.applyOnlineLink && (
-          <div className="text-center mt-8">
+          <div className="text-center">
             <a
               href={job.applyOnlineLink}
               target="_blank"
@@ -437,8 +438,13 @@ const GovtJobDetails = ({ job, error }) => {
             >
               Apply Now
             </a>
+            <p className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+              You will be redirected to the official application portal.
+            </p>
           </div>
         )}
+        </section>
+        
       </div>
     </>
   );

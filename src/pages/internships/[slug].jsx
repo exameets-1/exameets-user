@@ -186,13 +186,13 @@ const InternshipDetails = ({ internship, error }) => {
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
         <div className="space-y-3">
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex justify-between items-center">
+          <div className="p-4 rounded-lg flex justify-between items-center">
             <p className="font-bold text-gray-800 dark:text-gray-200">Start Date</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.start_date ? formatDate(internship.start_date) : 'Not specified'}
             </p>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex justify-between items-center">
+          <div className="p-4 rounded-lg flex justify-between items-center">
             <p className="font-bold text-gray-800 dark:text-gray-200">Last Date to Apply</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.last_date ? formatDate(internship.last_date) : 'Not specified'}
@@ -203,13 +203,13 @@ const InternshipDetails = ({ internship, error }) => {
 
       {/* How to Apply */}
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-        <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">How to Apply</h2>
-        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+        {/* <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Apply</h2> */}
+        <div className="rounded-lg text-center">
           <a
             href={internship.application_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
+            className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors"
           >
             Apply Now
           </a>

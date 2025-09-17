@@ -308,7 +308,7 @@ const JobDetails = ({ job, error }) => {
         )}
 
         {/* Application Section */}
-        <section className="mb-8">
+        <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           {job.submissionMethod === 'email' ? (
             <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <p className="text-gray-700 dark:text-gray-300">
