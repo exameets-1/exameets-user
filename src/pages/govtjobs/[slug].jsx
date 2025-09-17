@@ -95,24 +95,98 @@ const GovtJobDetails = ({ job, error }) => {
     <>
       <Head>
         <link rel="canonical" href={`https://www.exameets.in/govtjobs/${job.slug}`} />
+        {/* Government Job Posting Schema.org Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "JobPosting",
+              "title": job.jobTitle,
+              "description": job.jobOverview,
+              "datePosted": job.createdAt,
+              "validThrough": job.applicationEndDate,
+              "employmentType": "FULL_TIME",
+              "hiringOrganization": {
+                "@type": "Organization",
+                "name": job.organization,
+                "description": job.jobOverview,
+                "sameAs": "https://www.exameets.in"
+              },
+              "jobLocation": {
+                "@type": "Place",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": job.jobLocation,
+                  "addressCountry": "IN"
+                }
+              },
+              "qualifications": job.educationalQualifications?.join(", "),
+              "occupationalCategory": "Government",
+              "jobBenefits": job.additionalRequirements?.join(", "),
+              "applicationContact": job.applyOnlineLink ? undefined : {
+                "@type": "ContactPoint",
+                "url": job.officialWebsiteLink
+              },
+              "directApply": !!job.applyOnlineLink,
+              "url": `https://www.exameets.in/govtjobs/${job.slug}`,
+              // Government-specific properties
+              "industry": "Government",
+              "jobImmediateStart": false,
+              "workHours": "Full-time",
+              // Additional government job specific data
+              "educationRequirements": job.educationalQualifications?.join(", "),
+              "experienceRequirements": job.additionalRequirements?.join(", "),
+              "skills": job.keywords?.join(", ")
+            })
+          }}
+        />
       </Head>
       <NextSeo
-        title={`${job.jobTitle || "Job Details"} | Exameets`}
-        description={job.jobOverview?.substring(0, 150) || "Government job details"}
+        title={`${job.jobTitle} | ${job.organization} | Government Job Details`}
+        description={job.jobOverview?.substring(0, 150) || `${job.jobTitle} government job at ${job.organization}. Apply online for this govt recruitment opportunity.`}
         canonical={`https://www.exameets.in/govtjobs/${job.slug}`}
         openGraph={{
           url: `https://www.exameets.in/govtjobs/${job.slug}`,
-          title: `${job.jobTitle || "Job Details"} | Exameets`,
-          description: job.jobOverview?.substring(0, 150) || "Government job details",
-                    images: [
-                {
-                  url: `https://www.exameets.in/api/og/govtjob/${job.slug}`,
-                  width: 1200,
-                  height: 630,
-                  alt: `${job.jobTitle} at ${job.organization}`,
-                },
-              ],
+          title: `${job.jobTitle} | ${job.organization} | Government Job Details`,
+          description: job.jobOverview?.substring(0, 150) || `${job.jobTitle} government job at ${job.organization}. Apply online for this govt recruitment opportunity.`,
+          images: [
+            {
+              url: `https://www.exameets.in/api/og/govtjob/${job.slug}`,
+              width: 1200,
+              height: 630,
+              alt: `${job.jobTitle} at ${job.organization}`,
+            },
+          ],
+          type: 'article',
+          article: {
+            publishedTime: job.createdAt,
+            modifiedTime: job.updatedAt || job.createdAt,
+            section: 'Government Jobs',
+            tags: job.keywords || []
+          }
         }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: [
+              job.jobTitle,
+              job.organization,
+              'government job',
+              'govt recruitment',
+              'sarkari naukri',
+              ...(job.keywords || [])
+            ].join(', ')
+          },
+          {
+            name: 'author',
+            content: 'Exameets'
+          },
+          {
+            property: 'article:author',
+            content: 'Exameets'
+          }
+        ]}
       />
 
       <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
