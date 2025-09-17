@@ -282,7 +282,7 @@ const JobDetails = ({ job, error }) => {
               {job.faq.map((item) => (
                 <li key={item._id} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                   <strong className="text-gray-800 dark:text-gray-200">Q:</strong> {item.question}<br />
-                  <strong className="text-gray-800 dark:text-gray-200 mt-2 block">A:</strong> {item.answer}
+                  <strong className="text-gray-800 dark:text-gray-200">A:</strong> {item.answer}
                 </li>
               ))}
             </ul>
@@ -337,21 +337,6 @@ const JobDetails = ({ job, error }) => {
           <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
             Featured Job
           </div>
-        )}
-
-        {/* FAQ */}
-        {job.faq?.length > 0 && (
-          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Frequently Asked Questions</h2>
-            <ul className="space-y-4">
-              {job.faq.map((item) => (
-                <li key={item._id} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                  <strong className="text-gray-800 dark:text-gray-200">Q:</strong> {item.question}<br />
-                  <strong className="text-gray-800 dark:text-gray-200 mt-2 block">A:</strong> {item.answer}
-                </li>
-              ))}
-            </ul>
-          </section>
         )}
       </div>
     </div>
