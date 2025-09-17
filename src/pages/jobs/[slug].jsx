@@ -241,7 +241,7 @@ const JobDetails = ({ job, error }) => {
           {renderArrayAsList(job.preferredQualifications)}
         </section>
 
-        {/* Important Dates */}
+        {/* Important Dates is commented out as tech jobs have important dates !
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
           <ul className="space-y-3">
@@ -256,7 +256,7 @@ const JobDetails = ({ job, error }) => {
               <span>{job.applicationDeadline}</span>
             </li>
           </ul>
-        </section>
+        </section> */}
 
         {/* Reference Number */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
