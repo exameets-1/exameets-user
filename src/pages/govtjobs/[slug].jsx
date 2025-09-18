@@ -198,16 +198,16 @@ const GovtJobDetails = ({ job, error }) => {
           >
             <ArrowLeft className="w-4 h-4 inline-block" /> Back to Govt Jobs
           </button>
-        </div>
-
-        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
-          {/* <button
+          <button
             className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             onClick={() => setShowShare(true)}
             aria-label="Share"
           >
             <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
-          </button> */}
+          </button>
+        </div>
+
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
 
           <h1 className="text-xl font-bold text-white text-center">
             {job.jobTitle || "Government Job"}
@@ -496,7 +496,7 @@ const GovtJobDetails = ({ job, error }) => {
 
         {/* Featured Badge */}
         {job.isFeatured && (
-          <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
+          <div className="absolute top-6 right-16 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
             Featured Job
           </div>
         )}

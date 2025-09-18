@@ -162,9 +162,6 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
           >
             ← Back to Admit Cards
           </button>
-        </div>
-
-        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
           <button
             className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             onClick={() => setShowShare(true)}
@@ -172,12 +169,15 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
           >
             <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
           </button>
+        </div>
+
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
           
-          <h1 className="text-2xl font-bold text-white text-center px-12">
+          <h1 className="text-xl font-bold text-white text-center">
             {admitCard.title || "Admit Card Details"}
           </h1>
-          
-          <p className="mt-2 text-xl text-white text-center px-12">
+
+          <p className="mt-2 text-15px text-[#ececec] text-center">
             {admitCard.organization || "Not specified"}
           </p>
         </div>
