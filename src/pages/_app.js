@@ -41,6 +41,9 @@ function AppContent({ Component, pageProps }) {
 
   return (
     <>
+    <Head>
+      <meta name="google-adsense-account" content="ca-pub-3933872662333205"></meta>
+    </Head>
           <Script
         strategy="afterInteractive"
         async
