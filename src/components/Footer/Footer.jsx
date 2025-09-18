@@ -216,7 +216,7 @@ const Footer = () => {
               Developed by{' '}
             <a href="https://www.linkedin.com/in/mayaluri-anusha/" target='_blank' rel="noopener noreferrer" className="hover:underline">Anusha Mayaluri</a>{' '}
             and{' '}
-            <a href="https://www.linkedin.com/in/santhosh-anantha58/" target='_blank' rel="noopener noreferrer" className="hover:underline">Santhosh Anantha</a>
+            <a href="https://www.linkedin.com/in/poornapm/" target='_blank' rel="noopener noreferrer" className="hover:underline">Poorna Prasad Macha</a>
           </p>
         </div>
 
