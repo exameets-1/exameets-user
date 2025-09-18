@@ -21,7 +21,7 @@ const CookieConsent = () => {
 
     const script = document.createElement("script");
     script.id = "ga-script";
-    script.src = "https://www.googletagmanager.com/gtag/js?id="; //Add your GA ID here
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-BM36X73W5X"; //Add your GA ID here || Added Analytics ID
     script.async = true;
     document.head.appendChild(script);
 
@@ -31,7 +31,7 @@ const CookieConsent = () => {
         window.dataLayer.push(arguments);
       }
       gtag("js", new Date());
-      gtag("config", "//Add your GA ID here", { anonymize_ip: true });
+      gtag("config", "G-BM36X73W5X", { anonymize_ip: true });   //Add your GA ID here || Added Analytics ID
     };
   };
 

@@ -45,7 +45,7 @@ const Navbar = () => {
   return (
     <header className="w-full dark:bg-gray-800">
       {/* Top Line - Hidden on mobile, visible on desktop */}
-      <div className="hidden md:block bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 text-center py-2 flex items-center justify-center px-4">
+      <div className="hidden md:block bg-[#015990] dark:bg-gray-950 text-white dark:text-gray-100 text-center py-2 items-center justify-center px-4">
         <p className="text-base md:text-xl">
           Exameets is a one-step platform for students, where all the needs are met !
         </p>
