@@ -124,7 +124,7 @@ export default async function handler(req) {
                 textAlign: 'center',
               }}
             >
-             {govtJob.jobLocation}
+             Application Deadline: {govtJob.applicationEndDate}
             </p>
           </div>
           

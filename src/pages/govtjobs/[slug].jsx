@@ -6,6 +6,7 @@ import { GovtJob } from "@/lib/models/GovtJob";
 import { useRouter } from 'next/router';
 import ShareModal from "@/modals/ShareModal";
 import { FaShareAlt } from "react-icons/fa";
+import { ArrowLeft } from "lucide-react";
 
 // Helper function for consistent date formatting
 const formatDate = (dateString) => {
@@ -77,7 +78,7 @@ const GovtJobDetails = ({ job, error }) => {
           onClick={() => window.history.back()} 
           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
         >
-          ← Go Back
+          Back to Govt Jobs
         </button>
       </div>
     );
@@ -195,24 +196,24 @@ const GovtJobDetails = ({ job, error }) => {
             onClick={() => window.history.back()} 
             className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            ← Back to Govt Jobs
+            <ArrowLeft className="w-4 h-4 inline-block" /> Back to Govt Jobs
           </button>
         </div>
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
-          <button
+          {/* <button
             className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             onClick={() => setShowShare(true)}
             aria-label="Share"
           >
             <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
-          </button>
-          
-          <h1 className="text-2xl font-bold text-white text-center px-12">
+          </button> */}
+
+          <h1 className="text-xl font-bold text-white text-center">
             {job.jobTitle || "Government Job"}
           </h1>
-          
-          <p className="mt-2 text-xl text-white text-center px-12">
+
+          <p className="mt-2 text-15px text-[#ececec] text-center">
             {job.organization || "Not specified"}
           </p>
         </div>

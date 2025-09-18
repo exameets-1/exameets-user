@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { ArrowDown10, MapPinCheck } from 'lucide-react';
+import { ArrowDown10, MapPinCheck,ArrowRight } from 'lucide-react';
 import dbConnect from '@/lib/dbConnect';
 import { GovtJob } from '@/lib/models/GovtJob';
 import useDebounce from '@/hooks/useDebounce'; // Create this hook or use a utility
@@ -202,9 +202,9 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error, bas
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-[#e6f4ff] dark:bg-gray-800 p-6 rounded-lg mb-8">
+          <div className="bg-[#e6f4ff] dark:bg-gray-800 p-1.5 rounded-lg mb-8">
             <div className="mb-6">
-              <h2 className="text-3xl font-bold text-[#003366] dark:text-white">Government Jobs</h2>
+              <h2 className="text-3xl font-bold text-[#003366] dark:text-white lg:p-2">Government Jobs</h2>
             </div>
 
             {/* Mobile Layout */}
@@ -387,7 +387,7 @@ const GovtJobsPage = ({ govtJobs, currentPage, totalPages, totalJobs, error, bas
                       href={`/govtjobs/${job.slug}`}
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                     >
-                      View Details →
+                      View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
                     </Link>
                   </div>
                 </div>
