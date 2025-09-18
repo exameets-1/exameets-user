@@ -3,13 +3,13 @@ import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { 
-    FaArrowLeft,
     FaMapMarker,
     FaShareAlt
 } from 'react-icons/fa';
 import dbConnect from '@/lib/dbConnect';
 import { Scholarship } from '@/lib/models/Scholarship';
 import ShareModal from '@/modals/ShareModal';
+import { ArrowLeft } from 'lucide-react';
 
 const formatDate = (dateString) => {
     if (!dateString) return "Not specified";
@@ -181,7 +181,7 @@ const ScholarshipDetails = ({ scholarship, error, baseUrl }) => {
                         onClick={() => window.history.back()} 
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
-                        <FaArrowLeft /> Back to Scholarships
+                        <ArrowLeft className="w-4 h-4 inline-block" /> Back to Scholarships
                     </button>
                     <button
                         className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"

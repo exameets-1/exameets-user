@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { FaExternalLinkAlt, FaLink, FaShareAlt } from 'react-icons/fa';
 import { NextSeo } from 'next-seo';
 import ShareModal from '@/modals/ShareModal';
+import { ArrowLeft } from 'lucide-react';
 
 const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
   const router = useRouter();
@@ -160,7 +161,7 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
             onClick={handleBack}
             className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            ← Back to Admit Cards
+            <ArrowLeft className="w-4 h-4 inline-block" />Back to Admit Cards
           </button>
           <button
             className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"

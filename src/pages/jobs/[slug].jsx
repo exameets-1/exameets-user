@@ -6,6 +6,7 @@ import dbConnect from "@/lib/dbConnect";
 import { Job } from "@/lib/models/Job";
 import { FaShareAlt } from "react-icons/fa";
 import ShareModal from "@/modals/ShareModal";
+import { ArrowLeft } from "lucide-react";
 
 // Helper function to format dates consistently (MM/DD/YYYY)
 const formatDate = (dateString) => {
@@ -148,7 +149,7 @@ const JobDetails = ({ job, error }) => {
           onClick={() => window.history.back()} 
           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-6"
         >
-          ← Back to Jobs
+          <ArrowLeft className="w-4 h-4 inline-block" /> Back to Jobs
         </button>
           <button
             className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
