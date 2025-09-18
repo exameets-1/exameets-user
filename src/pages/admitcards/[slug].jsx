@@ -172,10 +172,11 @@ const AdmitCardDetailsPage = ({ admitCard, baseUrl }) => {
         </div>
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
-          
+        <section className="border-b border-gray-200 pb-3">
           <h1 className="text-xl font-bold text-white text-center">
             {admitCard.title || "Admit Card Details"}
           </h1>
+        </section>
 
           <p className="mt-2 text-15px text-[#ececec] text-center">
             {admitCard.organization || "Not specified"}
