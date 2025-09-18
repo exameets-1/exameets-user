@@ -14,10 +14,10 @@ import ShareModal from '@/modals/ShareModal';
 const formatDate = (dateString) => {
     if (!dateString) return "Not specified";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
+    return date.toLocaleDateString('en-IN', {
+        day: '2-digit',
         month: '2-digit',
-        day: '2-digit'
+        year: 'numeric',
     });
 }; 
 
@@ -268,16 +268,16 @@ const ScholarshipDetails = ({ scholarship, error, baseUrl }) => {
                         {scholarship.start_date && (
                             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                                 <p className="font-bold text-gray-800 dark:text-gray-200">Start Date</p>
-                                <p className="text-gray-700 dark:text-gray-300">{formatDate(scholarship.start_date)}</p>
+                                <p className="text-gray-700 dark:text-gray-300">{(scholarship.start_date)}</p>
                             </div>
                         )}
-                        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        {/* <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                             <p className="font-bold text-gray-800 dark:text-gray-200">Posted Date</p>
-                            <p className="text-gray-700 dark:text-gray-300">{formatDate(scholarship.post_date)}</p>
-                        </div>
+                            <p className="text-gray-700 dark:text-gray-300">{(scholarship.post_date)}</p>
+                        </div> */}
                         <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                             <p className="font-bold text-gray-800 dark:text-gray-200">Last Date to Apply</p>
-                            <p className="text-gray-700 dark:text-gray-300">{formatDate(scholarship.last_date)}</p>
+                            <p className="text-gray-700 dark:text-gray-300">{(scholarship.last_date)}</p>
                         </div>
                     </div>
                 </section>
