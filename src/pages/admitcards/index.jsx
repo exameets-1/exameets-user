@@ -214,10 +214,10 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
                     {admitCard.organization}
                   </div>
 
-                  {/* Vacancies */}
-                  <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                    <span className="font-bold">Vacancies:</span> {admitCard.vacancies || 'Not specified'}
-                  </div>
+                  {/* Exam Date */}
+                  {/* <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                    <span className="font-bold">Exam Date:</span> {admitCard.examDate || 'Not specified'}
+                  </div> */}
 
                   {/* Content Section */}
                   <div className="grid gap-2 mb-4">
@@ -225,10 +225,17 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
                      <span className="font-bold">Exam Date:</span> {admitCard.examDetails?.[0]?.examDate || 'Not available'}
                     </div>
                   </div>
+
+                  {/* Vacancies
+                  <div className="grid gap-2 mb-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                     <span className="font-bold">Vacancies :</span> {admitCard.vacancies || 'Not available'}
+                    </div>
+                  </div> */}
                   {/* Footer Section */}
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
                     <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
-                      
+                      Vacancies : {admitCard.vacancies || 'Not available'}
                     </span>
                     <button
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
