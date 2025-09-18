@@ -267,9 +267,9 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-[#e6f4ff] dark:bg-gray-800 p-6 rounded-lg mb-8">
-            <div className="mb-6">
-              <h2 className="text-3xl font-bold text-[#003366] dark:text-white">
+          <div className="bg-[#e6f4ff] dark:bg-gray-800 p-1.5 rounded-lg mb-8">
+            <div className="mb-2">
+              <h2 className="text-3xl font-bold ml-2 text-[#003366] dark:text-white">
                 Admissions
               </h2>
             </div>
