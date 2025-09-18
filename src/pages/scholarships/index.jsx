@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { FaSearch } from 'react-icons/fa';
-import { School, GraduationCap } from 'lucide-react';
+import { School, GraduationCap , ArrowRight} from 'lucide-react';
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
@@ -458,7 +458,7 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                       onClick={() => handleViewDetails(scholarship.slug)}
                     >
-                      View Details →
+                      View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
                     </button>
                   </div>
                 </div>

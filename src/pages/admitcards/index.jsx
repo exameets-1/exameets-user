@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import dbConnect from '@/lib/dbConnect';
 import { AdmitCard } from '@/lib/models/AdmitCard';
+import { ArrowRight } from 'lucide-react';
 
 // Add these helper functions before the component
 const generateMetaDescription = (searchKeyword, totalAdmitCards = 0) => {
@@ -233,7 +234,7 @@ const AdmitCards = ({ admitCards, totalPages, currentPage, initialSearch, baseUr
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                       onClick={() => handleViewDetails(admitCard.slug)}
                     >
-                      View Details →
+                      View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
                     </button>
                   </div>
                 </div>

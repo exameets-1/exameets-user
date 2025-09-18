@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { FaSearch } from 'react-icons/fa';
-import { GraduationCap, MapPin } from 'lucide-react';
+import { GraduationCap, MapPin, ArrowRight } from 'lucide-react';
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
@@ -464,7 +464,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
                       href={`/admissions/${admission.slug}`}
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline whitespace-nowrap ml-2 flex-shrink-0"
                     >
-                      View Details →
+                      View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
                     </Link>
                   </div>
                 </div>

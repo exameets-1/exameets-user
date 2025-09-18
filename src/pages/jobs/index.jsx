@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
-import { MapPinCheck, Briefcase } from 'lucide-react';
+import { MapPinCheck, Briefcase, ArrowRight } from 'lucide-react';
 import dbConnect from '@/lib/dbConnect';
 import { Job } from '@/lib/models/Job';
 
@@ -346,7 +346,7 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                       href={`/jobs/${job.slug}`}
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                     >
-                      View Details →
+                      View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
                     </a>
                   </div>
                 </div>

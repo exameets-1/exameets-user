@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { FaSearch } from 'react-icons/fa';
-import { Briefcase, MapPinCheck } from 'lucide-react';
+import { Briefcase, MapPinCheck, ArrowRight } from 'lucide-react';
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import dbConnect from "@/lib/dbConnect";
@@ -421,7 +421,7 @@ const Internships = ({ initialData, initialFilters, initialSearch, baseUrl }) =>
                       handleInternshipClick(internship.slug);
                     }}
                   >
-                    View Details →
+                    View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
                   </button>
                 </div>
               </div>
