@@ -11,6 +11,8 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Loader from "@/components/Loader";
 import "@/styles/global.css";
 import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script";
+import Head from "next/head";
 
 function AppContent({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -38,6 +40,13 @@ function AppContent({ Component, pageProps }) {
   }, [router]);
 
   return (
+    <>
+          <Script
+        strategy="afterInteractive"
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3933872662333205"
+        crossOrigin="anonymous"
+      />
     <ThemeProvider>
       {loading && <Loader />}
       <Layout>
@@ -58,6 +67,7 @@ function AppContent({ Component, pageProps }) {
         />
       </Layout>
     </ThemeProvider>
+    </>
   );
 }
 
