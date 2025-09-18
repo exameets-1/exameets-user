@@ -132,7 +132,7 @@ const Navbar = () => {
             
             <div className="absolute hidden bg-white dark:bg-gray-700 shadow-lg rounded-md top-[100px] left-1/2 transform -translate-x-1/2 min-w-[180px] z-50 group-hover:block transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100">
               <div className="py-1">
-                <Link href="/govtjobs" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-100 transition-colors duration-200">All Govt Jobs</Link>
+                <Link href="/govtjobs" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-100 transition-colors duration-200">Notifications</Link>
                 <Link href="/admitcards" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-100 transition-colors duration-200">Admit Cards</Link>
                 <Link href="/results" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-100 transition-colors duration-200">Results</Link>
               </div>
