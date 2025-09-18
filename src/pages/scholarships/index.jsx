@@ -391,7 +391,7 @@ const Scholarships = ({ initialData, initialFilters, initialSearch, baseUrl }) =
                   <option value="Class 10">Class 10</option>
                   <option value="Class 11">Class 11</option>
                   <option value="Class 12">Class 12</option>
-                  <option value="Graduation">Graduation</option>
+                  <option value="Under Graduation">Under Graduation</option>
                   <option value="Post Graduation">Post Graduation</option>
                   <option value="Post Graduation Diploma">Post Graduation Diploma</option>
                   <option value="Phd">Phd</option>
