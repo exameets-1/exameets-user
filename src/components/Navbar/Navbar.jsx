@@ -94,7 +94,7 @@ const Navbar = () => {
       {/* Desktop Logo and Menu - Hidden on mobile */}
       <div className="hidden md:flex items-center justify-between px-5 py-4 relative dark:bg-gray-800">
         {/* Logo */}
-        <Link href="/" className="max-w-[320px] mx-auto">
+        <Link href="/" className="max-w-[320px] ml-20 mr-20"> {/*Actually it was mx-auto , so switch back to this after adding PYQ's again*/}
           <Image
             src={darkMode ? "/images/logo-final-dark.webp" : "/images/logo-final.webp"}
             alt="Exameets Logo"
@@ -166,14 +166,14 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="flex flex-col items-center m-4">
+          {/* <div className="flex flex-col items-center m-4">
             <Link href="/papers" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
                 <Image src="/PYQ_Icon.svg" alt="PYQ" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">PYQ</span>
             </Link>
-          </div>
+          </div> */}
 
           <div className="flex flex-col items-center m-4">
             <Link href="/scholarships" className="flex flex-col items-center">
@@ -203,7 +203,7 @@ const Navbar = () => {
           <Link href="/jobs" onClick={closeMobileMenu} className={getNavItemStyle('/jobs')}>Tech Jobs</Link>
           <Link href="/internships" onClick={closeMobileMenu} className={getNavItemStyle('/internships')}>Internships</Link>
           <Link href="/admissions" onClick={closeMobileMenu} className={getNavItemStyle('/admissions')}>Admissions</Link>
-          <Link href="/papers" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link>
+          {/* <Link href="/papers" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link> */}
           <Link href="/scholarships" onClick={closeMobileMenu} className={getNavItemStyle('/scholarships')}>Scholarships</Link>
         </div>
         
