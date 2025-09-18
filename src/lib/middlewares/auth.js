@@ -9,7 +9,6 @@ export const isAuthenticated = catchAsync(async(req, res, next) => {
         if (!token) {
             return next(new ErrorHandler("Please login to access this resource", 401));
         }
-        console.log(process.env.JWT_SECRET_KEY);
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {
             algorithms: ["HS256"]
         });
