@@ -442,7 +442,7 @@ const Admissions = ({ initialData, initialFilters, initialSearch, baseUrl }) => 
                     )}
                     {admission.last_date && (
                       <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1 overflow-hidden">
-                        <span className="font-bold">Last Date:</span> {formatDate(admission.last_date)}
+                        <span className="font-bold">Last Date:</span> {admission.last_date}
                       </div>
                     )}
                     {admission.eligibility_criteria && (

@@ -280,7 +280,7 @@ const AdmissionDetails = ({ admission, error }) => {
               className={`flex justify-between items-center ${index < 2 ? 'border-b pb-2 border-gray-200 dark:border-gray-700' : ''}`}
             >
               <span className="font-bold">{label}:</span>
-              <span>{formatDate(date)}</span>
+              <span>{(date)}</span>
             </li>
           ))}
         </ul>
