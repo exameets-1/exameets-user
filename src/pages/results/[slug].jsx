@@ -458,7 +458,7 @@ const ResultDetailsPage = ({ result, baseUrl }) => {
                 "name": "Exameets",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": `${baseUrl}/logo.png`
+                  "url": `${baseUrl}/images/og-images/results-og.png`
                 }
               },
               "mainEntityOfPage": `${baseUrl}/results/${result.slug}`,
@@ -755,7 +755,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const result = await Result.findOne({ slug })
-      .select('-createdAt -slug')
+      .select('-createdAt')
       .lean();
 
     if (!result) {
