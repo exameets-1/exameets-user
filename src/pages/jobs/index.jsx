@@ -311,13 +311,26 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                   key={job._id} 
                   className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:scale-105 transition-transform relative h-full"
                 >
-                  {/* Title Section */}
-                  <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-1 min-h-[1.75rem]">
-                    {job.jobTitle}
-                  </h3>
+                  {/* Company Logo Image - Small square in top right */}
+                  {job.imageUrl && (
+                    <div className="absolute top-3 right-3 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0 z-10">
+                      <img 
+                        src={job.imageUrl} 
+                        alt={job.jobTitle}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
 
-                  {/* Company with Border */}
-                  <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
+                  {/* Title Section - Now positioned to overlap with image */}
+                  <div className="pr-16 sm:pr-18 md:pr-20">
+                    <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem] leading-tight">
+                      {job.jobTitle}
+                    </h3>
+                  </div>
+
+                  {/* Company with Border - Also with right padding to avoid image overlap */}
+                  <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1 pr-16 sm:pr-18 md:pr-20">
                     {job.companyName}
                   </div>
                   
