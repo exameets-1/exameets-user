@@ -182,56 +182,73 @@ const JobDetails = ({ job, error }) => {
         {/* Category & Position Type */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-2">Category</h2>
-              <p className="text-gray-700 dark:text-gray-300">{job.category}</p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-2">Position Type</h2>
-              <p className="text-gray-700 dark:text-gray-300">{job.positionType}</p>
-            </div>
+            {job.category && (
+              <div>
+                <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-2">Category</h2>
+                <p className="text-gray-700 dark:text-gray-300">{job.category}</p>
+              </div>
+            )}
+            {job.positionType && (  
+              <div>
+                <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-2">Position Type</h2>
+                <p className="text-gray-700 dark:text-gray-300">{job.positionType}</p>
+              </div>
+            )}
           </div>
         </section>
 
         {/* Location */}
-        <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-          <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Location</h2>
-          <p className="text-gray-700 dark:text-gray-300">
-            {job.city}, {job.state}, {job.country}
-          </p>
-        </section>
+        {job.city || job.state || job.country && (
+          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Location</h2>
+            <p className="text-gray-700 dark:text-gray-300">
+              {job.city}, {job.state}, {job.country}
+            </p>
+          </section>
+        )}
 
         {/* Company Overview */}
-        <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-          <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Company Overview</h2>
-          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.companyOverview}</p>
-        </section>
+        {job.companyOverview && (
+          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Company Overview</h2>
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.companyOverview}</p>
+          </section>
+        )}
 
         {/* Position Summary */}
-        <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-          <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Position Summary</h2>
-          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.positionSummary}</p>
-        </section>
+        {job.positionSummary && (
+          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Position Summary</h2>
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.positionSummary}</p>
+          </section>
+        )}
 
         {/* Key Responsibilities */}
-        <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-          <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Key Responsibilities</h2>
-          {renderArrayAsList(job.keyResponsibilities)}
-        </section>
+        {job.keyResponsibilities && (
+          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Key Responsibilities</h2>
+            {renderArrayAsList(job.keyResponsibilities)}
+          </section>
+        )}
 
         {/* Experience & Education */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <div className="grid grid-cols-2 gap-4">
+            {job.experience && (
             <div>
               <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-2">Experience Required</h2>
               <p className="text-gray-700 dark:text-gray-300">{job.experience}</p>
             </div>
+            )}
+            {job.education && (
             <div>
               <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-2">Education Requirements</h2>
               {renderArrayAsList(job.education)}
             </div>
+            )}
           </div>
         </section>
+        
 
         {/* Technical Skills */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
@@ -265,6 +282,7 @@ const JobDetails = ({ job, error }) => {
         </section>
 
         {/* Soft Skills */}
+        {job.softSkills && (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -273,18 +291,23 @@ const JobDetails = ({ job, error }) => {
             </div>
           </div>
         </section>
+        )}
 
         {/* Benefits */}
+        {job.benefits && (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Benefits</h2>
           {renderArrayAsList(job.benefits)}
         </section>
+        )}
 
         {/* Preferred Qualifications */}
+        {job.preferredQualifications && (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Preferred Qualifications</h2>
           {renderArrayAsList(job.preferredQualifications)}
         </section>
+        )}
 
         {/* Important Dates is commented out as tech jobs have important dates !
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
@@ -304,6 +327,7 @@ const JobDetails = ({ job, error }) => {
         </section> */}
 
         {/* Reference Number */}
+        {job.jobReferenceNumber && (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -312,12 +336,15 @@ const JobDetails = ({ job, error }) => {
             </div>
           </div>
         </section>
+        )}
 
         {/* Equal Opportunity */}
+        {job.equalOpportunityStatement && (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Equal Opportunity</h2>
           <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.equalOpportunityStatement}</p>
         </section>
+        )}
 
         {/* FAQ */}
         {job.faq?.length > 0 && (
