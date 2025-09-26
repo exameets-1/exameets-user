@@ -2,13 +2,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLatestJobs } from '@/store/slices/jobSlice';
-import { fetchLatestGovtJobs } from '@/store/slices/govtJobSlice';
 import { fetchLatestInternships } from '@/store/slices/internshipSlice';
-import { fetchLatestScholarships } from '@/store/slices/scholarshipSlice';
-import { fetchLatestResults } from '@/store/slices/resultSlice';
-import { fetchLatestAdmitCards } from '@/store/slices/admitCardSlice';
-import { fetchLatestAdmissions } from '@/store/slices/admissionSlice';
-import { fetchLatestYears } from '@/store/slices/previousSlice';
+// import { fetchLatestGovtJobs } from '@/store/slices/govtJobSlice';
+// import { fetchLatestScholarships } from '@/store/slices/scholarshipSlice';
+// import { fetchLatestResults } from '@/store/slices/resultSlice';
+// import { fetchLatestAdmitCards } from '@/store/slices/admitCardSlice';
+// import { fetchLatestAdmissions } from '@/store/slices/admissionSlice';
+// import { fetchLatestYears } from '@/store/slices/previousSlice';
 import Link from 'next/link';
 import Loader from '@/components/Loader';
 import useScrollToTop from '@/hooks/useScrollToTop';
@@ -25,59 +25,60 @@ const WhatsNew = () => {
     } = useSelector((state) => state.jobs);
 
     const {
-        latestGovtJobs = [],
-        loading: govtJobsLoading,
-        error: govtJobsError
-    } = useSelector((state) => state.govtJobs);
-
-    const {
         latestInternships = [],
         loading: internshipsLoading,
         error: internshipsError
     } = useSelector((state) => state.internships);
 
-    const {
-        latestScholarships = [],
-        loading: scholarshipsLoading,
-        error: scholarshipsError
-    } = useSelector((state) => state.scholarships);
+    // const {
+    //     latestGovtJobs = [],
+    //     loading: govtJobsLoading,
+    //     error: govtJobsError
+    // } = useSelector((state) => state.govtJobs);
 
-    const {
-        latestResults = [],
-        loading: resultsLoading,
-        error: resultsError
-    } = useSelector((state) => state.results);
 
-    const {
-        latestAdmitCards = [],
-        loading: admitCardsLoading,
-        error: admitCardsError
-    } = useSelector((state) => state.admitcards);
+    // const {
+    //     latestScholarships = [],
+    //     loading: scholarshipsLoading,
+    //     error: scholarshipsError
+    // } = useSelector((state) => state.scholarships);
 
-    const {
-        latestAdmissions = [],
-        loading: admissionsLoading,
-        error: admissionsError
-    } = useSelector((state) => state.admissions);
+    // const {
+    //     latestResults = [],
+    //     loading: resultsLoading,
+    //     error: resultsError
+    // } = useSelector((state) => state.results);
 
-    const {
-        latestYears = [],
-        loading: yearsLoading,
-        error: yearsError
-    } = useSelector((state) => state.previousYears);
+    // const {
+    //     latestAdmitCards = [],
+    //     loading: admitCardsLoading,
+    //     error: admitCardsError
+    // } = useSelector((state) => state.admitcards);
+
+    // const {
+    //     latestAdmissions = [],
+    //     loading: admissionsLoading,
+    //     error: admissionsError
+    // } = useSelector((state) => state.admissions);
+
+    // const {
+    //     latestYears = [],
+    //     loading: yearsLoading,
+    //     error: yearsError
+    // } = useSelector((state) => state.previousYears);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await Promise.all([
                     dispatch(fetchLatestJobs()),
-                    dispatch(fetchLatestGovtJobs()),
                     dispatch(fetchLatestInternships()),
-                    dispatch(fetchLatestScholarships()),
-                    dispatch(fetchLatestResults()),
-                    dispatch(fetchLatestAdmitCards()),
-                    dispatch(fetchLatestAdmissions()),
-                    dispatch(fetchLatestYears())
+                    // dispatch(fetchLatestGovtJobs()),
+                    // dispatch(fetchLatestScholarships()),
+                    // dispatch(fetchLatestResults()),
+                    // dispatch(fetchLatestAdmitCards()),
+                    // dispatch(fetchLatestAdmissions()),
+                    // dispatch(fetchLatestYears())
                 ]);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -88,13 +89,17 @@ const WhatsNew = () => {
     }, [dispatch]);
 
     // Loading and error states
-    const isLoading = jobsLoading || govtJobsLoading || internshipsLoading || 
-                    scholarshipsLoading || resultsLoading || admitCardsLoading || 
-                    admissionsLoading || yearsLoading;
+    const isLoading = jobsLoading || 
+    internshipsLoading;
+    // govtJobsLoading || 
+    //                 scholarshipsLoading || resultsLoading || admitCardsLoading || 
+                    // admissionsLoading || yearsLoading;
 
-    const error = jobsError || govtJobsError || internshipsError || 
-                scholarshipsError || resultsError || admitCardsError || 
-                admissionsError || yearsError;
+    const error = jobsError || 
+    internshipsError ;
+    // govtJobsError || 
+    //             scholarshipsError || resultsError || admitCardsError || 
+    //             admissionsError || yearsError;
 
     if (isLoading) {
         return (
@@ -122,54 +127,54 @@ const WhatsNew = () => {
             getContent: (item) => `${item.jobTitle} - ${item.companyName}`
         },
         {
-            title: "Latest Government Jobs",
-            data: latestGovtJobs,
-            path: "/govtjobs/",
-            viewAll: "/govtjobs",
-            getContent: (item) => `${item.jobTitle} - ${item.organization}`
-        },
-        {
             title: "Latest Internships",
             data: latestInternships,
             path: "/internships/",
             viewAll: "/internships",
             getContent: (item) => `${item.title} - ${item.organization}`
         },
-        {
-            title: "Latest Scholarships",
-            data: latestScholarships,
-            path: "/scholarships/",
-            viewAll: "/scholarships",
-            getContent: (item) => `${item.title} - ${item.organization}`
-        },
-        {
-            title: "Latest Results",
-            data: latestResults,
-            path: "/results/",
-            viewAll: "/results",
-            getContent: (item) => `${item.title} - ${item.organization}`
-        },
-        {
-            title: "Latest Admit Cards",
-            data: latestAdmitCards,
-            path: "/admitcards/",
-            viewAll: "/admitcards",
-            getContent: (item) => `${item.title} - ${item.organization}`
-        },
-        {
-            title: "Latest Admissions",
-            data: latestAdmissions,
-            path: "/admissions/",
-            viewAll: "/admissions",
-            getContent: (item) => `${item.title} - ${item.institute}`
-        },
-        {
-            title: "Latest PYQ's",
-            data: latestYears,
-            viewAll: "/papers",
-            getContent: (item) => `${item.year} - ${item.subject}`,
-            path: "/papers/"
-        }
+        // {
+        //     title: "Latest Government Jobs",
+        //     data: latestGovtJobs,
+        //     path: "/govtjobs/",
+        //     viewAll: "/govtjobs",
+        //     getContent: (item) => `${item.jobTitle} - ${item.organization}`
+        // },
+        // {
+        //     title: "Latest Scholarships",
+        //     data: latestScholarships,
+        //     path: "/scholarships/",
+        //     viewAll: "/scholarships",
+        //     getContent: (item) => `${item.title} - ${item.organization}`
+        // },
+        // {
+        //     title: "Latest Results",
+        //     data: latestResults,
+        //     path: "/results/",
+        //     viewAll: "/results",
+        //     getContent: (item) => `${item.title} - ${item.organization}`
+        // },
+        // {
+        //     title: "Latest Admit Cards",
+        //     data: latestAdmitCards,
+        //     path: "/admitcards/",
+        //     viewAll: "/admitcards",
+        //     getContent: (item) => `${item.title} - ${item.organization}`
+        // },
+        // {
+        //     title: "Latest Admissions",
+        //     data: latestAdmissions,
+        //     path: "/admissions/",
+        //     viewAll: "/admissions",
+        //     getContent: (item) => `${item.title} - ${item.institute}`
+        // },
+        // {
+        //     title: "Latest PYQ's",
+        //     data: latestYears,
+        //     viewAll: "/papers",
+        //     getContent: (item) => `${item.year} - ${item.subject}`,
+        //     path: "/papers/"
+        // }
     ];
 
     return (

@@ -1,17 +1,7 @@
 User-agent: *
 Allow: /
 
-# Important pages - encourage crawling
-Allow: /govtjobs
-Allow: /jobs
-Allow: /results
-Allow: /internships
-Allow: /scholarships
-Allow: /admitcards
-Allow: /admissions
-Allow: /papers
-
-# Block admin or private areas (if any)
+# Block admin or private areas
 Disallow: /admin
 Disallow: /api
 Disallow: /_next
@@ -20,6 +10,3 @@ Disallow: /500
 
 # Sitemap location
 Sitemap: https://www.exameets.in/sitemap.xml
-
-# Crawl delay (optional - remove if you want faster crawling)
-Crawl-delay: 1

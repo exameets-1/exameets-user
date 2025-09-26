@@ -3,13 +3,13 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLatestJobs } from '@/store/slices/jobSlice';
-import { fetchLatestGovtJobs } from '@/store/slices/govtJobSlice';
 import { fetchLatestInternships } from '@/store/slices/internshipSlice';
-import { fetchLatestScholarships } from '@/store/slices/scholarshipSlice';
-import { fetchLatestResults } from '@/store/slices/resultSlice';
-import { fetchLatestAdmitCards } from '@/store/slices/admitCardSlice';
-import { fetchLatestAdmissions } from '@/store/slices/admissionSlice';
-import { fetchLatestYears } from '@/store/slices/previousSlice';
+// import { fetchLatestGovtJobs } from '@/store/slices/govtJobSlice';
+// import { fetchLatestScholarships } from '@/store/slices/scholarshipSlice';
+// import { fetchLatestResults } from '@/store/slices/resultSlice';
+// import { fetchLatestAdmitCards } from '@/store/slices/admitCardSlice';
+// import { fetchLatestAdmissions } from '@/store/slices/admissionSlice';
+// import { fetchLatestYears } from '@/store/slices/previousSlice';
 import { performGlobalSearch, clearSearchResults } from '@/store/slices/globalSearchSlice';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
@@ -23,13 +23,13 @@ const WhatsNew = () => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
     
     const { latestJobs = [], loading: jobsLoading } = useSelector((state) => state.jobs);
-    const { latestGovtJobs = [], loading: govtJobsLoading } = useSelector((state) => state.govtJobs);
     const { latestInternships = [], loading: internshipsLoading } = useSelector((state) => state.internships);
-    const { latestScholarships = [], loading: scholarshipsLoading } = useSelector((state) => state.scholarships);
-    const { latestResults = [], loading: resultsLoading } = useSelector((state) => state.results);
-    const { latestAdmitCards = [], loading: admitCardsLoading } = useSelector((state) => state.admitcards);
-    const { latestAdmissions = [], loading: admissionsLoading } = useSelector((state) => state.admissions);
-    const { latestYears = [], loading: yearsLoading } = useSelector((state) => state.previousYears);
+    // const { latestGovtJobs = [], loading: govtJobsLoading } = useSelector((state) => state.govtJobs);
+    // const { latestScholarships = [], loading: scholarshipsLoading } = useSelector((state) => state.scholarships);
+    // const { latestResults = [], loading: resultsLoading } = useSelector((state) => state.results);
+    // const { latestAdmitCards = [], loading: admitCardsLoading } = useSelector((state) => state.admitcards);
+    // const { latestAdmissions = [], loading: admissionsLoading } = useSelector((state) => state.admissions);
+    // const { latestYears = [], loading: yearsLoading } = useSelector((state) => state.previousYears);
     const { searchResults = [], loading: searchLoading, error: searchError } = useSelector((state) => state.globalSearch);
 
     // Fetch data only once when component mounts
@@ -37,13 +37,13 @@ const WhatsNew = () => {
         const fetchData = async () => {
             await Promise.all([
                 dispatch(fetchLatestJobs()),
-                dispatch(fetchLatestGovtJobs()),
                 dispatch(fetchLatestInternships()),
-                dispatch(fetchLatestScholarships()),
-                dispatch(fetchLatestResults()),
-                dispatch(fetchLatestAdmitCards()),
-                dispatch(fetchLatestAdmissions()),
-                dispatch(fetchLatestYears())
+                // dispatch(fetchLatestGovtJobs()),
+                // dispatch(fetchLatestScholarships()),
+                // dispatch(fetchLatestResults()),
+                // dispatch(fetchLatestAdmitCards()),
+                // dispatch(fetchLatestAdmissions()),
+                // dispatch(fetchLatestYears())
             ]);
         };
         fetchData();
@@ -60,13 +60,13 @@ const WhatsNew = () => {
     const sortedEntries = useMemo(() => {
         const entries = [
             ...(latestJobs?.map(item => ({ ...item, type: 'job' })) || []),
-            ...(latestGovtJobs?.map(item => ({ ...item, type: 'govtjob' })) || []),
             ...(latestInternships?.map(item => ({ ...item, type: 'internship' })) || []),
-            ...(latestScholarships?.map(item => ({ ...item, type: 'scholarship' })) || []),
-            ...(latestResults?.map(item => ({ ...item, type: 'result' })) || []),
-            ...(latestAdmitCards?.map(item => ({ ...item, type: 'admitcard' })) || []),
-            ...(latestAdmissions?.map(item => ({ ...item, type: 'admission' })) || []),
-            ...(latestYears?.map(item => ({ ...item, type: 'previousyear' })) || [])
+            // ...(latestGovtJobs?.map(item => ({ ...item, type: 'govtjob' })) || []),
+            // ...(latestScholarships?.map(item => ({ ...item, type: 'scholarship' })) || []),
+            // ...(latestResults?.map(item => ({ ...item, type: 'result' })) || []),
+            // ...(latestAdmitCards?.map(item => ({ ...item, type: 'admitcard' })) || []),
+            // ...(latestAdmissions?.map(item => ({ ...item, type: 'admission' })) || []),
+            // ...(latestYears?.map(item => ({ ...item, type: 'previousyear' })) || [])
         ];
 
         return entries
@@ -76,8 +76,15 @@ const WhatsNew = () => {
                 const timestampB = getTimestampFromObjectId(b._id);
                 return timestampB - timestampA;
             });
-    }, [latestJobs, latestGovtJobs, latestInternships, latestScholarships, 
-        latestResults, latestAdmitCards, latestAdmissions, latestYears]);
+    }, [latestJobs, 
+        latestInternships, 
+        // latestGovtJobs, 
+        // latestScholarships, 
+        // latestResults, 
+        // latestAdmitCards, 
+        // latestAdmissions, 
+        // latestYears
+        ]);
 
     // Handle search debouncing
     useEffect(() => {
@@ -107,13 +114,13 @@ const WhatsNew = () => {
         
         switch(entry.type) {
             case 'job': return `/jobs/${entry.slug}`;
-            case 'govtjob': return `/govtjobs/${entry.slug}`;
             case 'internship': return `/internships/${entry.slug}`;
-            case 'scholarship': return `/scholarships/${entry.slug}`;
-            case 'result': return `/results/${entry.slug}`;
-            case 'admitcard': return `/admitcards/${entry.slug}`;
-            case 'admission': return `/admissions/${entry.slug}`;
-            case 'previousyear': return `/papers/${entry.subject}`;
+            // case 'govtjob': return `/govtjobs/${entry.slug}`;
+            // case 'scholarship': return `/scholarships/${entry.slug}`;
+            // case 'result': return `/results/${entry.slug}`;
+            // case 'admitcard': return `/admitcards/${entry.slug}`;
+            // case 'admission': return `/admissions/${entry.slug}`;
+            // case 'previousyear': return `/papers/${entry.subject}`;
             default: return '#';
         }
     };
@@ -124,28 +131,31 @@ const WhatsNew = () => {
         switch(entry.type) {
             case 'job':
                 return `${entry.jobTitle || ''} at ${entry.companyName || ''}`;
-            case 'govtjob':
-                return `${entry.jobTitle || ''} at ${entry.organization || ''}`;
             case 'internship':
                 return `${entry.title || ''} at ${entry.organization || ''}`;
-            case 'previousyear':
-                return `PYQ for ${entry.subject || ''} - ${entry.year || ''}`;
-            case 'scholarship':
-                return `${entry.title || ''} - ${entry.organization || ''}`;
-            case 'admission':
-                return `${entry.title || ''} - ${entry.institute || ''}`;
-            case 'result':
-                return `${entry.title || ''} - ${entry.organization || ''}`;
-            case 'admitcard':
-                return `${entry.title || ''} - ${entry.organization || ''}`;
+            // case 'govtjob':
+            //     return `${entry.jobTitle || ''} at ${entry.organization || ''}`;
+            // case 'previousyear':
+            //     return `PYQ for ${entry.subject || ''} - ${entry.year || ''}`;
+            // case 'scholarship':
+            //     return `${entry.title || ''} - ${entry.organization || ''}`;
+            // case 'admission':
+            //     return `${entry.title || ''} - ${entry.institute || ''}`;
+            // case 'result':
+            //     return `${entry.title || ''} - ${entry.organization || ''}`;
+            // case 'admitcard':
+            //     return `${entry.title || ''} - ${entry.organization || ''}`;
             default:
                 return entry.title || '';
         }
     };
 
-    const isLoading = jobsLoading || govtJobsLoading || internshipsLoading || 
-                      scholarshipsLoading || resultsLoading || admitCardsLoading || 
-                      admissionsLoading || yearsLoading || searchLoading;
+    const isLoading = jobsLoading || 
+    internshipsLoading || 
+    // govtJobsLoading || 
+                    //   scholarshipsLoading || resultsLoading || admitCardsLoading || 
+                    //   admissionsLoading || yearsLoading ||
+                     searchLoading;
 
     const displayEntries = searchTerm.trim() !== '' ? 
         [...(searchResults || [])].sort((a, b) => {

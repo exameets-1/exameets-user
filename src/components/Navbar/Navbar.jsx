@@ -119,7 +119,7 @@ const Navbar = () => {
           </div>
 
           {/* Updated GovtJobs with hover styling */}
-          <div className="relative flex flex-col items-center m-4 group">
+          {/* <div className="relative flex flex-col items-center m-4 group">
             <Link href="/govtjobs" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50] transition-all duration-300 group-hover:bg-[#B3E0FF] group-hover:shadow-md">
                 <Image src="/Govt_Icon.svg" alt="Govt Jobs" width={36} height={36} className="w-9 h-auto dark-image transition-transform duration-300 group-hover:scale-110" />
@@ -137,7 +137,7 @@ const Navbar = () => {
                 <Link href="/results" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-100 transition-colors duration-200">Results</Link>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-col items-center m-4">
             <Link href="/jobs" className="flex flex-col items-center">
@@ -157,14 +157,14 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="flex flex-col items-center m-4">
+          {/* <div className="flex flex-col items-center m-4">
             <Link href="/admissions" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
                 <Image src="/Admission_Icon.svg" alt="Admissions" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">Admissions</span>
             </Link>
-          </div>
+          </div> */}
 
           {/* <div className="flex flex-col items-center m-4">
             <Link href="/papers" className="flex flex-col items-center">
@@ -175,14 +175,14 @@ const Navbar = () => {
             </Link>
           </div> */}
 
-          <div className="flex flex-col items-center m-4">
+          {/* <div className="flex flex-col items-center m-4">
             <Link href="/scholarships" className="flex flex-col items-center">
               <div className="flex items-center justify-center w-[70px] h-[70px] bg-[#DFF1FF] rounded-full border-[3.5px] border-[#283D50]">
                 <Image src="/Intern_Icon.svg" alt="Internships" width={36} height={36} className="w-9 h-auto dark-image" />
               </div>
               <span className="text-xl dark:text-gray-100">Scholarships</span>
             </Link>
-          </div>
+          </div> */}
         </nav>
       </div>
 
@@ -197,14 +197,14 @@ const Navbar = () => {
         
         <div className="flex flex-col p-4 space-y-4 flex-1">
           <Link href="/" onClick={closeMobileMenu} className={getNavItemStyle('/')}>Home</Link>
-          <Link href="/govtjobs" onClick={closeMobileMenu} className={getNavItemStyle('/govtjobs')}>Govt Jobs</Link>
+          {/* <Link href="/govtjobs" onClick={closeMobileMenu} className={getNavItemStyle('/govtjobs')}>Govt Jobs</Link>
           <Link href="/admitcards" onClick={closeMobileMenu} className={getNavItemStyle('/admitcards')}>Admit Cards</Link>
-          <Link href="/results" onClick={closeMobileMenu} className={getNavItemStyle('/results')}>Results</Link>
+          <Link href="/results" onClick={closeMobileMenu} className={getNavItemStyle('/results')}>Results</Link> */}
           <Link href="/jobs" onClick={closeMobileMenu} className={getNavItemStyle('/jobs')}>Tech Jobs</Link>
           <Link href="/internships" onClick={closeMobileMenu} className={getNavItemStyle('/internships')}>Internships</Link>
-          <Link href="/admissions" onClick={closeMobileMenu} className={getNavItemStyle('/admissions')}>Admissions</Link>
+          {/* <Link href="/admissions" onClick={closeMobileMenu} className={getNavItemStyle('/admissions')}>Admissions</Link> */}
           {/* <Link href="/papers" onClick={closeMobileMenu} className={getNavItemStyle('/papers')}>PYQs</Link> */}
-          <Link href="/scholarships" onClick={closeMobileMenu} className={getNavItemStyle('/scholarships')}>Scholarships</Link>
+          {/* <Link href="/scholarships" onClick={closeMobileMenu} className={getNavItemStyle('/scholarships')}>Scholarships</Link> */}
         </div>
         
         {/* Footer for mobile menu - Login/Register or Profile - moved to bottom */}

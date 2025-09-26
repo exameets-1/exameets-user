@@ -20,14 +20,14 @@ export default function NotFound() {
         <Link href="/" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
           Go to Home
         </Link>
-        <Link href="/govtjobs" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
-          Govt Jobs
-        </Link>
         <Link href="/jobs" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
           Tech Jobs
         </Link>
         <Link href="/internships" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
           Internships
+        </Link>
+        {/* <Link href="/govtjobs" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
+          Govt Jobs
         </Link>
         <Link href="/scholarships" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
           Scholarships
@@ -43,7 +43,7 @@ export default function NotFound() {
         </Link>
         <Link href="/admitcards" className="px-5 py-2 rounded-md font-semibold bg-[#015990] text-white hover:bg-[#01456d] transition">
           Admit Cards
-        </Link>
+        </Link> */}
 
 
       </div>
