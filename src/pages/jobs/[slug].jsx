@@ -198,14 +198,14 @@ const JobDetails = ({ job, error }) => {
         </section>
 
         {/* Location */}
-        {job.city || job.state || job.country && (
+        {job.city || job.state || job.country ? (
           <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
             <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Location</h2>
             <p className="text-gray-700 dark:text-gray-300">
               {job.city}, {job.state}, {job.country}
             </p>
           </section>
-        )}
+        ) : null }
 
         {/* Company Overview */}
         {job.companyOverview && (
