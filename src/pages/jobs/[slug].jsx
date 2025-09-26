@@ -144,6 +144,13 @@ const JobDetails = ({ job, error }) => {
         }}
       />
 
+        <ShareModal
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          url={`https://www.exameets.in${router.asPath}`}
+          title={job.jobTitle || "Tech Job"}
+          details={shareDetails}
+        />
       <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
         <button 
           onClick={() => window.history.back()} 
@@ -159,25 +166,51 @@ const JobDetails = ({ job, error }) => {
             <FaShareAlt className="text-[#015990] dark:text-blue-400" size={22} />
           </button>
 
-        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
-          <section className="border-gray-200 pb-3">
-          <h1 className="text-xl font-bold text-white text-center">
-            {job.jobTitle || "Tech Job"}
-          </h1>
-          </section>
-
-          <p className="mt-2 text-15px text-[#ececec] text-center">
-            {job.companyName || "Not specified"}
-          </p>
+        <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-6 mb-6 relative">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+            {/* Job Details Section */}
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                {job.jobTitle || "Tech Job"}
+              </h1>
+              <p className="text-xl text-[#ececec] mb-3">
+                {job.companyName || "Not specified"}
+              </p>
+              {(job.city || job.state || job.country) && (
+                <p className="text-md text-[#b8d4f0] flex items-center justify-center md:justify-start gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                  </svg>
+                  {[job.city, job.state, job.country].filter(Boolean).join(', ')}
+                </p>
+              )}
+            </div>
+            
+            {/* Company Image Section */}
+            {job.imageUrl && (
+              <div className="w-full md:flex-shrink-0 md:w-auto">
+                <div className="w-full h-auto md:w-32 md:h-32 bg-white rounded-lg shadow-lg overflow-hidden border-2 border-white/20">
+                  <img 
+                    src={job.imageUrl} 
+                    alt={`${job.companyName || 'Company'} logo`}
+                    className="w-full h-auto md:h-full object-contain md:object-cover object-center"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = `
+                        <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                      `;
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <ShareModal
-          open={showShare}
-          onClose={() => setShowShare(false)}
-          url={`https://www.exameets.in${router.asPath}`}
-          title={job.jobTitle || "Tech Job"}
-          details={shareDetails}
-        />
 
         {/* Category & Position Type */}
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
@@ -197,15 +230,7 @@ const JobDetails = ({ job, error }) => {
           </div>
         </section>
 
-        {/* Location */}
-        {job.city || job.state || job.country ? (
-          <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-            <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Location</h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              {job.city}, {job.state}, {job.country}
-            </p>
-          </section>
-        ) : null }
+
 
         {/* Company Overview */}
         {job.companyOverview && (
@@ -251,6 +276,7 @@ const JobDetails = ({ job, error }) => {
         
 
         {/* Technical Skills */}
+        {(job.languages || job.frameworks || job.databases || job.methodologies) ? (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
           <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Technical Skills</h2>
           <div className="space-y-6">
@@ -280,6 +306,7 @@ const JobDetails = ({ job, error }) => {
             )}
           </div>
         </section>
+        ) : null}
 
         {/* Soft Skills */}
         {job.softSkills && (
