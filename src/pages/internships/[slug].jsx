@@ -204,40 +204,55 @@ const InternshipDetails = ({ internship, error, baseUrl }) => {
         />
 
       {/* Organization Details */}
+      {internship.location || internship.field ? (
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Organization Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {internship.location && (
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Location</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.location || 'Not specified'}</p>
           </div>
+          )}
+          {internship.field && (
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Field</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.field || 'Not specified'}</p>
           </div>
+          )}
         </div>
       </section>
+      ) : null}
 
       {/* Internship Details */}
+      {internship.internship_type || internship.duration || internship.stipend ? (
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Internship Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {internship.internship_type && (
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Type</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.internship_type || 'Not specified'}</p>
           </div>
+          )}
+          {internship.duration && (
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Duration</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.duration || 'Not specified'}</p>
           </div>
+          )}
+          {internship.stipend && (
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-2">Stipend</h3>
             <p className="text-gray-700 dark:text-gray-300">{internship.stipend || 'Not specified'}</p>
           </div>
+          )}
         </div>
       </section>
+      ) : null}
 
       {/* Skills Required */}
+      {internship.skills_required?.length > 0 && (
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Skills Required</h2>
         <ul className="list-disc pl-5 space-y-2">
@@ -249,14 +264,18 @@ const InternshipDetails = ({ internship, error, baseUrl }) => {
           }
         </ul>
       </section>
+      )}
 
       {/* Description */}
+      {internship.description && (
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Description</h2>
         <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{internship.description || 'No description available'}</p>
       </section>
+      )}
 
       {/* Eligibility Criteria */}
+      {internship.eligibility_criteria?.length > 0 && (
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Eligibility Criteria</h2>
         <ul className="list-disc pl-5 space-y-2">
@@ -268,25 +287,32 @@ const InternshipDetails = ({ internship, error, baseUrl }) => {
           }
         </ul>
       </section>
+      )}
 
       {/* Important Dates */}
+      {internship.start_date || internship.last_date ? (
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
         <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Important Dates</h2>
         <div className="space-y-3">
+          {internship.start_date && (
           <div className="rounded-lg flex justify-between items-center">
             <p className="text-gray-800 dark:text-gray-200">Start Date</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.start_date ? internship.start_date : 'Not specified'}
             </p>
           </div>
+          )}
+          {internship.last_date && (
           <div className="rounded-lg flex justify-between items-center">
             <p className=" text-gray-800 dark:text-gray-200">Last Date to Apply</p>
             <p className="text-gray-700 dark:text-gray-300">
               {internship.last_date ? internship.last_date : 'Not specified'}
             </p>
           </div>
+          )}
         </div>
       </section>
+      ) : null}
 
       {/* How to Apply */}
       <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
