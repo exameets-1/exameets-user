@@ -386,34 +386,63 @@ const Internships = ({ initialData, initialFilters, initialSearch, baseUrl }) =>
                 key={internship._id} 
                 className="grid grid-rows-[auto_auto_1fr_auto] bg-white dark:bg-gray-800 border-2 border-[#015990] dark:border-gray-700 rounded-lg p-4 shadow-md hover:scale-105 transition-transform relative h-full"
               >
-                {/* Title Section */}
-                <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-1 min-h-[1.75rem]">
-                  {internship.title}
-                </h3>
-                {/* Organization with Border */}
-                <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1">
+                {/* Company/Organization Logo Image - Small square in top right */}
+                {internship.imageUrl && (
+                  <div className="absolute top-3 right-3 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0 z-10">
+                    <img 
+                      src={internship.imageUrl} 
+                      alt={internship.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                {/* Title Section - Now positioned to overlap with image */}
+                <div className="pr-16 sm:pr-18 md:pr-20">
+                  {internship.title ? (
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem] leading-tight">
+                    {internship.title}
+                  </h3>
+                  ) : null}
+                </div>
+
+                {/* Organization with Border - Also with right padding to avoid image overlap */}
+                {internship.organization ? (
+                <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1 pr-16 sm:pr-18 md:pr-20">
                   {internship.organization}
                 </div>
+                ) : null}
+
                 {/* Content Section */}
                 <div className="grid gap-2 mb-4">
+                  {internship.location ? (
                   <div className="text-sm text-gray-600 dark:text-gray-300">
                     <span className="font-bold">Location:</span> {internship.location}
                   </div>
+                  ) : null}
+                  {internship.duration ? (
                   <div className="text-sm text-gray-600 dark:text-gray-300">
                     <span className="font-bold">Duration:</span> {internship.duration}
                   </div>
+                  ) : null}
+                  {internship.start_date ? (
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    <span className="font-bold">Start Date:</span> {(internship.start_date) === "" ? "Not specified" : (internship.start_date)}
+                    <span className="font-bold">Start Date:</span> {(internship.start_date)}
                   </div>
+                  ) : null}
+                  {internship.last_date ? (
                   <div className="text-sm text-gray-600 dark:text-gray-300">
-                    <span className="font-bold">Last Date to Apply:</span> {(internship.last_date) === "" ? "Not specified" : (internship.last_date)}
+                    <span className="font-bold">Last Date to Apply:</span> {(internship.last_date)}
                   </div>
+                  ) : null}
                 </div>
                 {/* Footer Section */}
                 <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
+                  {internship.stipend ? (
                   <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
                     Stipend: {internship.stipend}
                   </span>
+                  ) : null}
                   <button
                     className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                     onClick={(e) => {
@@ -504,8 +533,8 @@ export async function getServerSideProps(context) {
       _id: internship._id.toString(),
       createdAt: internship.createdAt.toISOString(),
       postedBy: internship.postedBy ? internship.postedBy.toString() : null,
-      start_date: internship.start_date,
-      last_date: internship.last_date,
+      start_date: internship.start_date || null,
+      last_date: internship.last_date || null,
       skills_required: internship.skills_required || []
     }));
 

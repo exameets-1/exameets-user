@@ -324,37 +324,51 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
 
                   {/* Title Section - Now positioned to overlap with image */}
                   <div className="pr-16 sm:pr-18 md:pr-20">
+                    {job.jobTitle ? (
                     <h3 className="text-xl font-semibold mb-2 dark:text-white line-clamp-2 min-h-[3.5rem] leading-tight">
                       {job.jobTitle}
                     </h3>
+                    ) : null}
                   </div>
 
                   {/* Company with Border - Also with right padding to avoid image overlap */}
+                  {job.companyName ? (
                   <div className="text-md text-gray-600 dark:text-gray-300 pb-2 mb-3 border-b border-gray-200 dark:border-gray-600 line-clamp-1 pr-16 sm:pr-18 md:pr-20">
                     {job.companyName}
                   </div>
+                  ) : null}
                   
                   {/* Content Section */}
                   <div className="grid gap-2 mb-4">
+                    {job.city || job.state ? (
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       <span className="font-bold">Location:</span> {job.city}, {job.state}
                     </div>
+                    ) : null}
+                    {job.experience ? (
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       <span className="font-bold">Experience:</span> {job.experience}
                     </div>
+                    ) : null}
+                    {job.education ? (
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       <span className="font-bold">Education:</span> {job.education.join(", ")}
                     </div>
+                    ) : null}
+                    {job.positionType ? (
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       <span className="font-bold">Position:</span> {job.positionType}
                     </div>
+                    ) : null}
                   </div>
                   
                   {/* Footer Section */}
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-600">
+                    {job.category ? (
                     <span className="bg-[#015990] dark:bg-blue-600 text-white text-xs px-3 py-1 rounded">
                       {job.category}
                     </span>
+                    ) : null}
                     <a 
                       href={`/jobs/${job.slug}`}
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline"

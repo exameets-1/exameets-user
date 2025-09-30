@@ -185,14 +185,18 @@ const InternshipDetails = ({ internship, error, baseUrl }) => {
 
         <div className="bg-[#015590] dark:bg-[#013b64] rounded-t-lg p-4 mb-6 flex items-center justify-center flex-col relative">
           <section className="border-gray-200 pb-3">
-          <h1 className="text-xl font-bold text-white text-center">
-            {internship.title || "Internship Title"}
-          </h1>
+          {internship.title ? (
+            <h1 className="text-xl font-bold text-white text-center">
+              {internship.title || "Internship Title"}
+            </h1>
+          ) : null}
           </section>
 
+          {internship.organization ? (
           <p className="mt-2 text-15px text-[#ececec] text-center">
             {internship.organization || "Not specified"}
           </p>
+          ) : null}
         </div>
 
         <ShareModal
