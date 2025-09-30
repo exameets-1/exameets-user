@@ -12,6 +12,13 @@ export default function EmployeeIDCard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Validate employee ID format (4 alphanumeric characters)
+  const isValidEmployeeId = (id) => {
+    if (!id || typeof id !== 'string') return false;
+    // Exactly 4 alphanumeric characters, no special chars or path traversal
+    return /^[A-Za-z0-9]{4}$/.test(id);
+  };
+
   useEffect(() => {
     if (!slug) return;
 
@@ -20,7 +27,15 @@ export default function EmployeeIDCard() {
         setLoading(true);
         setError(null);
         
-        const response = await fetch(`/api/emp/${slug}`);
+        // Validate slug format before making request
+        if (!isValidEmployeeId(slug)) {
+          throw new Error('Invalid employee ID format');
+        }
+
+        // Sanitize: convert to uppercase to match server expectation
+        const sanitizedSlug = slug.toUpperCase();
+        
+        const response = await fetch(`/api/emp/${sanitizedSlug}`);
         const data = await response.json();
 
         if (!response.ok) {
