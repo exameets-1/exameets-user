@@ -29,6 +29,7 @@ export default async function handler(req, res) {
       department: 1,
       active: 1,
       createdAt: 1,
+      email: 1, // Include email field
       _id: 1
     });
 
@@ -46,6 +47,7 @@ export default async function handler(req, res) {
         empId: employee.empId,
         name: employee.name,
         photoUrl: employee.photoUrl,
+        email : employee.email,
         role: employee.role,
         department: employee.department || 'Not specified',
         joinDate: employee.createdAt,

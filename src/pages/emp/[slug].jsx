@@ -12,11 +12,11 @@ export default function EmployeeIDCard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Validate employee ID format (4 alphanumeric characters)
+  // Validate employee ID format (6 alphanumeric characters)
   const isValidEmployeeId = (id) => {
     if (!id || typeof id !== 'string') return false;
-    // Exactly 4 alphanumeric characters, no special chars or path traversal
-    return /^[A-Za-z0-9]{4}$/.test(id);
+    // Exactly 6 alphanumeric characters, no special chars or path traversal
+    return /^[A-Za-z0-9]{6}$/.test(id);
   };
 
   useEffect(() => {
@@ -162,6 +162,16 @@ export default function EmployeeIDCard() {
                   </div>
                   <span className="text-sm font-medium text-gray-900 dark:text-white">
                     {employee.department}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center text-gray-500 dark:text-gray-400">
+                    <FaBuilding className="text-sm mr-2" />
+                    <span className="text-xs font-medium">Mail</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    {employee.email}
                   </span>
                 </div>
 
