@@ -70,7 +70,7 @@ const JobDetails = ({ job, error }) => {
     return (
       <ul className="list-disc pl-5 space-y-2">
         {array.map((item, index) => (
-          <li key={index} className="text-gray-700 dark:text-gray-200">{item}</li>
+          <li key={index} className="text-gray-700 dark:text-gray-200 text-justify leading-relaxed">{item}</li>
         ))}
       </ul>
     );
@@ -236,7 +236,9 @@ const JobDetails = ({ job, error }) => {
         {job.companyOverview && (
           <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
             <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Company Overview</h2>
-            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.companyOverview}</p>
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line text-justify leading-relaxed">
+              {job.companyOverview}
+            </p>
           </section>
         )}
 
@@ -244,7 +246,7 @@ const JobDetails = ({ job, error }) => {
         {job.positionSummary && (
           <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
             <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Position Summary</h2>
-            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.positionSummary}</p>
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line text-justify leading-relaxed">{job.positionSummary}</p>
           </section>
         )}
 
@@ -368,8 +370,8 @@ const JobDetails = ({ job, error }) => {
         {/* Equal Opportunity */}
         {job.equalOpportunityStatement && (
         <section className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
-          <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4">Equal Opportunity</h2>
-          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{job.equalOpportunityStatement}</p>
+          <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4 ">Equal Opportunity</h2>
+          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line text-justify leading-relaxed">{job.equalOpportunityStatement}</p>
         </section>
         )}
 
@@ -380,8 +382,8 @@ const JobDetails = ({ job, error }) => {
             <ul className="space-y-4">
               {job.faq.map((item) => (
                 <li key={item._id} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                  <strong className="text-gray-800 dark:text-gray-200">Q:</strong> {item.question}<br />
-                  <strong className="text-gray-800 dark:text-gray-200">A:</strong> {item.answer}
+                  <strong className="text-gray-800 dark:text-gray-200 text-justify leading-relaxed">Q:</strong> {item.question}<br />
+                  <strong className="text-gray-800 dark:text-gray-200 text-justify leading-relaxed">A:</strong> {item.answer}
                 </li>
               ))}
             </ul>
