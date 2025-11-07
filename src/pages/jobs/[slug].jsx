@@ -153,7 +153,14 @@ const JobDetails = ({ job, error }) => {
         />
       <div className="relative max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md text-gray-900 dark:text-gray-100">
         <button 
-          onClick={() => window.history.back()} 
+          onClick={() => {
+            const fromPath = router.query.from;
+            if (fromPath && fromPath !== 'undefined') {
+              router.push(fromPath);
+            } else {
+              router.push('/jobs');
+            }
+          }} 
           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-6"
         >
           <ArrowLeft className="w-4 h-4 inline-block" /> Back to Jobs

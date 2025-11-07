@@ -370,7 +370,9 @@ const Jobs = ({ initialData, initialFilters, initialSearch, baseUrl }) => {
                     </span>
                     ) : null}
                     <a 
-                      href={`/jobs/${job.slug}`}
+                      href={`/jobs/${job.slug}?from=${encodeURIComponent(window.location.pathname + window.location.search)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
                     >
                       View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
