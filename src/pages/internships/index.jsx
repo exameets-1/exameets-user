@@ -444,7 +444,7 @@ const Internships = ({ initialData, initialFilters, initialSearch, baseUrl }) =>
                   </span>
                   ) : null}
                   <a
-                    href={`/internships/${internship.slug}?from=${encodeURIComponent(window.location.pathname + window.location.search)}`}
+                    href={`/internships/${internship.slug}?from=${encodeURIComponent(router.asPath)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
@@ -490,18 +490,26 @@ const Internships = ({ initialData, initialFilters, initialSearch, baseUrl }) =>
 };
 
 export async function getServerSideProps(context) {
-  const { query, req } = context;
-  await dbConnect();
+  try {
+    const { query, req } = context;
+    
+    // Connect to database with error handling
+    try {
+      await dbConnect();
+    } catch (dbError) {
+      console.error("Database connection failed:", dbError);
+      throw new Error("Failed to connect to database");
+    }
 
-  // Pagination and filter parameters
-  const page = parseInt(query.page) || 1;
-  const limit = parseInt(query.limit) || 8;
-  const city = query.city || "All";
-  const internship_type = query.internship_type || "All";
-  const searchKeyword = query.q || "";
+    // Pagination and filter parameters with validation
+    const page = Math.max(1, parseInt(query.page) || 1); // Ensure page is at least 1
+    const limit = Math.min(50, Math.max(1, parseInt(query.limit) || 8)); // Limit between 1 and 50
+    const city = (query.city && typeof query.city === 'string') ? query.city : "All";
+    const internship_type = (query.internship_type && typeof query.internship_type === 'string') ? query.internship_type : "All";
+    const searchKeyword = (query.q && typeof query.q === 'string') ? query.q : "";
 
-  // Build query object based on schema
-  const dbQuery = {};
+    // Build query object based on schema
+    const dbQuery = {};
   if (city !== "All") dbQuery.location = city;
   if (internship_type !== "All") dbQuery.internship_type = internship_type;
   if (searchKeyword) {
@@ -514,59 +522,114 @@ export async function getServerSideProps(context) {
     ];
   }
 
-  try {
-    // Get total count and paginated results
-    const totalInternships = await Internship.countDocuments(dbQuery);
-    const totalPages = Math.ceil(totalInternships / limit);
-    const skip = (page - 1) * limit;
-
-    const internships = await Internship.find(dbQuery)
-      .sort({ createdAt: -1, is_featured: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
-
-    // Serialize internships
-    const serializedInternships = internships.map(internship => ({
-      ...internship,
-      _id: internship._id.toString(),
-      createdAt: internship.createdAt.toISOString(),
-      postedBy: internship.postedBy ? internship.postedBy.toString() : null,
-      start_date: internship.start_date || null,
-      last_date: internship.last_date || null,
-      skills_required: internship.skills_required || []
-    }));
-
-    // Generate base URL
-    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    if (!baseUrl && req) {
-      const protocol = req.headers['x-forwarded-proto'] || 'http';
-      const host = req.headers.host;
-      baseUrl = `${protocol}://${host}`;
-    }
-
-    return {
-      props: {
-        initialData: {
-          internships: serializedInternships,
-          pagination: {
-            currentPage: page,
-            totalPages,
-            hasNextPage: page < totalPages,
-            hasPrevPage: page > 1,
-            nextPage: page < totalPages ? page + 1 : null,
-            prevPage: page > 1 ? page - 1 : null
-          },
-          totalInternships,
-          limit
-        },
-        initialFilters: { city, internship_type, page },
-        initialSearch: searchKeyword,
-        baseUrl: baseUrl || 'http://localhost:3000'
+    try {
+      // Get total count and paginated results with error handling
+      let totalInternships = 0;
+      try {
+        totalInternships = await Internship.countDocuments(dbQuery);
+      } catch (countError) {
+        console.error("Error counting internships:", countError);
+        throw new Error("Failed to count internships");
       }
-    };
-  } catch (error) {
-    console.error("Database query failed:", error);
+
+      const totalPages = Math.ceil(totalInternships / limit);
+      const skip = (page - 1) * limit;
+
+      // Fetch internships with error handling
+      let internships = [];
+      try {
+        internships = await Internship.find(dbQuery)
+          .sort({ createdAt: -1, is_featured: -1 })
+          .skip(skip)
+          .limit(limit)
+          .lean();
+      } catch (findError) {
+        console.error("Error fetching internships:", findError);
+        throw new Error("Failed to fetch internships");
+      }
+
+      // Safely serialize internships with null checks
+      const serializedInternships = internships.map(internship => {
+        try {
+          return {
+            ...internship,
+            _id: internship._id?.toString() || '',
+            createdAt: internship.createdAt?.toISOString() || new Date().toISOString(),
+            postedBy: internship.postedBy?.toString() || null,
+            start_date: internship.start_date || null,
+            last_date: internship.last_date || null,
+            skills_required: Array.isArray(internship.skills_required) ? internship.skills_required : []
+          };
+        } catch (serializeError) {
+          console.error("Error serializing internship:", serializeError);
+          return null;
+        }
+      }).filter(Boolean); // Remove any null entries from serialization errors
+
+      // Generate base URL with validation
+      let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      if (!baseUrl && req) {
+        try {
+          const protocol = req.headers['x-forwarded-proto'] || 'http';
+          const host = req.headers.host;
+          if (!host) throw new Error('No host found in request headers');
+          baseUrl = `${protocol}://${host}`;
+        } catch (urlError) {
+          console.error("Error generating base URL:", urlError);
+          baseUrl = 'http://localhost:3000';
+        }
+      }
+
+      return {
+        props: {
+          initialData: {
+            internships: serializedInternships,
+            pagination: {
+              currentPage: page,
+              totalPages,
+              hasNextPage: page < totalPages,
+              hasPrevPage: page > 1,
+              nextPage: page < totalPages ? page + 1 : null,
+              prevPage: page > 1 ? page - 1 : null
+            },
+            totalInternships,
+            limit
+          },
+          initialFilters: { city, internship_type, page },
+          initialSearch: searchKeyword,
+          baseUrl: baseUrl || 'http://localhost:3000'
+        }
+      };
+
+    } catch (error) {
+      console.error("Server-side props generation failed:", error);
+      return {
+        props: {
+          initialData: {
+            internships: [],
+            pagination: {
+              currentPage: 1,
+              totalPages: 1,
+              hasNextPage: false,
+              hasPrevPage: false,
+              nextPage: null,
+              prevPage: null
+            },
+            totalInternships: 0,
+            limit: 8
+          },
+          initialFilters: {
+            city: "All",
+            internship_type: "All",
+            page: 1
+          },
+          initialSearch: "",
+          baseUrl: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+        }
+      };
+    }
+  } catch (outerError) {
+    console.error("Critical error in getServerSideProps:", outerError);
     return {
       props: {
         initialData: {
@@ -588,7 +651,7 @@ export async function getServerSideProps(context) {
           page: 1
         },
         initialSearch: "",
-        baseUrl: ""
+        baseUrl: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
       }
     };
   }
