@@ -81,9 +81,9 @@ const Welcome = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.7 }}
       >
-        Exameets is more than just a website – it's a comprehensive platform designed
+        Exameets is more than just a website , it's a comprehensive platform designed
         to meet the unique needs of students and professionals. From study materials
-        and job notifications to travel support, we've got you covered. We also conduct tech training at{' '}
+        and job notifications to travel support, we've got you covered. We are also best at training the most demanding courses like AIML, Data Science, MERN Stack, Digital Marketing and many more at {' '}
 {' '}
         <a 
           href="https://skillverse.exameets.in/" 
