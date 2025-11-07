@@ -83,7 +83,16 @@ const Welcome = () => {
       >
         Exameets is more than just a website – it's a comprehensive platform designed
         to meet the unique needs of students and professionals. From study materials
-        and job notifications to travel support, we’ve got you covered.
+        and job notifications to travel support, we've got you covered. We also conduct tech training at{' '}
+{' '}
+        <a 
+          href="https://skillverse.exameets.in/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-[#015990] dark:text-blue-400 font-semibold hover:underline"
+        >
+          Exameets Skillverse Academy
+        </a>.
       </motion.p>
 
       {/* Call to Action */}
