@@ -169,7 +169,14 @@ const InternshipDetails = ({ internship, error, baseUrl }) => {
 
       <div className="flex justify-between items-start mb-6">
         <button 
-          onClick={() => window.history.back()}
+          onClick={() => {
+            const fromPath = router.query.from;
+            if (fromPath && fromPath !== 'undefined') {
+              router.push(fromPath);
+            } else {
+              router.push('/internships');
+            }
+          }}
           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
         >
           <ArrowLeft className="w-4 h-4 inline-block" /> Back to Internships

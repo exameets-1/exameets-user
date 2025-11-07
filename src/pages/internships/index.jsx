@@ -443,15 +443,14 @@ const Internships = ({ initialData, initialFilters, initialSearch, baseUrl }) =>
                     Stipend: {internship.stipend}
                   </span>
                   ) : null}
-                  <button
+                  <a
+                    href={`/internships/${internship.slug}?from=${encodeURIComponent(window.location.pathname + window.location.search)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-[#015990] dark:text-blue-400 font-bold hover:underline"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleInternshipClick(internship.slug);
-                    }}
                   >
                     View Details <ArrowRight className="w-4 h-4 inline-block mb-1" />
-                  </button>
+                  </a>
                 </div>
               </div>
             ))
